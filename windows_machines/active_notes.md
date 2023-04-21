@@ -109,7 +109,7 @@ Using Impacket's tool GetUserSPNs I can run the following:
 
 `impacket-GetUserSPNs -dc-ip 10.10.10.100 -request active.htb/SVC_TGS`
 
-for an easy win at kerberoasting! Furthermore, this appears to be the administrator hash; we hopefully we can use this cracked credential to login to the target with admin access. 
+for an easy win at kerberoasting! Furthermore, this appears to be the administrator hash; we hopefully can use this cracked credential to login to the target with admin access. 
 
 ![kerberoast](../assets/active_assets/kerberoast.png)
 
