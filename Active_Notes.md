@@ -79,7 +79,7 @@ Lately, my favorite way to enumerate shares (and my ability to read them) is wit
 
 /home/ryan/HTB/Active/active_card.png
 
-Ok cool, so looks like I have read access to the Replication share; let's check that out. For this I'm reverting back to the old-school smbclient tool to see what we can find. (CME has some cool ways to further check shares using the spider function, but I find smbclient easier for cases like this)
+Ok cool, so looks like I have read access to the Replication share; let's check that out. For this I'm reverting back to the old-school smbclient tool to see what we can find. (CME has some cool ways to further check shares using the spider feature, but I find smbclient easier for cases like this)
 
 Running: `smbclient //10.10.10.100/replication` and simply hitting enter in lieu of a password gets me into the share. After poking around a bit I found an interesting file called Groups.xml, and used `get Groups.xml` to pull the file back to my machine. If on the fly, you can always use `more Groups.xml` which essentially just lets you read the file stored in temporary memory in a vim-like setting, but I prefer to store files like this locally, in case I need to revisit them.
 
@@ -155,7 +155,7 @@ Running `whoami` with this tool only lists me as active/administrator, whereas p
 
 - Kerberoasting is an invaluable part of any attacker's arsenal. Learning about a few of the biggest attacks (golden/ silver tickets, SPNs, AS-REPs, etc) will pay dividends later on. 
 
-- Similarly, Impacket and CrackMapExec are about as comprehensive and valuable tools as anyone could hope for when it comes to attacking Active Directory. These are huge tools that offer so much, and I am still only beginning to scratch there surface of what they can offer. Getting to know your tools is important in any line of work, but especially in pentesting; these are two worth getting to know well, in my opinion. 
+- Similarly, Impacket and CrackMapExec are about as comprehensive and valuable tools as anyone could hope for when it comes to attacking Active Directory. These are huge tools that offer so much, and I am still only beginning to scratch there surface of what they can offer. Getting to know your tools is important in any line of work, but especially in pentesting. These are two worth getting to know well, in my opinion. 
 
 Thanks for following along!
 
