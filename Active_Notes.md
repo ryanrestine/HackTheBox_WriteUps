@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-/home/ryan/HTB/Active/active_card.png
+![active_card](./assets/active_card.png)
 
 ## Enumeration
 
