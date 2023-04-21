@@ -131,6 +131,8 @@ Once again, Impacket to the rescue; let's try using psexec to login:
 impacket-psexec active.htb/administrator:Ticketmaster1968@10.10.10.100
 ```
 
+![pseexec_login](../assets/active_assets/login_psexec.png)
+
 And since I am logging in as administrator I can grab both flags on the SVC_TGS and Administrator desktops respectively.
 
 ![user_txt](../assets/active_assets/user_txt.png)
