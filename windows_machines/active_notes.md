@@ -16,7 +16,7 @@ As always, lets kick things off with an Nmap scan covering all TCP ports. Becaus
 sudo nmap -p-  --min-rate 10000 10.10.10.100
 ```
 
-As usual with Windows AD boxes, there's quite a few ports open here, with all the tell-tell signs of a Windows box (All those RPC ports), and an AD Domain Controller specifically (ports 53,88,389, etc). Here, I am scanning the discovered open ports from our `-p-` scan, and tacking on the `-sC` and `-sV` flags to enumerate versions and run common scripts against the ports:
+As usual with Windows AD boxes, there's quite a few ports open here, with all the tell-tale signs of a Windows box (All those RPC ports), and an AD Domain Controller specifically (ports 53,88,389, etc). Here, I am scanning the discovered open ports from our `-p-` scan, and tacking on the `-sC` and `-sV` flags to enumerate versions and run common scripts against the ports:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Active]
