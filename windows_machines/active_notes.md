@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-![active_card](../../assets/active_notes/active_card.png)
+![active_card](../assets/active_assets/active_card.png)
 
 ## Enumeration
 
