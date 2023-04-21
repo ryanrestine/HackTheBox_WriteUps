@@ -1,7 +1,7 @@
 # HTB - Active
 
 ##### Ip: 10.10.10.100
-##### Hostname: active.htb
+##### Name: Active
 ##### Rating: Easy
 
 ------------------------------------------------
