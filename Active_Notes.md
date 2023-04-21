@@ -67,7 +67,7 @@ Host script results:
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 71.01 seconds
 ```
-Because there doesn't appear to be any http or FTP ports open, let's begin by enumerating the SMB ports (139/445) as well as the LDAP port, to try and find something juicy.
+Because there doesn't appear to be any http or FTP ports open, let's begin by enumerating the SMB ports (139/445) to try and find something juicy.
 
 But before we do that, let's go ahead and add active.htb to the /etc/hosts file:
 
