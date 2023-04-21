@@ -98,7 +98,7 @@ gpp-decrypt edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH
 ```
 ![gpp_decrypt](../assets/active_assets/gpp_decrypt.png)
 
-Nice! We were very easily able to crack this password! Seems we may know have some credentials, 
+Nice! We were very easily able to crack this password! Seems we may now have some credentials, 
 `SVC_TGS:GPPstillStandingStrong2k18`, lets see what we can do with them. 
 
 ### Kerberoasting
@@ -141,7 +141,7 @@ And that's that! This was a great beginner friendly Active Directory box illustr
 
 ### Something Extra
 
-I recently found out about this and found it super interesting, so thought I would share here as well- Recall back to screen shot after logging in as administrator, where I ran the `whoami` command and got a response back as `nt authority\system`.
+I recently found out about this and found it super interesting, so thought I would share here as well- Recall back to the screen shot after logging in as administrator, where I ran the `whoami` command and got a response back as `nt authority\system`.
 
 Look what happens when I login using the very same credentials using a tool like wmiexec:
 
@@ -151,9 +151,9 @@ Running `whoami` with this tool only lists me as active/administrator, whereas p
 
 ### Key Takeaways
 
-- SMB can often contain a plethora of 'low hanging fruit' like we found here today. I was able to go from anonymous access to an SMB share to fully compromising the machine (or domain in this AD example) without anything too tricky, technically speaking. Sensitive information like credentials being stored somewhere like an open share like this is obviously not a good idea.
+- SMB can often contain a plethora of 'low hanging fruit' like we found here today. I was able to go from anonymous access to an SMB share to fully compromising the machine (or domain in this AD example) without anything too tricky, technically speaking. Sensitive information like credentials being stored in an open share like this is obviously not a good idea.
 
-- Kerberoasting is an invaluable part of any attacker's arsenal. Learning about a few of the biggest attacks (golden/ silver tickets, SPNs, AS-REPs, etc) will pay dividends later on. 
+- Kerberoasting is an invaluable part of any attacker's arsenal. Learning about a few of the biggest attacks/concepts (golden/ silver tickets, SPNs, AS-REPs, etc) will pay dividends later on. 
 
 - Similarly, Impacket and CrackMapExec are about as comprehensive and valuable tools as anyone could hope for when it comes to attacking Active Directory. These are huge tools that offer so much, and I am still only beginning to scratch there surface of what they can offer. Getting to know your tools is important in any line of work, but especially in pentesting. These are two worth getting to know well, in my opinion. 
 
