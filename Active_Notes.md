@@ -85,7 +85,7 @@ Running: `smbclient //10.10.10.100/replication` and simply hitting enter in lieu
 
 This file proves to be super interesting!
 
-/home/ryan/HTB/Active/gpp_pw.png
+![gpp_pw](./assets/gpp_pw.png)
 
 Here we have what appear to be a username SVC_TGS as well as a password. These Groups.xml files can be a goldmine for penetration testers because they can store extremely sensitive data (like PWs) as a Group Policy Preference (GPP) file, which can be decrypted using various tools. 
 
@@ -96,7 +96,7 @@ Armed with this knowledge we can use the built in Kali tool gpp-decrypt:
 ```text
 gpp-decrypt edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ
 ```
-/home/ryan/HTB/Active/gpp_decrypt.png
+![gpp_decrypt](./assets/gpp_decrypt.png)
 
 Nice! We were very easily able to crack this password! Seems we may know have some credentials, 
 `SVC_TGS:GPPstillStandingStrong2k18`, lets see what we can do with them. 
@@ -111,7 +111,7 @@ Using Impacket's tool GetUserSPNs I can run the following:
 
 for an easy win at kerberoasting! Furthermore, this appears to be the administrator hash; we hopefully we can use this cracked credential to login to the target with admin access. 
 
-/home/ryan/HTB/Active/kerberoast.png
+![kerberoast](./assets/kerberoast.png)
 
 ### Cracking the Hash With JTR
 
@@ -119,7 +119,7 @@ From here I will simply copy the hash to a text file named kerb_hash, and let Jo
 
 Most excellent! John was able to crack the hash quite quickly:
 
-/home/ryan/HTB/Active/jtr_crack.png
+![jtr_crack](./assets/jtr_crack.png)
 
 ### Logging In
 
@@ -133,9 +133,9 @@ impacket-psexec active.htb/administrator:Ticketmaster1968@10.10.10.100
 
 And since I am logging in as administrator I can grab both flags on the SVC_TGS and Administrator desktops respectively.
 
-/home/ryan/HTB/Active/user_txt.png
+![user_txt](./assets/user_txt.png)
 
-/home/ryan/HTB/Active/root_txt.png
+![root_txt](./assets/root_txt.png)
 
 And that's that! This was a great beginner friendly Active Directory box illustrating some key concepts needed to successfully enumerate and attack enterprise environments. 
 
@@ -145,7 +145,7 @@ I recently found out about this and found it super interesting, so thought I wou
 
 Look what happens when I login using the very same credentials using a tool like wmiexec:
 
-/home/ryan/HTB/Active/wmiexec_login.png
+![wmiexec_login](./assets/wmiexec_login.png)
 
 Running `whoami` with this tool only lists me as active/administrator, whereas psexec will auto-elevate privileges to that of nt/system. For all intents and purposes my privileges are the same here, but for those of us that want to document the highest level of privileges (say for an examination, or to include in a report), psexec offers an easy win in that regard. Likely superficial, but interesting none-the-less. 
 
