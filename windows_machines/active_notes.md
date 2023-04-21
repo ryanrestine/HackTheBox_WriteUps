@@ -16,7 +16,7 @@ As always, lets kick things off with an Nmap scan covering all TCP ports. Becaus
 sudo nmap -p-  --min-rate 10000 10.10.10.100
 ```
 
-As usual with Windows AD boxes, there's quite a few ports open here, with all the tell-tell signs of Windows box (All those RPC ports), and an AD Domain Controller specifically (ports 53,88,389, etc). Here, I am scanning the discovered open ports from our `-p-` scan, and tacking on the `-sC` and `-sV` flags to enumerate versions and run common scripts against the ports:
+As usual with Windows AD boxes, there's quite a few ports open here, with all the tell-tell signs of a Windows box (All those RPC ports), and an AD Domain Controller specifically (ports 53,88,389, etc). Here, I am scanning the discovered open ports from our `-p-` scan, and tacking on the `-sC` and `-sV` flags to enumerate versions and run common scripts against the ports:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Active]
@@ -77,7 +77,7 @@ But before we do that, let's go ahead and add active.htb to the /etc/hosts file:
 
 Lately, my favorite way to enumerate shares (and my ability to read them) is with CrackMapExec. CME is an extremely powerful tool with so many use cases, and is one of my go-to tools when working with active directory (Here is a great cheat sheet/wiki on the tool: https://wiki.porchetta.industries/other-gitbook. In this case I tried enumerating shares with user 'guest' and a blank password (this didn't work, the Guest user had been smartly disabled), as well as a blank user and blank pw, which worked!
 
-/home/ryan/HTB/Active/active_card.png
+![smb_enum](../assets/active_assets/smb_enum.png)
 
 Ok cool, so looks like I have read access to the Replication share; let's check that out. For this I'm reverting back to the old-school smbclient tool to see what we can find. (CME has some cool ways to further check shares using the spider feature, but I find smbclient easier for cases like this)
 
