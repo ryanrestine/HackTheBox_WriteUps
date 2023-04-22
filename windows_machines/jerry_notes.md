@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-Jerry.png
+![Jerry.png}(./assests/jerry_assets/Jerry.png)
 
 #### Enumeration
 
