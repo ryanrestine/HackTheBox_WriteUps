@@ -26,7 +26,7 @@ PORT     STATE SERVICE
 Nmap done: 1 IP address (1 host up) scanned in 13.42 seconds
 ```
 
-Ok interesting, looks like only one port open, which is pretty rare for a Windows machine. Let's go ahead and emumerate a bit further and port scan with the `-sC` and `-sV` flags set to enumerate versions and also throw some basic Nmap scripts at it:
+Ok interesting, looks like only one port open, which is pretty rare for a Windows machine. Let's go ahead and enumerate a bit further and port scan with the `-sC` and `-sV` flags set to enumerate versions and also throw some basic Nmap scripts at it:
 
 ![nmap_scan.png](../assets/jerry_assets/nmap_scan.png)
 
