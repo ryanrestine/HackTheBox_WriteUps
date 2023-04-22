@@ -69,7 +69,7 @@ To me it always makes sense to try more targeted wordlsists first, and for a cou
 
 ![wc_list.png](../assets/jerry_assets/wc_list.png)
 
-Hydra can blaze through the Tomcat list n early instantly, while rockyou would take hours and hours. Starting more simple and targeted and increasing your net as needed seems like the best path here. Not to mention that highly specific credentials may not even exist at all in rockyou.
+Hydra can blaze through the Tomcat list nearly instantly, while rockyou would take hours and hours. Starting more simple and targeted and increasing your net as needed seems like the best path here. Not to mention that highly specific credentials may not even exist at all in rockyou.
 
 2. While not relevant on a HTB machine, throwing something like rockyou against a login page would generate a HUGE amount of network traffic and would likely be detected quickly. While brute forcing isn't stealthy by nature, the logic follows that fewer login attempts generates less traffic and noise, which is less likely to be detected.
 
@@ -111,9 +111,9 @@ We can see here the default (but working) credentials listed as an example. To m
 
 ### Key Takeaways
 
-- As a user or administrator, make sure you always change your default credentials when setting up services. Conversely, as an attacker, it's always a good idea to try known default credentials or other easy quick wins (root:root, admin:passwd, etc), before getting too technical or trying nosiy methods like brute forcing. 
+- As a user or administrator, make sure you always change your default credentials when setting up services. Conversely, as an attacker, it's always a good idea to try known default credentials or other easy quick wins (root:root, admin:password, etc), before getting too technical or trying noisy methods like brute forcing. 
 
--  On a similar note, it always makes sense to try simpler, more targeted attacks before resorting to more complex and less specific attack vectors. Cast a small net at first, and increase in complexity and in scope only as needed.
+-  On a similar note, it always makes sense to try simpler, more targeted attacks before resorting to more complex or less specific attack vectors. Cast a small net at first, and increase in complexity and in scope only as needed.
 
 - Lastly, SecLists is your friend, and very much worth downloading and exploring.
 
