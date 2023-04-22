@@ -77,7 +77,7 @@ So all that said lets kick off Hydra against the login page:
 
 ![hydra_bf.png](../assets/jerry_assets/hydra_bf.png)
 
-Nice! Hydra has found two possible sets of credentials. The first pair of admin:admin turned out to be a false positive (Hydra is great, but not perfect after all), but the credentials tomcat:s3cret worked great. We can now login to the /manager page. From here it should be a breaze to get a working shell on the machine.
+Nice! Hydra has found two possible sets of credentials. The first pair of admin:admin turned out to be a false positive (Hydra is great, but not perfect after all), but the credentials tomcat:s3cret worked great. We can now login to the /manager page. From here it should be a breeze to get a working shell on the machine.
 
 Scrolling down the page we see  there is an option to upload and deploy a .war file.
 
