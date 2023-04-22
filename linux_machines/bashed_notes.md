@@ -1,6 +1,6 @@
 # HTB - Jerry
 
-#### Ip: 10.10.10.95
+#### Ip: 10.10.10.68
 #### Name: Bashed
 #### Rating: Easy
 
