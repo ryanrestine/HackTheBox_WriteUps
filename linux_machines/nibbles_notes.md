@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Bashed.png
+![Bashed.png](../assets/bashed_assets/Bashed.png)
 
 ### Enumeration
 
@@ -40,7 +40,7 @@ Nmap done: 1 IP address (1 host up) scanned in 8.94 seconds
 
 Checking out the http site in the browser we find a basically blank page only containing "Hello World!" in html, but checking out the source of the page (ctrl + u) we find our first clue:
 
-source.png
+![source.png](../assets/bashed_assets/source.png)
 
 Navigating to http://10.10.10.75/nibbleblog/ we find what appears to be a blog. One of the easiest and most convenient ways to check out a site's tech stack quickly is with a Firefox browser plugin called Wappalyzer. This plugin sits in your task bar in the browser and you can quickly get a lay-of-the-land in regards to technologies being used, simply by clicking the Wappalyzer icon.
 
@@ -48,17 +48,17 @@ In this case I can see the site is running on Apache 2.4.18 as well as using PHP
 
 For this I'll use Feroxbuster, and because I know the site is using PHP I'll use the `-x php` flags to append .php to words in the list as well as the `-q` flags, just to keep the results a bit more tidy. 
 
-feroxbuster.png
+![feroxbuster.png]((../assets/bashed_assets/feroxbuster.png)
 
 Ok cool, looks like Feroxbuster found some interesting directories. http://10.10.10.75/nibbleblog/admin.php definitely catches my eye first, and when I visit the URL I'm met with a login page. In cases like this I always like to start simple and get more complex only as needed, so I try a few common credential pairs like admin:admin, admin:password, and something like admin:(name-of-the-box) and sure enough admin:nibbles successfully logged me into the admin site!
 
 Poking around the site I see a plugin tab that seems interesting, but I'm not positive if there are any know exploits or misconfigurations here. Heading to Google and searching for 'nibbleblog exploits' returns some very juicy results. One site I'm particularly interested in is https://www.zerodaylab.com/vulnerabilities/CVE-2015/CVE-2015-6967.html which contains the following:
 
-cve_details.png
+![cve_details.png](../assets/bashed_assets/cve_details.png)
 
 Nice! All that's left to check before trying to exploit this is which version of Nibbleblog we're dealing with here. We can easily confirm this by heading to the Settings tab on the admin page and scrolling down to the bottom of the page:
 
-version.png
+![version.png](../assets/bashed_assets/version.png)
 
 We're in business! Looks like this version is vulnerable to uploading an executable to the image plugin. 
 
@@ -99,7 +99,7 @@ $debug = 0;
 
 I set up my netcat listener on port 443 and go ahead and upload the shell:
 
-shell_upload.png
+![shell_upload.png](../assets/bashed_assets/shell_upload.png)
 
 and navigate to http://10.10.10.75/nibbleblog/content/private/plugins/my_image/image.php to trigger it.
 
@@ -127,7 +127,7 @@ python3 -c 'import pty;pty.spawn("/bin/bash")'
 
 From here I can grab the first flag user.txt:
 
-user_flag.png
+![user_flag.png](../assets/bashed_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -196,7 +196,7 @@ root@Nibbles:~# ls
 ls
 root.txt
 ```
-root_flag.png
+![root_flag.png](../assets/bashed_assets/root_flag.png)
 
 
 ### Key Takeaways
