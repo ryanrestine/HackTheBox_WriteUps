@@ -12,7 +12,7 @@
 
 Let's kick things off by scanning all open TCP ports:
 
-nmap.png
+![nmap.png](../assets/bashed_assets/nmap.png)
 
 Ok cool, looks like the classic port 22 and 80 combo found on many Linux CTF boxes. Let's enumerate a bit further with the `-sC` and `-sV` flags to find out more about versions and to fire off some basic Nmap scripts:
 
@@ -48,7 +48,7 @@ In this case I can see the site is running on Apache 2.4.18 as well as using PHP
 
 For this I'll use Feroxbuster, and because I know the site is using PHP I'll use the `-x php` flags to append .php to words in the list as well as the `-q` flags, just to keep the results a bit more tidy. 
 
-![feroxbuster.png]((../assets/bashed_assets/feroxbuster.png)
+![feroxbuster.png](../assets/bashed_assets/feroxbuster.png)
 
 Ok cool, looks like Feroxbuster found some interesting directories. http://10.10.10.75/nibbleblog/admin.php definitely catches my eye first, and when I visit the URL I'm met with a login page. In cases like this I always like to start simple and get more complex only as needed, so I try a few common credential pairs like admin:admin, admin:password, and something like admin:(name-of-the-box) and sure enough admin:nibbles successfully logged me into the admin site!
 
