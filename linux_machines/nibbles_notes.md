@@ -44,7 +44,7 @@ Checking out the http site in the browser we find a basically blank page only co
 
 Navigating to http://10.10.10.75/nibbleblog/ we find what appears to be a blog. One of the easiest and most convenient ways to check out a site's tech stack quickly is with a Firefox browser plugin called Wappalyzer. This plugin sits in your task bar in the browser and you can quickly get a lay-of-the-land in regards to technologies being used, simply by clicking the Wappalyzer icon.
 
-In this case I can see the site is running on Apache 2.4.18 as well as using PHP. With this knowledge lets quick of a directory scan against the newly discovered directory in hopes to find some interesting sub-directories. 
+In this case I can see the site is running on Apache 2.4.18 as well as using PHP. With this knowledge lets kick of a directory scan against the newly discovered directory in hopes to find some interesting sub-directories. 
 
 For this I'll use Feroxbuster, and because I know the site is using PHP I'll use the `-x php` flags to append .php to words in the list as well as the `-q` flags, just to keep the results a bit more tidy. 
 
@@ -80,7 +80,7 @@ Documentation: http://docs.nibbleblog.com
 
 So armed with all this knowledge lets try and upload a php-reverse-shell to the image plugin upload, and see if that gets us a shell, as it appears that the upload feature isn't checking for or sanitizing file type, and only allowing images to be loaded. 
 
-I grab a copy of Pentest Monkey's famous php-revers-shell.php from https://pentestmonkey.net/tools/web-shells/php-reverse-shell and make the following changes to the code, pasting in my Ip address for the callback as well as which port I will be listening on:
+I grab a copy of Pentest Monkey's famous php-reverse-shell.php from https://pentestmonkey.net/tools/web-shells/php-reverse-shell and make the following changes to the code, pasting in my Ip address for the callback as well as which port I will be listening on:
 
 ```php
 // See http://pentestmonkey.net/tools/php-reverse-shell if you get stuck.
