@@ -196,7 +196,7 @@ root@Nibbles:~# ls
 ls
 root.txt
 ```
-![root_flag.png](../assets/nibbles_assets/root_flag.png)
+![root_flag.png](../assets/nibbles_assets/root_nibble.png)
 
 
 ### Key Takeaways
