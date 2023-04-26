@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Forest.png
+![Forest.png](../assets/forest_assets/Forest.png)
 
 ### Enumeration
 
@@ -115,7 +115,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 67.64 seconds
 ```
 
-Ok cool, looks like we've got all the signs of a domain controller here. Lets go aheat and add `10.10.10.161 htb.local` to our `/etc/hosts` file. 
+Ok cool, looks like we've got all the signs of a domain controller here. Lets go ahead and add `10.10.10.161 htb.local` to our `/etc/hosts` file. 
 
 Even though it's an old tool and spits out a lot of information, when I see SMB ports 139 and 445 open I like to try Enum4Linux to see if I can get a quick win of gathering some usernames and/or getting more info on the password policy.
 
@@ -125,7 +125,7 @@ Using:
 
 gets me a few usernames!
 
-enum4linux.png
+![enum4linux.png](../assets/forest_assets/enum4linux.png)
 
 lets add these to a file called users.txt
 
@@ -142,11 +142,11 @@ santi
 
 Now that we have a few possible users, lets try Impacket's tool GetNPUsers to see if we can grab any hashes:
 
-impacket.png
+![impacket.png](../assets/forest_assets/impacket.png)
 
 Nice! Lets go ahead and add this hash to a file named hash.txt and see if we can crack it using JohnTheRipper:
 
-jtr.png
+![jtr.png](../assets/forest_assets/jtr.png)
 
 Awesome, looks like we have some valid creds- svc-alfresco:s3rvice. Lets see if we can login using these. For this I will try using evil-winrm first:
 
@@ -170,7 +170,7 @@ FOREST
 
 Cool, lets go ahead and grab the user.txt flag from svc-alfresco's Desktop:
 
-user_flag.png
+![user_flag.png](../assets/forest_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -178,7 +178,7 @@ Lets go ahead try to enumerate the domain a bit more. To do this I like to use B
 
 To do this first I need to upload SharpHound.exe to the target, which will ingest all the data I need to input into BloodHound for mapping.
 
-Because we are using evil-winrm, this is a simple as issuing:
+Because we are using evil-winrm, this is as simple as issuing:
 
 ```text
 *Evil-WinRM* PS C:\Users\svc-alfresco\Music> upload /home/ryan/Tools/AD/kerberos/SharpHound.exe
@@ -189,6 +189,7 @@ Data: 1402196 bytes of 1402196 bytes copied
 
 Info: Upload successful!
 ```
+Quick aside - I'm working out of the Music directory because while I was working on this box, there was at least one other person on there too, and I wanted all my files/tools to be somewhere out of the way.
 
 Simply running `./SharpHound.exe` will initiate the ingestor and it will grab everything we need and compress it into a zip file. From there I can transfer the file back to my machine using Impacket's SMB Server and load the .zip into Bloodhound. 
 
@@ -196,15 +197,15 @@ To interact with Bloodhound i need to run `sudo neo4j console` and then run `blo
 
 Next I will be presented with a login screen, and after authenticating I can load my .zip file into bloodhound. 
 
-bh_login.png
+![bh_login.png](../assets/forest_assets/bh_login.png)
 
 After loading my data the first thing I like to do is search for the user I have a shell as (in this case svc-alfresco), right click on their icon, and select `Mark User as Owned`. That way I can get a better sense of possible exploit paths based on work I've already done. 
 
-owned.png
+![owned.png](../assets/forest_assets/owned.png)
 
 Clicking on the "Shortest Path from Owned Principals" query we can visualize our attack path:
 
-bloodhound.png
+![bloodhound.png](../assets/forest_assets/bloodhound.png)
 
 So it looks like our user svc-alfresco is a member of the Service Accounts group which in turn is a part of the Privileged IT Accounts group, which is also a member of the Account Operators group, who have generic all access over the Exchange, and that group has WriteDacl permissions on the dc.
 
@@ -218,7 +219,7 @@ Next I'll run `net group "Exchange Windows Permissions" /add ryan` to add user r
 
 After that the simplest way to go forward is to upload PowerView.ps1 to my shell. PowerView is an amazingly powerful tool and has so may features to discover. It is very much worth downloading and playing around with if not already familiar. 
 
-powerview.png
+![powerview.png](../assets/forest_assets/pwerview.png)
 
 After loading powerview, we only have a few more commands left.
 
@@ -287,7 +288,7 @@ FOREST
 
 Now all that's left to do is grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/forest_assets/root_flag.txt)
 
 This was a great beginner level Active Directory box. The foothold was quite easy, and the privilege escalation was really fun and interesting. It was a great way to practice DcSync attacks, which can get a bit tricky, if you're not familiar with them.
 
