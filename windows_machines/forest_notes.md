@@ -219,7 +219,7 @@ Next I'll run `net group "Exchange Windows Permissions" /add ryan` to add user r
 
 After that the simplest way to go forward is to upload PowerView.ps1 to my shell. PowerView is an amazingly powerful tool and has so may features to discover. It is very much worth downloading and playing around with if not already familiar. 
 
-![powerview.png](../assets/forest_assets/pwerview.png)
+![powerview.png](../assets/forest_assets/powerview.png)
 
 After loading powerview, we only have a few more commands left.
 
@@ -288,7 +288,7 @@ FOREST
 
 Now all that's left to do is grab the root.txt flag:
 
-![root_flag.png](../assets/forest_assets/root_flag.txt)
+![root_flag.png](../assets/forest_assets/root_flag.png)
 
 This was a great beginner level Active Directory box. The foothold was quite easy, and the privilege escalation was really fun and interesting. It was a great way to practice DcSync attacks, which can get a bit tricky, if you're not familiar with them.
 
