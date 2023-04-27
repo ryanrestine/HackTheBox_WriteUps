@@ -27,7 +27,7 @@ PORT   STATE SERVICE
 
 Nmap done: 1 IP address (1 host up) scanned in 6.86 seconds
 ```
-Ok interesting. We have the classic ports 22 and 80 combo so frequently found on Linux CTFs, but also we see DNS port 53 open. While not unheard of by anymeans, it's also not very common either, and will likely be what I first focus on.
+Ok interesting. We have the classic ports 22 and 80 combo so frequently found on Linux CTFs, but also we see DNS port 53 open. While not unheard of by any means, it's also not very common either, and will likely be what I first focus on.
 
 Let's further enumeratie the open ports using the `-sC` and `-sV` flags to use default scripts and enumerate versions, along with the `-T4` flag to speed things up:
 
@@ -56,7 +56,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 16.29 seconds
 ```
 
-This didn't find anything too juicy for us. SSH is a pretty safe and well built protocol, so not many vulnerabilities there. It looks like we've got Apache 2.4.18 on pert 80/http landing on Apache's default "It Works" page. 
+This didn't find anything too juicy for us. SSH is a pretty safe and well built protocol, so not many vulnerabilities there. It looks like we've got Apache 2.4.18 on port 80/http landing on Apache's default "It Works" page. 
 
 Let's take a quick look at DNS before turning our attention to http.
 
@@ -135,7 +135,7 @@ Sweet, looks like all we need to do here is inject a php reverse shell into this
 
 First I need to transfer from my machine to Cronos a copy of php-reverse-shell.php, after updating the script to reflect my Ip and port I'll be listening on:
 
-![php_shell.png](../assets/cronos_assets/php_shell.png)
+![php_shell.png](../assets/cronos_assets/php-shell.png)
 
 Then I set up a Python http.server with `python -m http.server 80` and grab the file using wget:
 
