@@ -57,7 +57,7 @@ Not being familiar with this software, first thing I do is look it up using Sear
 
 Nice! I'm especially interested in the unauthenticated RCE exploit. You can either download it directly from searchsploit, or go out and grab it from ExploitDB (https://www.exploit-db.com/exploits/48506) Looking at the exploit, the comments state "Gym Management System version 1.0 suffers from an Unauthenticated File Upload Vulnerability allowing Remote Attackers to gain Remote Code Execution (RCE) on the Hosting Webserver via uploading a maliciously crafted PHP file that bypasses the image upload filters."
 
-Interesting. Looking through the Python code, this should be good to just point and fire, with no changes needed.
+Interesting. Looking through the Python code, this should be good to just point and shoot, with no changes needed.
 
 ### Exploitation
 
@@ -66,15 +66,15 @@ I execute the exploit using:
 
 `python2 gym-mgmt-system-rce.py http://10.10.10.198:8080/` 
 
-(I'm using Python2, because this is an old script and I didn't want to have to go through and clean up all the print statements, after the transition to Python3)
+(I'm using Python2 because this is an old script and I didn't want to have to go through and clean up all the print statements after the transition to Python3)
 
-The foothold was a breeze. After firing the script I'm presented with a web-shell, where I can grab user.txt.
+The foothold was a breeze. After firing the script I'm presented with a webshell, where I can grab user.txt.
 
 ![user_flag.png](../assets/buff_assets/user_flag.png)
 
 ### Privilege Escalation
 
-This web-shell is not the best to work out of, so I'm going to create a reverse shell from the web-shell back to my machine, so I can enumerate more comfortably.
+This webshell is not the best to work out of, so I'm going to create a reverse shell from the webshell back to my machine, so I can enumerate more comfortably.
 
 To do this I'll need to transfer a netcat executable to the target machine. First I'll set up a Python webserver and on the target box fetch netcat with:
 
@@ -92,19 +92,19 @@ Great, now we have a stable, fully interactive shell to work with.
 
 ![stable_shell.png](../assets/buff_assets/stable_shell.png)
 
-Browsing around the machine, I find and interesting executable in Shaun's Downloads folder:
+Browsing around the machine, I find an interesting executable in Shaun's Downloads folder:
 
 ![find_cloudme.png](../assets/buff_assets/find_cloudme.png)
 
 It also looks like the version number is being listed as well. Turning to ExploitDB to see if I can find any public exploits, I quickly find this one: https://www.exploit-db.com/exploits/48389. This is a Python script, which should be pretty straightforward to execute. 
 
-But there is one small hurdle we'll have to get through first. Because this is exploit is written in Python, and Python is not normally installed on Windows machines, we'll need to use a tool like Chisel to tunnel from my machine to the target.
+But there is one small hurdle we'll have to get through first. Because this is exploit is written in Python, and Python is not normally installed on Windows machines, we'll need to use a tool like Chisel to tunnel from my attacking machine to the target.
 
 So, lets get the exploit cleaned up and ready to execute and then transfer over Chisel to set up a tunnel.
 
 ### Modifying The Exploit
 
-This is a pretty straight forward buffer overflow exploit which will only need  light updating. Looking at the code it looks like the shellcode provided opens up calc.exe, but we want something a bit more useful than that. So what we need to do is utilize msfvenom to create some new shell code that contains a reverse shell back to our box. We can do that as follows:
+This is a pretty straight forward buffer overflow exploit which will only need light updating. Looking at the code it looks like the shellcode provided opens up calc.exe, but we want something a bit more useful than that. So what we need to do is utilize msfvenom to create some new shell code that contains a reverse shell back to our box. We can do that as follows:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Buff]
@@ -160,7 +160,7 @@ With:
 
 After updating the shellcode in the exploit, that should be it for updating the script.
 
-Next, lets use Chisel to set up a tunnel between our machine and the target:
+Next, lets use Chisel to set up a tunnel between our machine and the target.
 
 ### Chisel
 
