@@ -67,7 +67,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 47.66 seconds
 ```
 
-Lets also go ahead and kick off some directory scanning against the two ope http ports 80 and 50000, while we continue to poke around:
+Lets also go ahead and kick off some directory scanning against the two open http ports 80 and 50000, while we continue to poke around:
 
 ![gubuster.png](../assets/jeeves_assets/gubuster.png)
 
@@ -93,7 +93,7 @@ Navigating to http://10.10.10.63:50000/askjeeves/ I find a Jenkins dashboard. Cl
 
 Nice! That worked! We can now successfully login as admin:
 
-![admin_login.png](../assets/jeeves_assets/admin_login.png)
+![admin_login.png](../assets/jeeves_assets/admin_panel.png)
 
 From here I was able to navigate to the Script Console. Now I can grab a base64 encoded PowerShell reverse shell from https://www.revshells.com/ and simply paste it in to the command prompt with a bit of Groovy script syntax:
 
@@ -109,7 +109,7 @@ Which gets me back a a shell as user kohsuke:
 
 ![shell.png](../assets/jeeves_assets/shell.png)
 
-where I can then grab user.txt
+Where I can then grab user.txt
 
 ![user_flag.png](../assets/jeeves_assets/user_flag.png)
 
@@ -159,7 +159,7 @@ We can crack the login password:
 
 ![jtr.png](../assets/jeeves_assets/jtr.png)
 
-Great! Now we can begin to interact with the database from our command line:
+Great! Now we can begin to interact with the database from the command line:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Jeeves]
