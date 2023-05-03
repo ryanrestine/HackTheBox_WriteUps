@@ -217,17 +217,9 @@ type root.txt
 Access is denied.
 ```
 
-This is peculiar, and indicates we have at least some kind of elevated permissions. Using icacls, we can see we doo have read permissions to the Administrator Desktop, but not the root.txt flag.
+This is peculiar, and indicates we have at least some kind of elevated permissions. Using icacls, we can see we do have read permissions to the Administrator Desktop, but not the root.txt flag.
 
 ```text
-C:\Users\Administrator\Desktop>icacls Desktop
-icacls Desktop
-Desktop: The system cannot find the file specified.
-Successfully processed 0 files; Failed processing 1 files
-
-C:\Users\Administrator\Desktop>cd ..
-cd ..
-
 C:\Users\Administrator>icacls Desktop
 icacls Desktop
 Desktop NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
