@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Sense.png
+![Sense.png](../assets/sense_assets/Sense.png)
 
 ### Enumeration
 
@@ -51,7 +51,7 @@ Nmap done: 1 IP address (1 host up) scanned in 12.23 seconds
 
 Based on the Nmap scan and confirming by navigating to the site, port 80 http redirects to https://10.10.10.60. From here we'll we're met with a pfSense login page:
 
-pfsense_login.png
+![pfsense_login.png](../assets/sense_assets/pfsense_login.png)
 
 pfSence is is an open source firewall software that is extremely common. From past history I know that the default credentials are admin:pfsense, and sometimes these aren't changed by admins. Unfortunately for us, it appears they've been changed. Looks like we'll need to enumerate further. 
 
@@ -67,13 +67,13 @@ Here, I also need to use the `-k` flag to bypass the SSL certificate verificatio
 
 After a long while I finally find something of value: https://10.10.10.60/system-users.txt
 
-system_users.png
+![system_users.png](../assets/sense_assets/system_users.png)
 
 Nice! We now have a username, and knowing that the default password for pfSense is 'pfsense.'
 
 Logging in we are greeted with an admin dashboard:
 
-pfsense_rohit.png
+![pfsense_rohit.png](../assets/sense_assets/pfsense_rohit.png)
 
 At this point lets take a look and see if we can identify any public exploits against this service. 
 
@@ -83,7 +83,7 @@ There were so many options to choose from using Searchsploit, so I simply Google
 
 This appears to be a pretty straightforward script abusing a misconfiguration in 'status_rrd_graph_img.php' where we can upload a reverse shell back to our attacking machine. Looks like we only need to supply a few arguments before firing off the exploit:
 
-exploit_args.png
+![exploit_args.png](../assets/sense_assets/exploit_args.png)
 
 Let's set up a netcat listener to catch a shell back on, and try the exploit out:
 
@@ -97,12 +97,14 @@ Exploit completed
 
 And back at our netcat listener we've caught a shell back as root! 
 
-nc_shell.png
+![nc_shell.png](../assets/sense_assets/nc_shell.png)
 
 Nice! Because we caught the shell with root permissions, there's no need for privilege escalation. Lets grab the two flags for this box:
 
-flags.png
+![flags.png](../assets/sense_assets/flags.png)
 
 Thanks for following along!
 
 -Ryan
+
+-------------------------------------------------------------------------------------
