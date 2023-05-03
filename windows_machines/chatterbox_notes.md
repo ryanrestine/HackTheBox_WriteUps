@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Chatterbox.png
+![Chatterbox.png](../assets/chatterbox_assets/Chatterbox.png)
 
 ### Enumeration
 
@@ -89,7 +89,7 @@ After trying to enumerate the SMB ports with no luck, lets move on to http on po
 
 Doing a quick SearchSploit search, we find some potentially interesting buffer overflow attacks against the service.
 
-searchsploit.png
+![searchsploit.png](../assets/chatterbox_assets/searchsploit.png)
 
 Ok cool, looks like there is a public exploit in Python as well as a Metasploit module here. Looking at the Python exploit at https://www.exploit-db.com/exploits/36025 we see a buffer overflow attack, with the shellcode presently set to open up calc.exe as a proof of concept.
 
@@ -176,7 +176,7 @@ buf += b"\x59\x6f\x48\x55\x41\x41"
 
 Cool, so after copying this shellcode into the exploit and changing the target address:
 
-ip_change.png
+![ip_change.png](../assets/chatterbox_assets/ip_change.png)
 
 We should be all set to set up a listener and to launch the exploit:
 
@@ -188,11 +188,11 @@ We should be all set to set up a listener and to launch the exploit:
 
 Where we get a shell back as Alfred:
 
-alfred_shell.png
+![alfred_shell.png](../assets/chatterbox_assets/alfred_shell.png)
 
 From here lets grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/chatterbox_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -265,7 +265,7 @@ Successfully processed 1 files; Failed processing 0 files
 
 Nice! That worked! From here we can go ahead and read root.txt:
 
-root_flag.png
+![root_flag.png](../assets/chatterbox_assets/root_flag.png)
 
 And that's that! This was somewhat of a tease seeing as we never actually held nt/system permissions on the machine, and this level of access wouldn't qualify for an exam like OSCP, but it was an interesting way to reach the flag nonetheless. 
 
