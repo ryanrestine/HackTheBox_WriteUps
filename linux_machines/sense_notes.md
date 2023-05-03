@@ -69,7 +69,7 @@ After a long while I finally find something of value: https://10.10.10.60/system
 
 ![system_users.png](../assets/sense_assets/system_users.png)
 
-Nice! We now have a username, and knowing that the default password for pfSense is 'pfsense.'
+Nice! We now have a username, and knowing that the default password for pfSense is 'pfsense', we can login as Rohit.
 
 Logging in we are greeted with an admin dashboard:
 
