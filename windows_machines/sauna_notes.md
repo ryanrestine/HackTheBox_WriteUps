@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Suana.png
+![Suana.png](../assets/suana_assets/Sauna.png)
 
 ### Enumeration
 
@@ -108,7 +108,7 @@ Here I'll run:
 
 Which drops a user for us!
 
-hugo_smith.png
+![hugo_smith.png](../assets/suana_assets/hugo_smith.png)
 
 Armed with this name, lets create a list of common naming conventions in order to try and A) find Hugo's true username and B) use this naming convention to enumerate more users.
 
@@ -144,7 +144,7 @@ Ok great, so wwhile we were unable to exploit this, we were able to verify Hugo'
 
 Lets enumerate the website on port 80 to see if we can find more info. After browsing around a bit, I found an "About Us" page that seemed useful, as it listed several other Egotistical-Bank employees:
 
-about_us.png
+![about_us.png](../assets/suana_assets/about_us.png)
 
 So now that we know the naming convention being used here, lets simply create a new file called users.txt, with all the employees names we've found so far:
 
@@ -162,23 +162,23 @@ hsmith
 
 Now let's go back to the Impacket script used above to we if we can grab any Kerberos tickets now:
 
-kerberos.png
+![kerberos.png](../assets/suana_assets/kerberos.png)
 
 Nice!
 
 Lets add fmsith's ticket to a file called fsmith_hash.txt and try to crack it with JohnTheRipper:
 
-jtr.png
+![jtr.png](../assets/suana_assets/jtr.png)
 
 John was able to crack the hash pretty quickly, and we now should have some working credentials; fsmith:Thestrokes23 (I forgot about The Strokes, they were a great band!) - Let's see what we can do with these creds.
 
 Thinking back to our initial Nmap scans, I recall that port 5985/winrm was open, so we should hopefully just be able to use evil-winrm to get on the box. 
 
-winrm.png
+![winrm.png](../assets/suana_assets/winrm.png)
 
 Now lets grab the first flag:
 
-user_flag.png
+![user_flag.png](../assets/suana_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -218,7 +218,7 @@ After uploading WinPEaS to the machine and running it, we find some stored AutoL
 Info: Uploading ~/Tools/privesc/winPEASx64.exe to C:\Users\Fsmith\Documents\winPEASx64.exe
 ```
 
-svc_passwd.png
+![svc_passwd.png](../assets/suana_assets/svc_passwd.png)
 
 Awesome, lets go back and try Impacket's secretsdump again, but with these credentials instead this time:
 
@@ -227,20 +227,20 @@ Awesome, lets go back and try Impacket's secretsdump again, but with these crede
 └─$ impacket-secretsdump 'EGOTISTICAL-BANK.LOCAL/svc_loanmgr:Moneymakestheworldgoround!'@10.10.10.175
 ```
 
-secretsdump.png
+![secretsdump.png](../assets/suana_assets/secretsdump.png)
 
-Nice! We should now have the keys to the kingdom here. Lets see if we can pass-the-hash with the administrator NTLM hash to logon and collect the last flag:
+Nice! We should now have the keys to the kingdom here (It's a good feeling to have to zoom way out, just to included all hashes you dumped in a screenshot!). Lets see if we can pass-the-hash with the administrator NTLM hash to logon and collect the last flag:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Sauna]
 └─$ impacket-psexec administrator@10.10.10.175 -hashes aad3b435b51404eeaad3b435b51404ee:823452073d75b9d1cf70ebdf86c7f98e
 ```
 
-admin_shell.png
+![admin_shell.png](../assets/suana_assets/admin_shell.png)
 
 All that's left to do now is grab the root.txt file on the Administrator's Desktop:
 
-root_flag.png
+![root_flag.png](../assets/suana_assets/root_flag.png)
 
 ### Something Extra
 
@@ -248,12 +248,14 @@ One of my favorite things about this box, was finding Hugo Smith's name, trying 
 
 Funnily enough, I also launched Kerbrute against the box after rooting it the first time, just trying to enumerate users, and Kerbute was able to ASREP roast fsmith's ticket, completely bypassing what was (in my opinion) the most interesting part of the box!
 
-kerbrute.png
+![kerbrute.png](../assets/suana_assets/kerbrute.png)
 
 From here all you'd need to do is crack the ticket and logon as fsmith, without any of that initial recon.
 
-That said, this is still a great beginner level Active Directory box, which illustrated some foundational topics, and I had fun completing it.
+That said, this is still a great beginner level Active Directory box which illustrated some foundational topics, and I had fun completing it.
 
 Thanks for following along!
 
 -Ryan
+
+------------------------------------------------------------------------------------------------
