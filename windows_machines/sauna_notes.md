@@ -100,7 +100,7 @@ Lets go ahead and add EGOTISTICAL-BANK.LOCAL to /etc/hosts.
 
 With Active Directory boxes, if possible, my favorite way to start is by enumerating LDAP. This requires little effort and can yield some great results and low hanging fruit. 
 
-There are sever ways to enumerate LDAP, but one of the easiest ways is to kick off an Nmap scan against the service. 
+There are several ways to enumerate LDAP, but one of the easiest ways is to kick off an Nmap scan against the service. 
 
 Here I'll run:
 
@@ -110,7 +110,7 @@ Which drops a user for us!
 
 ![hugo_smith.png](../assets/sauna_assets/hugo_smith.png)
 
-Armed with this name, lets create a list of common naming conventions in order to try and A) find Hugo's true username and B) use this naming convention to enumerate more users.
+Armed with this name, lets create a list of common naming conventions in order to try to A) find Hugo's true username and B) use this naming convention to enumerate more users.
 
 I'll add the following possible usernames to a file called hugo.txt:
 
@@ -125,7 +125,7 @@ smith.hugo
 hugo.s
 ```
 
-Now lets try Impacket's GetNPUsers script to see if we can verify a true username:
+Now lets try Impacket's GetNPUsers script to see if we can verify a true username and/or dump some hashes:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Sauna]
@@ -140,7 +140,7 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 [-] Kerberos SessionError: KDC_ERR_C_PRINCIPAL_UNKNOWN(Client not found in Kerberos database)
 ```
 
-Ok great, so wwhile we were unable to exploit this, we were able to verify Hugo's username as well as the naming convention for Egotistical-Bank is first_letter_of_first-name.last_name (hsmith).
+Ok great, so while we were unable to exploit this, we were able to verify Hugo's username as well as the naming convention for Egotistical-Bank is first_letter_of_first-name.last_name (hsmith).
 
 Lets enumerate the website on port 80 to see if we can find more info. After browsing around a bit, I found an "About Us" page that seemed useful, as it listed several other Egotistical-Bank employees:
 
@@ -160,13 +160,13 @@ skerb
 hsmith
 ```
 
-Now let's go back to the Impacket script used above to we if we can grab any Kerberos tickets now:
+Now let's go back to the Impacket script used above to see if we can grab any Kerberos tickets now:
 
 ![kerberos.png](../assets/sauna_assets/kerberos.png)
 
 Nice!
 
-Lets add fmsith's ticket to a file called fsmith_hash.txt and try to crack it with JohnTheRipper:
+Lets add fsmith's ticket to a file called fsmith_hash.txt and try to crack it with JohnTheRipper:
 
 ![jtr.png](../assets/sauna_assets/jtr.png)
 
@@ -211,7 +211,7 @@ Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
 [*] Cleaning up...
 ```
 
-After uploading WinPEaS to the machine and running it, we find some stored AutoLogon credentials for svc_loanmgr:
+After uploading WinPEAS to the machine and running it, we find some stored AutoLogon credentials for svc_loanmgr:
 
 ```text
 *Evil-WinRM* PS C:\Users\Fsmith\Documents> upload ~/Tools/privesc/winPEASx64.exe
@@ -229,7 +229,7 @@ Awesome, lets go back and try Impacket's secretsdump again, but with these crede
 
 ![secretsdump.png](../assets/sauna_assets/secretsdump.png)
 
-Nice! We should now have the keys to the kingdom here (It's a good feeling to have to zoom way out, just to included all hashes you dumped in a screenshot!). Lets see if we can pass-the-hash with the administrator NTLM hash to logon and collect the last flag:
+Nice! We should now have the keys to the kingdom here (It's a good feeling to have to zoom way out, just to include all hashes you dumped in a screenshot!). Lets see if we can pass-the-hash with the administrator NTLM hash to logon and collect the last flag:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Sauna]
@@ -244,7 +244,7 @@ All that's left to do now is grab the root.txt file on the Administrator's Deskt
 
 ### Something Extra
 
-One of my favorite things about this box, was finding Hugo Smith's name, trying out and then confirming the appropriate naming convention for usernames, and simply applying that logic to other found names to generate a working users list. 
+One of my favorite things about this box was finding Hugo Smith's name, trying out and then confirming the appropriate naming convention for usernames, and simply applying that logic to other found names to generate a working users list. 
 
 Funnily enough, I also launched Kerbrute against the box after rooting it the first time, just trying to enumerate users, and Kerbute was able to ASREP roast fsmith's ticket, completely bypassing what was (in my opinion) the most interesting part of the box!
 
