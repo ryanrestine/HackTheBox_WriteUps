@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Shocker.png
+![Shocker.png](../assets/shocker_assets/Shocker.png)
 
 ### Enumeration
 
@@ -52,7 +52,7 @@ Nmap done: 1 IP address (1 host up) scanned in 8.97 seconds
 
 Ok, looks like the classic http/ssh combo found on many Linux CTFs. Navigating to the website, we see just a simple static page:
 
-site.png
+![site.png](../assets/shocker_assets/site.png)
 
 Lets kick off some directory enumeration to see if we can find any interesting sub-directories:
 
@@ -61,7 +61,7 @@ gobuster dir -u http://10.10.10.56 -w /usr/share/wordlists/dirbuster/directory-l
 ```
 Gobuster doesn't find anything useful for us. But if I include the `-f` flag to append the last `/` character, we find there is in fact a /cgi-bin/ directory.
 
-gobuster_flag.png
+![gobuster_flag.png](../assets/shocker_assets/gobuster_flag.png)
 
 Interestingly, navigating to http://10.10.10.56/cgi-bin we get a 404 Not Found error (hence our initial Gobuster scan not finding anything, but visiting http://10.10.10.56/cgi-bin/ gives us a 403 Forbidden message. 
 
@@ -100,11 +100,11 @@ There are a few ways to exploit this vulnerability, but today I'm going to just 
 ```
 And I will catch a shell back as user Shelly (ha!):
 
-shelly_shell.png
+![shelly_shell.png](../assets/shocker_assets/shelly_shell.png)
 
 and grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/shocker_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -112,20 +112,20 @@ First thing I like to do once I have initial access on a Linux machine is to run
 
 Today is no different; running `sudo -l` I see I can run `/usr/bin/perl` commands with root permissions:
 
-sudo.png
+![sudo.png](../assets/shocker_assets/sudo.png)
 
 For situations like this https://gtfobins.github.io/ is where you want to be. This site is an amazing resource for pentesters/hackers and is extremely user friendly.
 
 In this specific case, all I need to do is search for 'perl' in the search bar, and I am presented with results I can literally copy/paste onto the target to elevate my shell to root:
 
-gtfo_bins.png
+![gtfo_bins.png](../assets/shocker_assets/gtfo_bins.png)
 
 ```text
 shelly@Shocker:/home/shelly$     sudo perl -e 'exec "/bin/sh";'
 ```
 This command uses Perl to launch bin/bash and from there all that is left to do is grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/shocker_assets/root_flag.png)
 
 And that's that! Thanks for following along!
 
