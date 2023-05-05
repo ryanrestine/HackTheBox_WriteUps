@@ -63,9 +63,9 @@ Gobuster doesn't find anything useful for us. But if I include the `-f` flag to 
 
 ![gobuster_flag.png](../assets/shocker_assets/gobuster_flag.png)
 
-Interestingly, navigating to http://10.10.10.56/cgi-bin we get a 404 Not Found error (hence our initial Gobuster scan not finding anything, but visiting http://10.10.10.56/cgi-bin/ gives us a 403 Forbidden message. 
+Interestingly, navigating to http://10.10.10.56/cgi-bin we get a 404 Not Found error (hence our initial Gobuster scan not finding anything), but visiting http://10.10.10.56/cgi-bin/ gives us a 403 Forbidden message. 
 
-Lets continue digging into the /cgi-bin directory:
+Lets continue digging into the /cgi-bin/ directory:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Shocker]
