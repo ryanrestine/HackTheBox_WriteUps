@@ -172,7 +172,7 @@ Lets grab the user.txt flag:
 
 ### Privilege Escalation
 
-Running `whomai /all` show we are are in a high manadatory label shell, but more importantly, it looks like we are also in the Server Operators Group
+Running `whoami /all` shows we are are in a high level shell, but more importantly, it looks like we are also in the Server Operators Group
 
 ![server_operators.png](../assets/return_assets/server_operators.png)
 
