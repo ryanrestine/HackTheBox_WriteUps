@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Return.png
+![Return.png](../assets/return_assets/Return.png)
 
 ### Enumeration
 
@@ -119,13 +119,13 @@ I always like to start off my enumeration by looking at LDAP:
 
 This didn't return much of use for us, but did drop a DNS Hostname:
 
-ldap.png
+![ldap.png](../assets/return_assets/ldap.png)
 
 Lets go ahead and add return.local and printer.return.local to `/etc/hosts`
 
 Checking out return.local, we find a Printer Admin Panel. Poking around a bit more we see an interesting Settings page:
 
-settings_page.png
+![settings_page.png](../assets/return_assets/settings_page.png)
 
 Going off a hunch I start a Responder listener on my tun0 interface using:
 
@@ -145,15 +145,11 @@ And change the 'Server Address' field to my tun0 IP address and click update.
 
 Nice looks like we were able to capture the passsword for svc-printer!
 
-svc-printer_pw.png
+![svc-printer_pw.png](../assets/return_assets/svc-printer_pw.png)
 
 Awesome! We can use these creds to directly logon to the box:
 
-```text
-┌──(ryan㉿kali)-[~/HTB/Return]
-└─$ evil-winrm -u svc-printer -p 1edFg43012sudo responder -I tun0 -wv -i 10.10.11.108
-
-                                                                                                                             
+```text                                                                                                                             
 ┌──(ryan㉿kali)-[~/HTB/Return]
 └─$ evil-winrm -u svc-printer -p '1edFg43012!!' -i 10.10.11.108
 
@@ -172,19 +168,19 @@ printer
 ```
 Lets grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/return_assets/user_flag.png)
 
 ### Privilege Escalation
 
 Running `whomai /all` show we are are in a high manadatory label shell, but more importantly, it looks like we are also in the Server Operators Group
 
-server_operators.png
+![server_operators.png](../assets/return_assets/server_operators.png)
 
 Because svc-printer is in the server operators group, that means we can start and stop services on the machine.
 
 Lets see what services are running here:
 
-services.png
+![services.png](../assets/return_assets/services.png)
 
 Cool, lots to choose from! Lets kick this off by uploading nc.exe to the target. Once nc.exe is on the target our goal will be to modify the path for one of the services, stop the service, set up a netcat listener, and finally restart the service, which should give us back a reverse shell with elevated permissions.
 
@@ -203,11 +199,11 @@ sc.exe start VMTools
 
 And sure enough we catch a shell back!
 
-shell.png
+![shell.png](../assets/return_assets/shell.png)
 
 All that's left to do now is grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/return_assets/root_flag.png)
 
 Thanks for following along!
 
