@@ -54,6 +54,8 @@ Because we will most likely get a foothold using a web based exploit, it never h
 
 Looking over the results we can see Nikto identified PHP/8.1.0-dev. From past experience I recall there may have been a vulnerability or a backdoor with this version.
 
+![nikto.png](../assets/knife_assets/nikto.png) 
+
 Heading over to Google confirms there is indeed a backdoor in this version, and it is easily exploitable. 
 
 While is is definitely possible to exploit this backdoor manually in BurpSuite, today I'm going to utilize this exploit found on ExploitDB: https://www.exploit-db.com/exploits/49933. 
