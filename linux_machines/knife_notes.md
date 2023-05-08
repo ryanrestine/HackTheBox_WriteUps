@@ -73,7 +73,11 @@ Let's fire off the exploit and try and get onto the box.
 
 ### Exploitation
 
-After copying the script to my exploits folder, I execute the exploit and get a pseudo-shell as user James. This is all well and good, but I'd prefer a proper reverse shell, that way I can keep some persistence on the box in case the pseudo-shell crashes.
+After copying the script to my exploits folder, I execute the exploit and get a pseudo-shell as user James. 
+
+![exploit.png](../assets/knife_assets/exploit.png)
+
+This is all well and good, but I'd prefer a proper reverse shell, that way I can keep some persistence on the box in case the pseudo-shell crashes.
 
 To do this I simply set up a netcat listener and issue this one-liner:
 
@@ -134,7 +138,7 @@ root
 
 Nice! All that's left to do now is grab the root flag!
 
-![root_flag.png](../assets/knife_assets/rot_flag.png)
+![root_flag.png](../assets/knife_assets/root_flag.png)
 
 Thanks for following along!
 
