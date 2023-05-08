@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Knife.png
+![Knife.png](../assets/knife_assets/Knife.png)
 
 ### Enumeration
 
@@ -65,7 +65,7 @@ The following exploit uses the backdoor to provide a pseudo shell on the host."
 
 Taking a closer look at the exploit we can see that we will be appending a cmd to the user-agentt field:
 
-user-agentt.png
+![user-agentt.png](../assets/knife_assets/user-agentt.png)
 
 Let's fire off the exploit and try and get onto the box.
 
@@ -87,7 +87,7 @@ python3 -c 'import pty;pty.spawn("/bin/bash")'
 
 And grab the first flag:
 
-user_flag.png
+![user_flag.png](../assets/knife_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -110,7 +110,7 @@ According to the man-pages:
 
 Lets take a look at https://gtfobins.github.io/ to see if we can find a way to exploit this:
 
-gtfobins.png
+![gtfobins.png](../assets/knife_assets/gtfobins.png)
 
 Cool, so looks like we simply have to run `sudo knife exec -E 'exec "/bin/sh"'` to escalate to root:
 
@@ -132,7 +132,7 @@ root
 
 Nice! All that's left to do now is grab the root flag!
 
-root_flag.png
+![root_flag.png](../assets/knife_assets/rot_flag.png)
 
 Thanks for following along!
 
