@@ -97,7 +97,7 @@ And grab the first flag:
 
 ### Privilege Escalation
 
-Running `sud -l` I can see that user James can run `knife` with root permissions:
+Running `sudo -l` I can see that user James can run `knife` with root permissions:
 
 ```text
 james@knife:~$ sudo -l
