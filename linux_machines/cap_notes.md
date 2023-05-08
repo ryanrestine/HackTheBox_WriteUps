@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Cap.png
+![Cap.png](../assets/cap_assets/Cap.png)
 
 ### Enumeration
 
@@ -56,7 +56,7 @@ PORT   STATE SERVICE VERSION
 
 Navigating to the site we see a security dashboard and we appear to be logged in a user Nathan.
 
-dashboard.png
+![dashboard.png](../assets/cap_assets/dashboard.png)
 
 Running a directory scan I find a few subdirectories:
 
@@ -72,13 +72,13 @@ Running a directory scan I find a few subdirectories:
 
 Interestingly, it looks like `/capture` is forwarding to `/data/2`. Lets check that out.
 
-capture.png
+![capture.png](../assets/cap_assets/capture.png)
 
 So looks like there is some packet capturing going on here, and I have the ability to download this .pcap file and inspect it.
 
 After not finding anything interesting in `/2` I tested for an IDOR vulnerability navigated to `/0` and was able to download that file and open it in WireShark. This was a more robust file and after poking around a bit I found an FTP login from Nathan:
 
-wireshark.png
+![wireshark.png](../assets/cap_assets/wireshark.png)
 
 
 ### Exploitation
@@ -126,7 +126,7 @@ ftp> bye
 221 Goodbye.
 ```
 
-user_flag.png
+![user_flag.png](../assets/cap_assets/user_flag.png)
 
 
 Lets try using Nathan's credentials to login to SSH:
@@ -166,7 +166,7 @@ nathan@cap:/tmp$ ./linpeas.sh
 
 Linpeas quickly finds a potential path:
 
-linpeas.png
+![linpeas.png](../assets/cap_assets/linpeas.png)
 
 Cool, this should make for an easy privilege escalation. We can exploit the setuid capability by using:
 
@@ -179,7 +179,7 @@ And just like that we have root!
 
 Lets grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/cap_assets/root_flag.png)
 
 Thanks for following along!
 
