@@ -249,7 +249,7 @@ admin@mango:/tmp$ ./linpeas.sh
 
 LinPeas quickly finds that `/usr/lib/jvm/java-11-openjdk-amd64/bin/jjs` has the SUID bit set.
 
-![linpeas.sh](../assets/mango_assets/linpeas.sh)
+![linpeas.sh](../assets/mango_assets/linpeas.png)
 
 Lets see if we can use https://gtfobins.github.io/ here. Looks like there is an interesting series of commands we can run to use jjs to read files. Lets try to use this to read the root.txt file:
 
