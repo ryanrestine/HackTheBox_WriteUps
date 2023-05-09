@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-![Cap.png](../assets/mango_assets/Cap.png)
+![Mango.png](../assets/mango_assets/Mango.png)
 
 ### Enumeration
 
