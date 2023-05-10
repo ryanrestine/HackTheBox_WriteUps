@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Traverxec.png
+![Traverxec.png](../assets/traverxec_assets/Traverxec.png)
 
 ### Enumeration
 
@@ -57,7 +57,7 @@ Looks like port 80 is running nostromo 1.9.6. Giving that a quick search I find 
 
 This looks pretty straight forward, and I can issue a simple Bash oneliner to get a shell back as www-data:
 
-exploit.png
+![exploit.png](../assets/traverxec_assets/exploit.png)
 
 Looking around the box it appears there is only one user in the `/home` directory, but we can't access the files.
 
@@ -106,7 +106,7 @@ www-data@traverxec:/tmp$ ./linpeas.sh
 
 Cool, LinPeas quickly finds an htpasswd for David. 
 
-htpasswd.png
+![htpasswd.png](../assets/traverxec_assets/htpasswd.png)
 
 david:$1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/
 
@@ -120,7 +120,7 @@ $1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/
 
 We can crack the hash using JohnTheRipper:
 
-john.png
+![john.png](../assets/traverxec_assets/john.png)
 
 This took about 30 minutes to crack, but unfortunately I can't use the credential to SSH as david or to `su david` in our shell. Looks like we'll need to do more enumeration.
 
@@ -233,21 +233,21 @@ Enter passphrase for key 'id_rsa':
 Enter passphrase for key 'id_rsa':
 ```
 
-ssh2john.png
+![ssh2john.png](../assets/traverxec_assets/ssh2john.png)
 
 Great, john was able to crack the passphrase quickly, and we should be in business to SSH in and grab that user.txt now:
 
-user_flag.png
+![user_flag.png](../assets/traverxec_assets/user_flag.png)
 
 ### Privilege Escalation
 
 In David's home directory, there was a directory called `bin`, and inside there is an interesting bash script called server-stats.sh. Taking a look at the script we can see it is calling journalctl with sudo. 
 
-server_status.png
+![server_status.png](../assets/traverxec_assets/server-status.png)
 
 Lets head over to https://gtfobins.github.io/ to see if we can exploit this.
 
-gtfobins.png
+![gtfobins.png](../assets/traverxec_assets/gtfobins.png)
 
 Cool, looks like we're onto something here. Gtfobins states "This invokes the default pager, which is likely to be less, other functions may apply." After Googling around a bit I learned we'll need to declare the number of lines displayed by using `-n 5` which should allow us to then just call `!/bin/bash` to give us root.
 
@@ -268,7 +268,7 @@ root
 
 Great, that worked! All that's left now is to grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/traverxec_assets/root_flag.png)
 
 Thanks for following along!
 
