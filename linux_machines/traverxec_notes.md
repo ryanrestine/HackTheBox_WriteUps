@@ -243,7 +243,7 @@ Great, john was able to crack the passphrase quickly, and we should be in busine
 
 In David's home directory, there was a directory called `bin`, and inside there is an interesting bash script called server-stats.sh. Taking a look at the script we can see it is calling journalctl with sudo. 
 
-![server_status.png](../assets/traverxec_assets/server-status.png)
+![server_status.png](../assets/traverxec_assets/server_status.png)
 
 Lets head over to https://gtfobins.github.io/ to see if we can exploit this.
 
