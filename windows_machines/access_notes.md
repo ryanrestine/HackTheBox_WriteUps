@@ -7,7 +7,7 @@
 
 ----------------------------------------------------------------------
 
-Access.png
+![Access.png](../assets/access_assets/Access.png)
 
 ### Enumeration
 
@@ -56,7 +56,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 Taking a look at the site on port 80, we find just a static page with a picture of a server room.
 
-site.png
+![site.png](../assets/access_assets/site.png)
 
 Nmap caught that we could access FTP anonymously, so lets try that before digging further into http:
 
@@ -125,7 +125,7 @@ Cool, I was able to grab two files from FTP. Lets checkout backup.mdb first. The
 
 `strings backup.mdb`
 
-strings.png
+![strings.png](../assets/access_assets/strings.png)
 
 So looks like maybe a few usernames/ roles, and maybe passwords? lets add these to a list called strings.txt:
 
@@ -142,7 +142,7 @@ admin
 
 Lets go back and take a look at the Access Control.zip file. Trying to open it up we see it is password protected. 
 
-ac_passwd.png
+![ac_passwd.png](../assets/access_assets/ac_passwd.png)
 
 Trying access4u@security found in the other file works and we can access the file.
 
@@ -185,13 +185,13 @@ ACCESS
 
 Cool, we're on the box! Lets grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/access_assets/user_flag.png)
 
 ### Privilege Escalation
 
-After poking around for awhile and not seeing much, I thought I'd see if there were any passwords cached in memory:
+After poking around for awhile and not seeing much, I thought I'd see if there were any passwords cached in memory using `cmdkey /list`:
 
-cmdkey.png
+![cmdkey.png](../assets/access_assets/cmdkey.png
 
 Nice! We should be able to escalate privileges from here using RunAs.
 
@@ -214,11 +214,11 @@ runas /savecred /user:ACCESS\Administrator shell.exe
 
 If everything has gone to plan we should catch a shell back as access\administrator.
 
-shell.png
+![shell.png](../assets/access_assets/shell.png)
 
 All that's left to do now is grab that root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/access_assets/root_flag.png)
 
 Thanks for following along!
 
