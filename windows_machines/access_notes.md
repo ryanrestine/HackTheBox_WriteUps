@@ -191,7 +191,7 @@ Cool, we're on the box! Lets grab the user.txt flag:
 
 After poking around for awhile and not seeing much, I thought I'd see if there were any passwords cached in memory using `cmdkey /list`:
 
-![cmdkey.png](../assets/access_assets/cmdkey.png
+![cmdkey.png](../assets/access_assets/cmdkey.png)
 
 Nice! We should be able to escalate privileges from here using RunAs.
 
