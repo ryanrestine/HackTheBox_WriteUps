@@ -27,7 +27,7 @@ PORT     STATE SERVICE
 Nmap done: 1 IP address (1 host up) scanned in 13.37 seconds
 ```
 
-Looks like just a few open ports here. Let dig a bit deeper by using the `-sC` and `-sV` flags to use basic scripts and to enumerate versions:
+Looks like just a few open ports here. Lets dig a bit deeper by using the `-sC` and `-sV` flags to use basic scripts and to enumerate versions:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/SecNotes]
@@ -86,6 +86,8 @@ After trying several weak password combos and basic login bypasses via SQL injec
 
 It worked! After logging in as the created 'user' I was able to grab what appear to be a username and password: `tyler:92g!mA8BGjOirkL%OG*&`
 
+![home.png](../assets/secnotes_assets/home.png)
+
 Lets try to use these credentials with SMB. 
 
 ![smbmap.png](../assets/secnotes_assets/smbmap.png)
@@ -143,7 +145,7 @@ Checking out the contents of `C:\` we see an interesting file, Ubuntu.zip:
 
 This makes me wonder if the machine is running Windows Subsystem for Linux. 
 
-After Googling around a bit I find I can access the Linux system at `AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\LocalState/rootfs/root`
+After Googling around a bit I find I can access the Linux system at `AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\LocalState\rootfs\root`
 
 And sure enough I find I can access the root directory:
 
