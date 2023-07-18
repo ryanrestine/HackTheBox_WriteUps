@@ -330,6 +330,8 @@ I can then view the ouput using:
 
 Looking through the shares we see a few interesting things in the "RedirectedFolders$" share. Firstly, we see that the user.txt flag is on sierra.frye's desktop (we'll keep that in mind once we actually get on the box, and secondly, there's an interesting Excel file on edgar.jacob's desktop called Phishing_Attempt.xlsx, which is of obvious interest to a pentester/ hacker. Lets check that file out by logging into the share and using the `get` command to download it locally. 
 
+![interesting.png](../assets/search_assets/interesting.png)
+
 Interestingly, after opening the file in LibreOffice, we see names (first and last) as well as usernames, and it appears that Column C is actually hidden.
 
 ![hidden.png](../assets/search_assets/hidden.png)
