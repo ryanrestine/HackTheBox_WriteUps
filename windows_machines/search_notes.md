@@ -129,6 +129,8 @@ Navigating to the site on port 80 we find a website, mostly filled in with lorem
 
 Taking a look at the About Us page we can find a list of possible usernames. The trouble is that we still don't know what naming convention the company is using for usernamers. It could be just first names, first.last name, first_inital.last name, etc.
 
+![team.png](../assets/search_assets/team.png)
+
 Lets make a list with these names using some of the most populare naming conventions.
 
 ```text
