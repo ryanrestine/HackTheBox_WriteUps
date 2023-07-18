@@ -172,6 +172,8 @@ c.stewart
 
 Taking this list I tried Impacket-GetUserSPN, to see if I could drop some hashes. While there was no luck dropping any hashes, we were able to pinpoint the naming convention for user names, so we're on the right track!
 
+![convention.png](../assets/search_assets/convention.png)
+
 Making a more accurate usernames list:
 
 ```text
