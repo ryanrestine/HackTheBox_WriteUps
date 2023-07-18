@@ -127,11 +127,11 @@ Navigating to the site on port 80 we find a website, mostly filled in with lorem
 
 ![home.png](../assets/search_assets/home.png)
 
-Taking a look at the About Us page we can find a list of possible usernames. The trouble is that we still don't know what naming convention the company is using for usernamers. It could be just first names, first.last name, first_inital.last name, etc.
+Taking a look at the About Us page we can find a list of possible usernames. The trouble is that we still don't know what naming convention the company is using for usernames. It could be just first names, first.last name, first_initial.last name, etc.
 
 ![team.png](../assets/search_assets/team.png)
 
-Lets make a list with these names using some of the most populare naming conventions.
+Lets make a list with these names using some of the most popular naming conventions.
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Search]
@@ -170,7 +170,7 @@ chris.stewart
 c.stewart
 ```
 
-Taking this list I tried Impacket-GetUserSPN, to see if I could drop some hashes. While there was no luck dropping any hashes, we were able to pinpoint the naming convention for user names, so we're on the right track!
+Taking this list I tried Impacket-GetNPUsers, to see if I could drop some hashes. While there was no luck dropping any hashes, we were able to pinpoint the naming convention for user names, so we're on the right track!
 
 ![convention.png](../assets/search_assets/convention.png)
 
@@ -319,9 +319,9 @@ SPIDER_P... search.htb      445    RESEARCH         [*]       SIZE: 51200
 SPIDER_P... search.htb      445    RESEARCH         [*]     OUTPUT: /tmp/cme_spider_plus
 ```
 
-This will show us the contents or each share/ folder without us having to manually go into each one for enumeration. We can then take a look at the contents and go grab interesting looking files manually. (Note: there's a way to just copy all files en masse to your machine locally using the `-o READ_ONLY=false` flag, but I prefer not to copy over so many unneccesary files.)
+This will show us the contents or each share/ folder without us having to manually go into each one for enumeration. We can then take a look at the contents and go grab interesting looking files manually. (Note: there's a way to just copy all files en masse to your machine locally using the `-o READ_ONLY=false` flag, but I prefer not to copy over so many unnecessary files.)
 
-I can then view the ouput using:
+I can then view the output using:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Search]
@@ -395,11 +395,11 @@ I can now add the certificate to Firefox and enter the passphrase to use it:
 
 ![cert1.png](../assets/search_assets/cert1.png)
 
-This allows me to navigate to https://search.htb/staff where I can canfirm the certificate is working:
+This allows me to navigate to https://search.htb/staff where I can confirm the certificate is working:
 
 ![cert2.png](../assets/search_assets/cert2.png)
 
-We can then use sierra.frye's crednetials to login to a web shell session.
+We can then use sierra.frye's credentials to login to a web shell session.
 
 ![s_login.png](../assets/search_assets/s_login.png)
 
