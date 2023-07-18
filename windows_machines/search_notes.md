@@ -224,6 +224,8 @@ Cool, John was able to easily crack the hash.
 
 Using CrackmapExec it looks like we have access to a few SMB shares now. Lets see what we can find.
 
+![sme_shares.png](../assets/search_assets/sme_shares.png)
+
 Looking in the RedirectedFolders$ share we find what appear to be even more usernames:
 
 ```text
