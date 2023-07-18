@@ -326,6 +326,8 @@ Looking through the shares we see a few interesting things in the "RedirectedFol
 
 Interestingly, after opening the file in LibreOffice, we see names (first and last) as well as usernames, and it appears that Column C is actually hidden.
 
+![hidden.png](../assets/search_assets/hidden.png)
+
 If we try to manually expand the column we get an error message:
 
 ![protected.png](../assets/search_assets/protected.png)
@@ -336,7 +338,7 @@ After extracting the file and removing the SheetData protection tag, I was able 
 
 Nice! We now have access to the hidden column:
 
-![hidden.png](../assets/search_assets/hidden.png)
+![hidden_column.png](../assets/search_assets/hidden_column.png)
 
 Lets add these passwords to a file called passwords.txt
 
