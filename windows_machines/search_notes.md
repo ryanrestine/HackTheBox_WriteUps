@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Search.png
+![Search.png](../assets/search_assets/Search.png)
 
 ### Enumeration
 
@@ -125,7 +125,7 @@ Before getting started digging into the box, I'll add search.htb and RESEARCH to
 
 Navigating to the site on port 80 we find a website, mostly filled in with lorem ipsum.
 
-home.png
+![home.png](../assets/search_assets/home.png)
 
 Taking a look at the About Us page we can find a list of possible usernames. The trouble is that we still don't know what naming convention the company is using for usernamers. It could be just first names, first.last name, first_inital.last name, etc.
 
@@ -188,7 +188,7 @@ Ok great. We've got a list of potential usernames, but still aren't sure what to
 
 Looking around for a long while and not seeing anything of interest, until this particular picture caught my eye:
 
-pw.png
+![pw.png](../assets/search_assets/pw.png)
 
 Here we have a potential new user name (hope.sharp), as well as what looks like a password. I'll add the new username to the list and see if this password works anywhere. 
 
@@ -197,7 +197,7 @@ Here we have a potential new user name (hope.sharp), as well as what looks like 
 └─$ echo hope.sharp >> users.txt 
 ```
 
-hope_pw.png
+![hope_pw.png](../assets/search_assets/hope_pw.png)
 
 Nice! That indeed was the password for hope.sharp!
 
@@ -206,7 +206,7 @@ Armed with these credentials we can return to Impacket-GetUserSPN and see if we 
 
 Nice!
 
-web_svc_hash.png
+![web_svc_hash.png](../assets/search_assets/web_svc_hash.png)
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Search]
@@ -216,11 +216,11 @@ $krb5tgs$23$*web_svc$SEARCH.HTB$search.htb/web_svc*$dad7e77b5584beef4d883205260e
 
 Lets try and crack this using JohntheRipper
 
-cracked.png
+![cracked.png](../assets/search_assets/cracked.png)
 
 Cool, John was able to easily crack the hash. 
 
-web_svc:@3ONEmillionbaby
+`web_svc:@3ONEmillionbaby`
 
 Using CrackmapExec it looks like we have access to a few SMB shares now. Lets see what we can find.
 
@@ -295,7 +295,7 @@ trace.ryan
 ```
 After snooping around SMB for a bit and realizing the web_svc doesn't have access to much, I decided to try the cracked password again, this time against the larger username list.
 
-edgar_pw.png
+![edgar_pw.png](../assets/search_assets/edgar_pw.png)
 
 Ok cool, looks like edgar.jacobs is also using that password. 
 
@@ -328,15 +328,15 @@ Interestingly, after opening the file in LibreOffice, we see names (first and la
 
 If we try to manually expand the column we get an error message:
 
-protected.png
+![protected.png](../assets/search_assets/protected.png)
 
 After extracting the file and removing the SheetData protection tag, I was able to rezip the file and open it back in libreoffice.
 
-remove.png
+![remove.png](../assets/search_assets/remove.png)
 
 Nice! We now have access to the hidden column:
 
-hiiden_column.png
+![hidden_column.png](../assets/search_assets/hidden_clumn.png)
 
 Lets add these passwords to a file called passwords.txt
 
@@ -349,7 +349,7 @@ We can now use CrackmapExec again to try and brute force passwords:
 
 Success! we found sierra.frye's password!
 
-frye_pass.png
+![frye_pass.png](../assets/search_assets/frye_pass.png)
 
 `sierra.frye:$$49=wide=STRAIGHT=jordan=28$$18`
 
@@ -375,24 +375,23 @@ getting file \sierra.frye\Downloads\Backups\staff.pfx of size 4326 as staff.pfx 
 
 I can use pfx2john to get these files ready for brute forcing:
 
-pfx2john.png
-
+![pfx2john.png](../assets/search_assets/pfx2john.png)
 
 Nice, John was able to succesffuly crack both files passwords:
 
-pfx_crack.png
+![pfx_crack.png](../assets/search_assets/pfx_crack.png)
 
 I can now add the certificate to Firefox and enter the passphrase to use it:
 
-cert1.png
+![cert1.png](../assets/search_assets/cert1.png)
 
 This allows me to navigate to https://search.htb/staff where I can canfirm the certificate is working:
 
-cert2.png
+![cert2.png](../assets/search_assets/cert2.png)
 
 We can then use sierra.frye's crednetials to login to a web shell session.
 
-s_login.png
+![s_login.png](../assets/search_assets/s_login.png)
 
 Not finding much in terms of escalating my privileges, I decided to try bloodhound-python to see if I could find a path to administrator. Looking through the findings, it seems sierra.frye is a member of ITSEC@search.htb who has ReadGMSAPassword privileges over BIR-ADFS-GMSA@search.htb who in turn has GenericAll privileges over Tristan.Davies, who is in the domain admins group. 
 
@@ -406,10 +405,9 @@ ConvertFrom-ADManagedPasswordBlob $mp
 (ConvertFrom-ADManagedPasswordBlob $mp).CurrentPassword
 $password = (ConvertFrom-ADManagedPasswordBlob $mp).CurrentPassword
 $SecPass = (ConvertFrom-ADManagedPasswordBlob $mp).SecureCurrentPassword
-
 ```
 
-gmsa.png
+![gmsa.png](../assets/search_assets/gmsa.png)
 
 With that done, I can now reset Tristan's password:
 
@@ -418,16 +416,20 @@ $cred = New-Object System.Management.Automation.PSCredential BIR-ADFS-GMSA, $Sec
 Invoke-Command -ComputerName 127.0.0.1 -ScriptBlock {Set-ADAccountPassword -Identity tristan.davies -reset -NewPassword (ConvertTo-SecureString -AsPlainText 'Password123!' -force)} -Credential $cred
 ```
 
-pass_change.png
+![pass_change.png](../assets/search_assets/pass_change.png)
 
 Cool, now that we've done that all we need to do is login and grab the final flag. For this I'll use impacket-wmiexec:
 
-root_shell.png
+![root_shell.png](../assets/search_assets/root_shell.png)
+
+From here i can grab the final flag from the Administrator's desktop:
+
+![root_flag.png)](../assets/search_assets/root_flag.png)
 
 And that's that! Thanks for following along!
 
 -Ryan
 
-----------------------------------------------------
+----------------------------------------------------------------------------------------------
 
 
