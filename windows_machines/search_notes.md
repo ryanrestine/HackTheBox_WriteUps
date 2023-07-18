@@ -387,7 +387,7 @@ I can use pfx2john to get these files ready for brute forcing:
 
 ![pfx2john.png](../assets/search_assets/pfx2john.png)
 
-Nice, John was able to succesffuly crack both files passwords:
+Nice, John was able to successfully crack both files passwords:
 
 ![pfx_crack.png](../assets/search_assets/pfx_crack.png)
 
@@ -436,7 +436,7 @@ Cool, now that we've done that all we need to do is login and grab the final fla
 
 ![root_shell.png](../assets/search_assets/root_shell.png)
 
-From here i can grab the final flag from the Administrator's desktop:
+From here I can grab the final flag from the Administrator's desktop:
 
 ![root_flag.png)](../assets/search_assets/root_flag.png)
 
