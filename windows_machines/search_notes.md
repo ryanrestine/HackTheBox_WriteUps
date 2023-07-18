@@ -409,7 +409,7 @@ From here I can grab the user.txt flag:
 
 Not finding much in terms of escalating my privileges, I decided to try bloodhound-python to see if I could find a path to administrator. Looking through the findings, it seems sierra.frye is a member of ITSEC@search.htb who has ReadGMSAPassword privileges over BIR-ADFS-GMSA@search.htb who in turn has GenericAll privileges over Tristan.Davies, who is in the domain admins group. 
 
-First I'll need to get the MNSA password from the machine:
+First I'll need to get the GMSA password from the machine:
 
 ```text
 $gmsa = Get-ADServiceAccount -Identity 'BIR-ADFS-GMSA' -Properties 'msDS-ManagedPassword'
