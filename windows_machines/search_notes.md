@@ -295,7 +295,7 @@ trace.ryan
 ```
 After snooping around SMB for a bit and realizing the web_svc doesn't have access to much, I decided to try the cracked password again, this time against the larger username list.
 
-![edgar_pw.png](../assets/search_assets/edgar_pw.png)
+![edgar_pw.png](../assets/search_assets/edgar_pw.png.png)
 
 Ok cool, looks like edgar.jacobs is also using that password. 
 
@@ -336,7 +336,7 @@ After extracting the file and removing the SheetData protection tag, I was able 
 
 Nice! We now have access to the hidden column:
 
-![hidden_column.png](../assets/search_assets/hidden_clumn.png)
+![hidden.png](../assets/search_assets/hidden.png)
 
 Lets add these passwords to a file called passwords.txt
 
