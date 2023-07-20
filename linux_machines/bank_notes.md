@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Bank.png
+![Bank.png](../assets/bank_assets/Bank.png)
 
 ### Enumeration
 
@@ -60,19 +60,19 @@ Based on normal HacktheBox naming conventions, lets add bank.htb to the `/etc/ho
 
 Ok cool, looks like we got a few entries back from the zone transfer. Lets also add these to `/etc/hosts` before moving on to HTTP.
 
-dns.png 
+![dns.png](../assets/bank_assets/dns.png) 
 
 Navigating to just the IP, it looks like we've got just a default landing page for Apache.
 
-landing.png
+![landing.png](../assets/bank_assets/landing.png)
 
 but if we go to bank.htb we are forwarded to bank.htb/login.php where met with a simple login:
 
-login.php
+![login.png](../assets/bank_assets/login.png)
 
 Cool, now  that we know PHP is being used we can do some directory busting, and make sure to include fuxxing for .php pages as well.
 
-directory.png
+![directory.png](../assets/bank_assets/directory.png)
 
 Note: I had to include the `--filter-status 404` flag because I was getting so many 404 errors, and I just like to use the `-q`  (quiet) flag to bypass any graphics and keep my screenshots more tidy.
 
@@ -80,43 +80,43 @@ Cool, we found some interesting directories. `/balance-transfer` seems especiall
 
 In the `/balance-transfer` directory we find a large number of .acc files:
 
-bt.png
+![bt.png](../assets/bank_assets/bt.png)
 
 We can download these files and they appear to have hashed user information, including credentials:
 
-dl.png
+![dl.png](../assets/bank_assets/dl.png)
 
 Looking at the size of these files they all appear to be somewhere between 580-585, but if we sort them by their size rather than by name, we find one that is considerably smaller:
 
-size.png
+![size.png](../assets/bank_assets/size.png)
 
 Downloading this file we can see why it is so much smaller than the others. Looks like we've got an Encryption Failed error message, and this user's data was stored in clear-text.
 
-chris.png
+![chris.png](../assets/bank_assets/chris.png)
 
 Great, we can use these credentials to login to the site:
 
-chris_login.png
+![chris_login.png](../assets/bank_assets/chris_login.png)
 
 ### Exploitation
 
 Navigating around the site, we find a File Upload feature in the support page.
 
-support.png
+![support.png](../assets/bank_assets/support.png)
 
 After having a hard time getting anything to load succesfully, I take a look at the page source and find a super interesting comment left behind:
 
-htb.png
+![htb.png](../assets/bank_assets/htb.png)
 
 Now that's interesting. Because we know the site is using PHP, lets grab a copy of PentestMonkey's php-reverse-shell.php and rename it as shell.htb.
 
 First, we'll need to update the script with our correct IP adress and the port we'll listen on:
 
-php-rev.png
+![php-rev.png](../assets/bank_assets/php-rev.png)
 
 We can then upload the file:
 
-success.png
+![success.png](../assets/bank_assets/success.png)
 
 Recalling the `/uploads` directory discovered earlier, we can trigger the shell by navigating to bank.htb/uploads/shell.htb
 
@@ -138,20 +138,19 @@ $ hostname
 bank
 ```
 
-After stabilizing the shell with `python3 -c 'import pty;pty.spawn("/bin/bash")'
-` we can grab the user.txt flag:
+After stabilizing the shell with `python3 -c 'import pty;pty.spawn("/bin/bash")'` we can grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/bank_assets/user_flag.png)
 
 From here I'll transfer over linpeas for further enumeration of a privilege escalation vector:
 
-lp_tranfer.png
+![lp_tranfer.png](../assets/bank_assets/lp_transfer.png)
 
 ### Privilege Escalation #1
 
 Linpeas finds `/var/htb/bin/emergency` which in an unkown SUID binary (these are almost always worth investigating..)
 
-suid.png
+![suid.png](../assets/bank_assets/suid.png)
 
 Doing just a little more recon on the file, I see it is owned by root and I can execute it. Now I can simply run it and instantly drop into a root shell:
 
@@ -172,13 +171,13 @@ bank
 
 From here I can grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/bank_assets/root_flag.png)
 
 ### Privilege Escalation #2
 
 Linpeas also finds that the `/etc/passwd` file is writable. This lets us essentially give ourselves the keys to the kingdom! Lets add user root2 with root permissions:
 
-passwd_write.png
+![passwd_write.png](../assets/bank_assets/passwd_write.png)
 
 ```text
 www-data@bank:/var/htb/bin$ openssl passwd password123
