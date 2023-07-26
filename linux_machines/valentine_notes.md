@@ -176,6 +176,8 @@ To help with privilege escalation I'll go ahead and transfer over LinPeas to the
 
 Looking at running processes, LinPeas finds a tmux session running as root. Interesting!
 
+![ps.png](../assets/valentine_assets/ps.png)
+
 All we'd need to do to hijack that session is to call it:
 
 ```text
