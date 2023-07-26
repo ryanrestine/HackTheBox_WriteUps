@@ -84,7 +84,7 @@ Checking out the hype_key file, we see what appears to be a bunch of hex encodin
 
 whereas the notes.txt file appears to be some personal developer notes:
 
-![notes.txt](../assets/valentine_assets/notes.txt)
+![notes.png](../assets/valentine_assets/notes.png)
 
 This note also refers to the `/encode` directory which we also found with Feroxbuster. 
 
