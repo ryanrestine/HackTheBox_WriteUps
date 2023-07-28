@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Blackfield.png
+![Blackfield.png](../assets/blackfield_assets/Blackfield.png)
 
 ### Enumeration
 
@@ -78,7 +78,7 @@ Based on these results lets add blackfield.local and dc01.blackfield.local to ou
 
 Lets check out if we can access any SMB shares with null authentication, or using the Guest account:
 
-cme.png
+![cme.png](../assets/blackfield_assets/cme.png)
 
 Cool, looks like we have read permissions on the `profiles$` share. Lets see what we can find in there.
 
@@ -168,13 +168,13 @@ $krb5asrep$23$support@BLACKFIELD.LOCAL:64cfbe3c96320a79b843b0dbf80b8a79$8985c694
 
 We can now use JohnTheRipper to crack this hash:
 
-john.png
+![john.png](../assets/blackfield_assets/john.png)
 
 Nice! John was able to crack the hash, and we now have some working credentials.
 
 After trying to logon to the box using Evil-WinRM and failing, it looks like we need to enumerate a bit more. Lets use these credentials to see if we can access any other SMB shares that we couldn't before.
 
-cme2.png
+![cme2.png](../assets/blackfield_assets/cme2.png)
 
 Hmm, we can now access the `NETLOGON` and `SYSVOL` shares,but I didn't see anything of interest in them. 
 
@@ -226,7 +226,7 @@ INFO: Compressing output into 20230728103203_bloodhound.zip
 
 After importing my zip file into Bloodhound I can search for user support, and click on their icon to reveal potential paths from this user:
 
-bh.png
+![bh.png](../assets/blackfield_assets/bh.png)
 
 Cool, looks like user support has the ability to change the password of another discovered user, audit2020. Bloodhound even offers more advice on the attack:
 
@@ -250,11 +250,11 @@ rpcclient $>
 
 Lets see if we can access any SMB shares with audit2020:Password4321
 
-cme3.png
+![cme3.png](../assets/blackfield_assets/cme3.png)
 
-Nice! We now have access to that `forensics` share. Lets check that out.
+Nice! We now have access to that `forensic` share. Lets check that out.
 
-forensic.png
+![forensic.png](../assets/blackfield_assets/forensic.png)
 
 Looks like there are several memory/investigation type files in here. Luckily for us there is a lsass.zip file, which will likely contain lots of juicy materials. Lets bring that back to our machine using the `get` command. 
 
@@ -298,13 +298,13 @@ This drops a ton of information for us, the most interesting being:
 
 Cool, now that we have these hashes we can try logging onto the box. Unfortunately the admin hash didn't seem to work for me, but I was able to pass-the-hash in Evil-WinRM to logon as svc_backup and grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/blackfield_assets/user_flag.png)
 
 ### Privilege Escalation
 
 Running `whoami /all` I see svc_backup is part of the Backup Operators group, and that they have SeBackupPrivilege enabled.
 
-whoami.png
+![whoami.png](../assets/blackfield_assets/whoami.png)
 
 This can be exploited to copy the ntds.dit file back to our attacking machine, which can then be used to dump domain hashes. 
 
@@ -326,6 +326,8 @@ unix2dos: converting file hey.dsh to DOS format...
 
 We can then upload the file using `upload` in Evil-WinRM. Once uploaded (into a writable directory, I made a TEMP directory) we can run diskshadow which makes a copy of the C drive for us in a Z drive. 
 
+![diskshadow.png](../assets/blackfield_assets/diskshadow.png)
+
 We can now copy the ntds file back to our TEMP directory using robocopy:
 
 ```text
@@ -346,17 +348,18 @@ We'll also need to copy the SYSTEM registry file, which we can grab with:
 ```text
 reg save hklm\system SYSTEM
 ```
-system.png
+
+![system.png](../assets/blackfield_assets/system.png)
 
 Now that both of these files are in our `C:\TEMP` directory we can download them back to our attacking machine with the `download` command in Evil-WinRM (dont forget to include the absolute path).
 
 Once the files are local we can use them with impacket-secretsdump to heopefully drop some hashes:
 
-secrets.png
+![secrets.png](../assets/blackfield_assets/secrets.png)
 
 Cool! We can now pass-the-hash as the administrator with Evil-WinRM and login to collect the final flag:
 
-root_flag.png
+![root_flag.png](../assets/blackfield_assets/root_flag.png)
 
 Thanks for following along!
 
