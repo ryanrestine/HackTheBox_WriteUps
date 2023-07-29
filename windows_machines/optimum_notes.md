@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Optimum.png
+![Optimum.png](../assets/optimum_assets/Optimum.png)
 
 ### Enumeration
 
@@ -46,29 +46,29 @@ Nmap done: 1 IP address (1 host up) scanned in 11.95 seconds
 ```
 Cool, looks like Nmap has identified HttpFileServer httpd 2.3 running, and we can confirm that by heading to the site itself:
 
-hfs.png
+![hfs.png](../assets/optimum_assets/hfs.png)
 
 Searching for this version in Google we find an RCE that looks promising: https://www.exploit-db.com/exploits/39161
 
-edb.png
+![edb.png](../assets/optimum_assets/edb.png)
 
 ### Exploitation
 
 First I'll copy over a copy of nc.exe to my working directory, set up a Python http server, and then update the script with my correct IP and port I'll be listening on. After that I'll use the exploit to transfer nc.exe to the target, and get a reverse shell back on my listener:
 
-shell.png
+![shell.png](../assets/optimum_assets/shell.png)
 
 Nice! That Worked! We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/optimum_assets/user_flag.png)
 
 ### Privilege Escalation
 
 First I'll transfer over a copy of winPEAS to help with the enumeration for privesc:
 
-transfer.png
+![transfer.png](../assets/optimum_assets/transfer.png)
 
-Loking through the results I'm not seeing much. Because I know this is an old machine, I run `ststeminfo` to see if I can get any more info:
+Loking through the results I'm not seeing much. Because I know this is an old machine, I run `systeminfo` to see if I can get any more info:
 
 ```text
 C:\Users\kostas\Documents>systeminfo
@@ -87,7 +87,7 @@ Registered Owner:          Windows User
 
 Googling Microsoft Windows Server 2012 R2 Standard leads me to MS16-098 and I find this exploit: https://www.exploit-db.com/exploits/41020
 
-edb2.png
+![edb2.png](../assets/optimum_assets/edb2.png)
 
 I can transfer over the executable with certutil, and simply run it.
 
@@ -111,7 +111,7 @@ nt authority\system
 
 Nice! We are now nt authorit\sytem on the target! Lets grab that root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/optimum_assets/root_flag.png)
 
 Thanks for following along!
 
