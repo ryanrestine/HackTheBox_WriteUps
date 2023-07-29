@@ -54,7 +54,11 @@ Searching for this version in Google we find an RCE that looks promising: https:
 
 ### Exploitation
 
-First I'll copy over a copy of nc.exe to my working directory, set up a Python http server, and then update the script with my correct IP and port I'll be listening on. After that I'll use the exploit to transfer nc.exe to the target, and get a reverse shell back on my listener:
+First I'll copy over a copy of nc.exe to my working directory, set up a Python http server, and then update the script with my correct IP and port I'll be listening on. 
+
+![ip.png](../assets/optimum_assets/ip.png)
+
+After that I'll use the exploit to transfer nc.exe to the target, and get a reverse shell back on my listener:
 
 ![shell.png](../assets/optimum_assets/shell.png)
 
