@@ -1,1 +1,1 @@
-# HackTheBox-WriteUps
+# HackTheBox_WriteUps
