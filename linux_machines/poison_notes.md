@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Poison.png
+![Poison.png](../assets/poison_assets/Poison.png)
 
 ### Enumeration
 
@@ -55,15 +55,15 @@ Cool, looks like this is a FreeBSD box.
 
 Navigating to the site we find a place to search for files on the server. 
 
-site.png
+![site.png](../assets/poison_assets/site.png)
 
 And even more interesting, it appears we can search files just by entering their name (browse.php?file=listfiles.php)
 
-list.png
+![list.png](../assets/poison_assets/list.png)
 
 Hm, pwdbackup.txt definitely looks interesting, lets check that out:
 
-pwdbackup.txt
+![pwdbackup.txt](../assets/poison_assets/pwdbackup.png)
 
 Looks like a password that has been base64 encoded 13 times (for some reason?). 
 
@@ -84,11 +84,11 @@ print(decoded)
 
 We can execute the script and decode the password:
 
-py.png
+![py.png](../assets/poison_assets/py.png)
 
 That's all well and good, but we still don't have a username. Looking at the way we can search files, this is basically begging for local file inclusion. Lets see if we can grab anything else sensitive:
 
-etc.png
+![etc.png](../assets/poison_assets/etc.png)
 
 Nice, we can easily read the `/etc/passwd` file, and found a username! 
 
@@ -108,7 +108,7 @@ Poison
 
 We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/poison_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -135,7 +135,7 @@ Taking a look at the secret file we find `½¨[|Õ–z!`. Not sure what that is 
 
 After not finding much on the box for a while, I decided to see if there were any other connections.
 
-sockstat.png
+![sockstat.png](../assets/poison_assets/sockstat.png)
 
 Interesting! Looks like VNC is running with root privileges. To access this we'll need to use a bit of tunneling:
 
@@ -146,9 +146,11 @@ Interesting! Looks like VNC is running with root privileges. To access this we'l
 
 Once the new connection is made we can open a new terminal window on our attacking machine and start vncviewer with the secret file we found earlier:
 
-vnc.png
+![vnc.png](../assets/poison_assets/vnc.png)
 
 We can now access the root.txt flag as the root user.
+
+![root_flag.png](../assets/poison_assets/root_flag.png)
 
 Thanks for following along!
 
