@@ -148,7 +148,11 @@ This dumps a TON of information to sift through, and after a lot of trial and er
 
 ![view.png](../assets/tally_assets/view.png)
 
-Taking a look in the Documents folder we find an interesting file. We can go ahead and download this and open in in LibreOffice.
+Taking a look in the Documents folder we find an interesting file. 
+
+![docs.png](../assets/tally_assets/docs.png)
+
+We can go ahead and download this and open in in LibreOffice.
 
 ![ftp_creds.png](../assets/tally_assets/ftp_creds.png)
 
