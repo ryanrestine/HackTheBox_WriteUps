@@ -270,7 +270,7 @@ We can now grab the user.txt flag and also check out the todo.txt file in Sarah'
 
 ### Privilege Escalation 
 
-Once on the box and after a bit more and saw that sarah had SeImpersonatePrivilege enabled. 
+Once on the box I noticed that sarah had SeImpersonatePrivilege enabled. 
 
 ![priv.png](../assets/tally_assets/priv.png)
 
