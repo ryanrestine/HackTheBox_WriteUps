@@ -2,7 +2,7 @@
 
 A place to document various HTB CTF writeups
 
-## Linux
+## Linux 🐧
 
 - Bank
 - Bashed
@@ -18,7 +18,7 @@ A place to document various HTB CTF writeups
 - Valenintine
 - Validation
 
-## Windows
+## Windows 🪟
 
 - Access
 - Active
