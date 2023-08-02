@@ -187,7 +187,11 @@ ftp> ls
 226 Transfer complete.
 ```
 
-Going into the `User` directory we discover even more users. Browsing through the Users files we find Keepass materials in Tim's directory.
+Going into the `User` directory we discover even more users. 
+
+![users.png](../assets/tally_assets/users.png)
+
+Browsing through the Users files we find Keepass materials in Tim's directory.
 
 ```text
 125 Data connection already open; Transfer starting.
