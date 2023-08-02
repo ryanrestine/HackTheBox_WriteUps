@@ -219,7 +219,7 @@ We can now login to the keepass DB and grab some more credentials:
 
 Finance:Acc0unting
 
-Lets use these creds to access SMB and see whatelse we can find. 
+Lets use these creds to access SMB and see what else we can find. 
 
 ![smb.png](../assets/tally_assets/smb.png)
 
@@ -272,7 +272,7 @@ We can now grab the user.txt flag and also check out the todo.txt file in Sarah'
 
 Once on the box and after a bit more and saw that sarah had SeImpersonatePrivilege enabled. 
 
-![priv.png](../assets/tally_assets/pric.png)
+![priv.png](../assets/tally_assets/priv.png)
 
 Lets try JuicyPotato to escalate privileges:
 
