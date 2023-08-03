@@ -127,9 +127,13 @@ Lets go ahead and `background` this session and import the local_exploit_suggest
 
 ![bg.png](../assets/grandpa_assets/bg.png)
 
-Nice, the module found quite a few possible vectors. I'm most interested in trying exploit/windows/local/ms14_070_tcpip_ioctl.
+Nice, the module found quite a few possible vectors. 
 
-I can search for and use this mmodule and then set the session as well as my lhost IP adress:
+![vulns.png](../assets/grandpa_assets/vulns.png)
+
+I'm most interested in trying exploit/windows/local/ms14_070_tcpip_ioctl.
+
+I can search for and use this module and then set the session as well as my lhost IP adress:
 
 ```text
 msf6 exploit(windows/local/ms14_070_tcpip_ioctl) > set session 1
