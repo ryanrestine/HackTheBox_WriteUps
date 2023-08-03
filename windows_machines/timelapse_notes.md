@@ -228,7 +228,7 @@ Lets check that out:
 
 ![creds.png](../assets/timelapse_assets/creds.png)
 
-Nice, we've discovered another pair of credentials. Lets login use these now:
+Nice, we've discovered another pair of credentials. Lets login and use these now:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Timelapse]
