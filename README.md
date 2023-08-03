@@ -26,6 +26,7 @@ A place to document various HTB CTF writeups
 - Buff
 - Chatterbox
 - Forest
+- Grandpa
 - Jeeves
 - Jerry
 - Optimum
