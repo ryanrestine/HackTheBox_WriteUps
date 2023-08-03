@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Grandpa.png
+![Grandpa.png](../assets/grandpa_assets/Grandpa.png)
 
 ### Enumeration
 
@@ -57,21 +57,21 @@ We can see here that the site is running IIS 6.0, which is super old.
 
 Navigating to the site we see the old-school and familiar Under Construction page from IIS 6 (I'm really dating myself here):
 
-site.png
+![site.png](../assets/grandpa_assets/site.png)
 
 Searching for exploits for IIS 6 I find a page from Rapid7 (the owners of Metasploit), outlining the vulnerability.
 
-rapid.png
+![rapid.png](../assets/grandpa_assets/rapid.png)
 
 This looks like it's definitely worth trying.
 
 Lets open up Metasploit and find the right module:
 
-msf.png
+![msf.png](../assets/grandpa_assets/msf.png)
 
 We can then update the lhost and Rhosts fields in Options:
 
-options.png
+![options.png](../assets/grandpa_assets/options.png)
 
 Once set, all we need to do is `run` (or `exploit`, if you're feeling like Mr. Robot or something), and we open up a Meterpreter shell:
 
@@ -97,7 +97,7 @@ meterpreter > getuid
 ```
 If we run `ps` in Meterpreter, we can find list out running processes.
 
-ps.png
+![ps.png](../assets/grandpa_assets/ps.png)
 
 Process 1736 seems especially interesting because it is running as  NT AUTHORITY\NETWORK SERVICE.
 
@@ -125,7 +125,7 @@ Access is denied.
 
 Lets go ahead and `background` this session and import the local_exploit_suggester module to check for privilege escalation vectors for us:
 
-bg.png
+![bg.png](../assets/grandpa_assets/bg.png)
 
 Nice, the module found quite a few possible vectors. I'm most interested in trying exploit/windows/local/ms14_070_tcpip_ioctl.
 
@@ -138,13 +138,13 @@ session => 1
 
 Once this runs we can interact with our session again using `sessions -i 1` and confirm the privilege escalation worked!
 
-worked.png
+![worked.png](../assets/grandpa_assets/worked.png)
 
 We can now grab the two flags:
 
-user_flag.png
+![user_flag.png](../assets/grandpa_assets/user_flag.png)
 
-root_flag.png
+![root_flag.png](../assets/grandpa_assets/root_flag.png)
 
 Thanks for following along!
 
