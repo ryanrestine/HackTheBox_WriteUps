@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Grandpa.png
+![Timelapse.png](../assets/timelapse_assets/Timelapse.png)
 
 ### Enumeration
 
@@ -95,7 +95,7 @@ Lets go ahead and add `10.10.11.152 timelapse.htb` to `/etc/hosts`.
 
 Taking a look at SMB first, it looks like we have Read access to a couple of shares as the guest user:
 
-cme.png
+![cme.png](../assets/timelapse_assets/cme.png)
 
 We can use smbclient to enumerate the shares:
 
@@ -134,7 +134,7 @@ Archive:  winrm_backup.zip
 
 Lets use zip2john and JohntheRipper to crack this:
 
-john.png
+![john.png](../assets/timelapse_assets/john.png)
 
 Cool, we can now unzip and extract the file:
 
@@ -148,7 +148,7 @@ Rats, its prompting for another password, and the supremelegacy password discove
 
 Lets crack this password using john again, as well as pfx2john:
 
-pfx_crack.png
+![pfx_crack.png](../assets/timelapse_assets/pfx_crack.png)
 
 Lets try extracting again:
 
@@ -159,7 +159,7 @@ Enter Import Password:
 Enter PEM pass phrase:
 Verifying - Enter PEM pass phrase:
 ```
-Note: you can set the PEM pass phrase to whatever you want (and will remember!).I used the word howdy this time. 
+Note: you can set the PEM pass phrase to whatever you want (and will remember).I used the word howdy this time. 
 
 Lets also grab that certificate too:
 
@@ -171,11 +171,11 @@ Enter Import Password:
 
 We can now login to the machine using Evil-WinRM:
 
-login.png
+![login.png](../assets/timelapse_assets/login.png)
 
 And grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/timelapse_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -220,9 +220,13 @@ Data: 2581844 bytes of 2581844 bytes copied
 Info: Upload successful!
 ```
 
-Running the executable, winPEAS finds there is a PowerShell history file present. Lets check that out:
+Running the executable, winPEAS finds there is a PowerShell history file present. 
 
-creds.png
+![lp_ps.png](../assets/timelapse_assets/lp_ps.png)
+
+Lets check that out:
+
+![creds.png](../assets/timelapse_assets/creds.png)
 
 Nice, we've discovered another pair of credentials. Lets login use these now:
 
@@ -266,7 +270,7 @@ dc01
 
 Nice! All that is left now is to grab that final flag:
 
-root_flag.png
+![root_flag.png](../assets/timelapse_assets/root_flag.png)
 
 Thanks for following along!
 
