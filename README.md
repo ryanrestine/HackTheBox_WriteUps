@@ -14,6 +14,7 @@ A place to document various HTB CTF writeups
 - Posion
 - Sense
 - Shocker
+- SolidState
 - Traverxec
 - Valenintine
 - Validation
