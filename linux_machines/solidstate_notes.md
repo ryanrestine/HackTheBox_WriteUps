@@ -213,7 +213,7 @@ We can now grab the user.txt flag:
 
 ### Privilege Escalation
 
-Lets transfer over a copy of Linpeas to the tadrget to help with enumeration:
+Lets transfer over a copy of Linpeas to the target to help with enumeration:
 
 ![lp_transf.png](../assets/solidstate_assets/lp_transf.png)
 
@@ -232,10 +232,25 @@ try:
      os.system('rm -r /tmp/* ')
 except:
      sys.exit()
-
 ```
 
-Heading back to `/tmp` the most interesting thing here is actually what we don't see. Where did the copy of Linpeas go that we tranfered earlier? Because it's no longer there, I'm thinking that tmp.py in `/opt` is actually a cronjob that is running, which removed our copy of Linpeas.
+Heading back to `/tmp` the most interesting thing here is actually what we don't see. Where did the copy of Linpeas go that we tranfered earlier? 
+
+```text
+${debian_chroot:+($debian_chroot)}mindy@solidstate:/opt$ cd /tmp
+${debian_chroot:+($debian_chroot)}mindy@solidstate:/tmp$ ls -la
+total 32
+drwxrwxrwt  7 root       root       4096 Aug  7 12:06 .
+drwxr-xr-x 22 root       root       4096 May 27  2022 ..
+drwxrwxrwt  2 root       root       4096 Aug  7 10:25 .font-unix
+drwxrwxrwt  2 root       root       4096 Aug  7 10:25 .ICE-unix
+drwxrwxrwt  2 root       root       4096 Aug  7 10:25 .Test-unix
+-r--r--r--  1 Debian-gdm Debian-gdm   11 Aug  7 10:25 .X1024-lock
+drwxrwxrwt  2 root       root       4096 Aug  7 10:25 .X11-unix
+drwxrwxrwt  2 root       root       4096 Aug  7 10:25 .XIM-unix
+```
+
+Because it's no longer there, I'm thinking that tmp.py in `/opt` is actually a cronjob that is running, which removed our copy of Linpeas.
 
 We also know that the file is writable for us, so lets add a reverse shell to the file and see if we can get a response back.
 
