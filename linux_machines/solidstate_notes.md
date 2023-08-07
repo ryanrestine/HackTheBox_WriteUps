@@ -234,7 +234,7 @@ except:
      sys.exit()
 ```
 
-Heading back to `/tmp` the most interesting thing here is actually what we don't see. Where did the copy of Linpeas go that we tranfered earlier? 
+Heading back to `/tmp` the most interesting thing here is actually what we don't see. Where did the copy of Linpeas go that we transferred earlier? 
 
 ```text
 ${debian_chroot:+($debian_chroot)}mindy@solidstate:/opt$ cd /tmp
