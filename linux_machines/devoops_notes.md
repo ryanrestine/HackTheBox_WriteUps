@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-DevOops.png
+![DevOops.png](../assets/devoops_assets/DevOops.png)
 
 ### Enumeration
 
@@ -53,11 +53,11 @@ Nmap done: 1 IP address (1 host up) scanned in 9.18 seconds
 
 Heading to the site on port 5000 we see a page that is under construction:
 
-site.png
+![site.png](../assets/devoops_assets/site.png)
 
 Doing some directory fuzzing we find an `/upload` directory.
 
-upload.png
+![upload.png](../assets/devoops_assets/upload.png)
 
 Interesting..We've got a file upload area, and there are even some notes about which XML elements are in play. 
 
@@ -79,7 +79,7 @@ I'll create an .xml file called test.xml with the elements mentioned on the site
 
 And upload this file:
 
-passwd.png
+![passwd.png](../assets/devoops_assets/passwd.png)
 
 Nice! That worked! We also see that there is a user named roosa on the box. Lets see if they happen to have an id_rsa file in their home directory. We can create a new .xml file with the following:
 
@@ -95,7 +95,7 @@ Nice! That worked! We also see that there is a user named roosa on the box. Lets
 
 After uploading this we succesfully dropped roosa's SSH key:
 
-id.png
+![id.png](../assets/devoops_assets/id.png)
 
 Lets add that to a file called id_rsa, and then update permissions on it:
 
@@ -122,31 +122,31 @@ devoops
 
 We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/devoops_assets/user_flag.png)
 
 ### Privilege Escalation
 
 Finding a `.git` folder I realize roosa and team are utilizing git. Lets see if we can find any commits:
 
-git.png
+![git.png](../assets/devoops_assets/git.png)
 
 Cool, we can see several different commits. 
 
 Scrolling through them, this one seems especially interesting to me:
 
-com.png
+![com.png](../assets/devoops_assets/com.png)
 
 Lets check it out:
 
-show.png
+![show.png](../assets/devoops_assets/show.png)
 
 Nice, we can see that the key in red was replaced by the key in green. 
 
-change.png
+![change.png](../assets/devoops_assets/change.png)
 
 Lets see who else on the box has bash enabled, and who the key may belong to:
 
-bash.png
+![bash.png](../assets/devoops_assets/bash.png)
 
 Just a few choices here. 
 
@@ -178,7 +178,7 @@ Nice! That key worked for root!
 
 Lets grab our root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/devoops_assets/root_flag.png)
 
 Thanks for following along!
 
