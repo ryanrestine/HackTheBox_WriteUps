@@ -8,6 +8,7 @@ A place to document various HTB CTF writeups
 - Bashed
 - Cap
 - Cronos
+- DevOops
 - Knife
 - Mango
 - Nibbles
