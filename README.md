@@ -31,6 +31,7 @@ A place to document various HTB CTF writeups
 - Grandpa
 - Jeeves
 - Jerry
+- Netmon
 - Optimum
 - Return
 - Sauna
