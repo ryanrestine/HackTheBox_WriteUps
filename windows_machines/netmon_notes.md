@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Netmon.png
+![Netmon.png](../assets/netmon_assets/Netmon.png)
 
 ### Enumeration
 
@@ -148,23 +148,23 @@ local: user.txt remote: user.txt
 
 Wow, we were able to grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/netmon_assets/user_flag.png)
 
 Browsing around a bit more we find some interesting configuration files for the PRTG Network Monitor. Lets use the `get` command to bring these back locally for inspection.
 
 Checking out the PRTG Configuration.old.bak file, we find some credentials:
 
-creds.png
+![creds.png](../assets/netmon_assets/creds.png)
 
 Navigating to the website on port 80 we find a login for PRTG Network Monitor. Lets try the credentials here:
 
-fail.png
+![fail.png](../assets/netmon_assets/fail.png)
 
 Hmm, these aren't working here. I did notice that the password has the year 2018 in it. Maybe the password we found was old and the admin got lazy and just changed the password up a year? Lets try PrTg@dmin2019
 
 Nice, that worked!
 
-in.png
+![in.png](../assets/netmon_assets/in.png)
 
 This version of PRTG is vulnerable to command injection. We can exploit this by heading over to the Notifications section in Account Settings and selecting "Add New Notification."
 
@@ -176,13 +176,13 @@ test.txt;net user howdy Password123! /add;net localgroup administrators howdy /a
 
 I can now hit Save and make sure my new notification is active:
 
-active.png
+![active.png](../assets/netmon_assets/active.png)
 
-Once this is done we can click on the bell icon to test the notification (ie add our user).
+Once this is done we can click on the bell icon to test the notification (add our user).
 
 Once completed lets use CrackMapExec to make sure our user has been added:
 
-cme.png
+![cme.png](../assets/netmon_assets/cme.png)
 
 Cool, we can now log on to the box to grab the last flag:
 
@@ -191,7 +191,7 @@ Cool, we can now log on to the box to grab the last flag:
 └─$ evil-winrm -i 10.10.10.152 -u howdy -p Password123!
 ```
 
-root_flag.png
+![root_flag.png](../assets/netmon_assets/root_flag.png)
 
 Thanks for following along!
 
