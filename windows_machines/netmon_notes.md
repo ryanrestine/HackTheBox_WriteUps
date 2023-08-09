@@ -152,6 +152,8 @@ Wow, we were able to grab the user.txt flag:
 
 Browsing around a bit more we find some interesting configuration files for the PRTG Network Monitor. Lets use the `get` command to bring these back locally for inspection.
 
+![config.png](../assets/netmon_assets/config.png)
+
 Checking out the PRTG Configuration.old.bak file, we find some credentials:
 
 ![creds.png](../assets/netmon_assets/creds.png)
