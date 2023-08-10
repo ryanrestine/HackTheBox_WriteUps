@@ -16,6 +16,7 @@ A place to document various HTB CTF writeups
 - Sense
 - Shocker
 - SolidState
+- Tenten
 - Traverxec
 - Valenintine
 - Validation
