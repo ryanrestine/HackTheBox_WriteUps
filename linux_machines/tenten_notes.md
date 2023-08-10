@@ -81,17 +81,19 @@ _______________________________________________________________
 
 Cool, we've found one user named takis.
 
-takis.png
+![takis.png](../assets/tenten_assets/takis.png)
 
 Lets head back to the site to see what we can find.
 
-site.png
+![site.png](../assets/tenten_assets/site.png)
 
 Clicking on the Job Listings link we see a job posting we can apply for:
 
-job.png
+![job.png](../assets/tenten_assets/job.png)
 
 Clicking into the Apply Now button, I'm most interested in the fact that this job or application id is directly represented with an `/8`. 
+
+![8.png](../assets/tenten_assets/8.png)
 
 Playing around with this manually, I see this site has an IDOR vulnerabilty and I can access other materials just by changing the number or ID in the browser. 
 
@@ -99,15 +101,15 @@ Playing around with this manually, I see this site has an IDOR vulnerabilty and 
 
 I manually tested this (probably would have been easier to just generate a number list and fuzz this in Burp or with Ffuzz), until I reached `/13` which had an interesting attachment:
 
-13.png
+![13.png](../assets/tenten_assets/13.png)
 
 We can fill out the appplication with test data and submit:
 
-hey.png
+![hey.png](../assets/tenten_assets/hey.png)
 
 Now that the aplication is sub,itted, we need to find out where the file ended up. This bit was tricky for me. I knew that standard WP files are loaded to `/wp-content/uploads/YEAR/MONTH/FILE` But was having a hard time finding it. I eventually checked when the box was created (May, 2017) and started fuzzing months in 2017. I eventually found our file at http://tenten.htb/wp-content/uploads/2017/04/HackerAccessGranted.jpg where I find a creepy "hacker" guy:
 
-hacker.png
+![hacker.png](../assets/tenten_assets/hacker.png)
 
 Not knowing exactly what to do with the image file, I downloaded it to my attacking machine and named it "creepy_hacker.jpg." Lets use exiftool to see if there is an steganography in play here, and something is embedded in the image file.
 
@@ -139,7 +141,7 @@ takis@10.10.10.10's password:
 
 We can use ssh2john to crack this:
 
-john.png
+![john.png](../assets/tenten_assets/john.png)
 
 Nice, John was able to crack this easily.
 
@@ -168,9 +170,9 @@ takis
 tenten
 ```
 
-We can now grab the user.txt flag:
+And grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/tenten_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -188,7 +190,7 @@ User takis may run the following commands on tenten:
 
 I have no idea what this is, so I turned to Google and found lots of people who REALLY hate Linux for some reason:
 
-linux.png
+![linux.png](../assets/tenten_assets/linux.png)
 
 Not much help there..
 
@@ -215,7 +217,7 @@ Nice! That worked!
 
 Lets grab that final flag:
 
-root_flag.png
+![root_flag.png](../assets/tenten_assets/root_flag.png)
 
 Thanks for following along!
 
