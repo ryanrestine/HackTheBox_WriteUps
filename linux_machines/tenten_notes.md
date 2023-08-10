@@ -99,7 +99,7 @@ Playing around with this manually, I see this site has an IDOR vulnerabilty and 
 
 ### Exploitation
 
-I manually tested this (probably would have been easier to just generate a number list and fuzz this in Burp or with Ffuzz), until I reached `/13` which had an interesting attachment:
+I manually tested this (probably would have been easier to just generate a number list and fuzz this in Burp or with Ffuff), until I reached `/13` which had an interesting attachment:
 
 ![13.png](../assets/tenten_assets/13.png)
 
