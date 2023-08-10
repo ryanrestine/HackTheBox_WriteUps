@@ -107,7 +107,7 @@ We can fill out the appplication with test data and submit:
 
 ![hey.png](../assets/tenten_assets/hey.png)
 
-Now that the aplication is sub,itted, we need to find out where the file ended up. This bit was tricky for me. I knew that standard WP files are loaded to `/wp-content/uploads/YEAR/MONTH/FILE` But was having a hard time finding it. I eventually checked when the box was created (May, 2017) and started fuzzing months in 2017. I eventually found our file at http://tenten.htb/wp-content/uploads/2017/04/HackerAccessGranted.jpg where I find a creepy "hacker" guy:
+Now that the aplication is submitted, we need to find out where the file ended up. This bit was tricky for me. I knew that standard WP files are loaded to `/wp-content/uploads/YEAR/MONTH/FILE` But was having a hard time finding it. I eventually checked when the box was created (May, 2017) and started fuzzing months in 2017. I eventually found our file at http://tenten.htb/wp-content/uploads/2017/04/HackerAccessGranted.jpg where I find a creepy "hacker" guy:
 
 ![hacker.png](../assets/tenten_assets/hacker.png)
 
