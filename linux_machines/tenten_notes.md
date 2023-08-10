@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Tenten.png
+![Tenten.png](../assets/tenten_assets/Tenten.png)
 
 ### Enumeration
 
