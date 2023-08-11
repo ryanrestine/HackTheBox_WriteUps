@@ -89,7 +89,7 @@ Lets head back to the site to see what we can find.
 
 Clicking on the Job Listings link we see a job posting we can apply for:
 
-![job.png](../assets/tenten_assets/job.png)
+![jobs.png](../assets/tenten_assets/jobs.png)
 
 Clicking into the Apply Now button, I'm most interested in the fact that this job or application id is directly represented with an `/8`. 
 
