@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Irked.png
+![Irked.png](../assets/irked_assets/Irked.png)
 
 ### Enumeration
 
@@ -76,7 +76,7 @@ Ok interesting, looks like we've got irc open on this box and also got the admin
 
 Lets use some nmap scripts to further enumerate this:
 
-nmap.png
+![nmap.png](../assets/irked_assets/nmap.png)
 
 Nice, looks like this version has a backdoor. Lets see if we can find any exploits out there for this.
 
@@ -108,7 +108,7 @@ s.close()
 
 We can run this, and with a listener going on port 443 catch a shell back as user ircd:
 
-python.png
+![python.png](../assets/irked_assets/python.png)
 
 Trying to grab the user.txt flag we get an Permission Denied:
 
@@ -122,11 +122,11 @@ Lets do a bit more enumerating. I'll use LinPEAS to help with this.
 
 Lets transfer it over to the target using wget and a Python http.server:
 
-wget.png
+![wget.png](../assets/irked_assets/wget.png)
 
 LinPEAS finds there is a SUID bit set on something called viewuser.
 
-suid.png
+![suid.png](../assets/irked_assets/suid.png)
 
 Trying to run the file we see it is trying to execute `/tmp/listusers` and it is being executed as root. Interestingly, this file doesn't exist in `/tmp`.
 
@@ -148,13 +148,13 @@ Cool, this should be a breeze.
 
 Lets create a file called `listusers` that is just `/bin/bash` and make it world executable. From there all we need to do is execute it, and it will run with root level permissions.
 
-cat.png
+![cat.png](../assets/irked_assets/cat.png)
 
 Nice!
 
 Lets grab both of the flags now:
 
-flags.png
+![flags.png](../assets/irked_assets/flags.png)
 
 Thanks for following along!
 
