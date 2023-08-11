@@ -9,6 +9,7 @@ A place to document various HTB CTF writeups
 - Cap
 - Cronos
 - DevOops
+- Irked
 - Knife
 - Mango
 - Nibbles
