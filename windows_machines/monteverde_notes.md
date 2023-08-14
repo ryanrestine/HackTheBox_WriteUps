@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Monteverde.png
+![Monteverde.png](../assets/monteverde_assets/Monteverde.png)
 
 ### Enumeration
 
@@ -91,7 +91,7 @@ With that done lets run enum4linux against the target in hopes we can drop some 
 ┌──(ryan㉿kali)-[~/HTB/Monteverde]
 └─$ enum4linux -a MEGABANK.LOCAL
 ```
-users.png
+![users.png](../assets/monteverde_assets/users.png)
 
 Cool! Looks like we have some user names. Lets copy these to a file called users.txt:
 
@@ -116,9 +116,9 @@ SMB         10.10.10.172    445    MONTEVERDE       [+] MEGABANK.LOCAL\SABatchJo
 
 Cool, we have some credentials now. Lets use these to see if we can access any shares:
 
-cme.png
+![cme.png](../assets/monteverde_assets/cme.png)
 
-Looks like we have read access to quitte a few of them.
+Looks like we have read access to quite a few of them.
 
 ### Exploitation
 
@@ -151,7 +151,7 @@ getting file \mhope\azure.xml of size 1212 as azure.xml (4.2 KiloBytes/sec) (ave
 
 And inside the file we find a plaintext credential:
 
-pw.png
+![pw.png](../assets/monteverde_assets/pw.png)
 
 We can use mhope's credentials to login to the box via Evil-WinRM and grab the user.txt flag:
 
@@ -161,7 +161,7 @@ user_flag.png
 
 Looking around the machine, I can run `whoami /groups` and see that mhope is in the Azure Admins group:
 
-azure_admins.png
+![azure_admins.png](../assets/monteverde_assets/azure_admins.png)
 
 And looking in `Program Files` I find a few interesting Azure directories:
 
@@ -235,15 +235,15 @@ Per the GitHub we'll need to be in the `C:\Program Files\Microsoft Azure AD Sync
 
 And the script will decrypt the stored credentials for the administrator:
 
-creds.png
+![creds.png](../assets/monteverde_assets/creds.png)
 
 We can now use impacket-psexec to login to the box as the administrator:
 
-psexec.png
+![psexec.png](../assets/monteverde_assets/psexec.png)
 
 And grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/monteverde_assets/root_flag.png)
 
 Thanks for following along!
 
