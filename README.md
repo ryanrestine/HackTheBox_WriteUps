@@ -33,6 +33,7 @@ A place to document various HTB CTF writeups
 - Grandpa
 - Jeeves
 - Jerry
+- Monteverde
 - Netmon
 - Optimum
 - Return
