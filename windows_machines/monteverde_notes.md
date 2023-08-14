@@ -157,7 +157,7 @@ And inside the file we find a plaintext credential:
 
 We can use mhope's credentials to login to the box via Evil-WinRM and grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/monteverde_assets/user_flag.png)
 
 ### Privilege Escalation
 
