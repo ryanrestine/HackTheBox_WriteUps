@@ -95,6 +95,7 @@ With that done lets run enum4linux against the target in hopes we can drop some 
 
 Cool! Looks like we have some user names. Lets copy these to a file called users.txt:
 
+```text
 Guest
 AAD_987d7f2f57d2
 mhope
@@ -105,6 +106,7 @@ svc-netapp
 dgalanos
 roleary
 smorgan
+```
 
 After using this username list with a couple of password lists and coming up with nothing, I tried using CrackMapExec with the user.txt file in both the username and password fields and found a match:
 
