@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Driver.png
+![Driver.png](../assets/driver_assets/Driver.png)
 
 ### Enumeration
 
@@ -74,11 +74,11 @@ Nmap done: 1 IP address (1 host up) scanned in 53.05 seconds
 
 Navigating to the website on port 80, we are met with a pop saying we need to authenticate. Luckily, I tried admin:admin and got access to the site:
 
-site.png
+![site.png](../assets/driver_assets/site.png)
 
 Clicking on the Firmware Updates link (the only option that contains an actual link) we find an interesting page and message:
 
-firmware.png
+![firmware.png](../assets/driver_assets/firmware.png)
 
 Ok interesting. This note seems to imply that whatever we load here will be manually reviewed. Lets try an SCF attack.
 
@@ -99,15 +99,15 @@ I saved this to a file called test.scf.
 
 Lets now start up Responder to listen for any connections:
 
-responder.png
+![responder.png](../assets/driver_assets/responder.png)
 
 Once we upload the file we see that user Tony did reveiw it and Responder was able to grab his hash!
 
-hash.png
+![hash.png](../assets/driver_assets/hash.png)
 
 Lets put this hash in a file called tony_hash and use JohnTheRipper to crack it:
 
-cracked.png
+![cracked.png](../assets/driver_assets/cracked.png)
 
 Remembering that WinRM (port 5985) is open on the target, lets login with the discovered credentials using Evil-WinRM:
 
@@ -131,7 +131,7 @@ DRIVER
 
 We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/driver_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -149,7 +149,7 @@ Info: Upload successful!
 
 Looking through the results from WinPEAS, I start seeing lots of info about Ricoh printers.
 
-ricoh.png
+![ricoh.png](../assets/driver_assets/ricoh.png)
 
 Googling for exploits I find https://github.com/cube0x0/CVE-2021-1675 hosting the PrintNightmare exploit code.
 
@@ -197,11 +197,11 @@ whoami
 nt authority\system
 ```
 
-exploit.png
+![exploit.png](../assets/driver_assets/exploit.png)
 
 From here all we need to do is grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/driver_assets/root_flag.png)
 
 Thanks for following along!
 
