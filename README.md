@@ -29,6 +29,7 @@ A place to document various HTB CTF writeups
 - Blackfield
 - Buff
 - Chatterbox
+- Driver
 - Forest
 - Grandpa
 - Jeeves
