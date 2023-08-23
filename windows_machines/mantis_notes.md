@@ -6,6 +6,8 @@
 
 ----------------------------------------------------------------------
 
+![Mantis.png](../assets/mantis_assets/Mantis.png)
+
 ### Enumeration
 
 I'll kick off enumerating this box with an Nmap scan covering all TCP ports. Here I'll also use the `sC` and `-sV` flags to use basic scripts and to enumerate versions
