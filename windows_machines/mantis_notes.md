@@ -135,19 +135,19 @@ Interestingly, there's a port 1337 here. That's always worth looking into while 
 
 Navigating to the site we find a default IIS7 page:
 
-site.png
+![site.png](../assets/mantis_assets/site.png)
 
 Lets use Feroxbuster to scan for directories:
 
-ferox.png
+![ferox.png](../assets/mantis_assets/ferox.png)
 
 Cool, looks like we've got an `/orchard` directory, as well as a `/secure_notes` directory. Heading over to http://htb.local:1337/secure_notes/ we find two files:
 
-notes.png
+![notes.png](../assets/mantis_assets/notes.png)
 
 Clicking into the dev_notes we find a list. But this bit highlighted here looks like Base64. 
 
-hash.png
+![hash.png](../assets/mantis_assets/hash.png)
 
 Looks like this was Base64 encoded and we'll also need to decode from hex too:
 
@@ -194,9 +194,9 @@ The orcharddb looks interesting:
 SQL> SELECT * FROM orcharddb.INFORMATION_SCHEMA.TABLES;
 ```
 
-There was tons of ourput here, but this one specifically caught my eye:
+There was tons of output here, but this one specifically caught my eye:
 
-users.png
+![users.png](../assets/mantis_assets/users.png)
 
 ```text
 SELECT * FROM blog_Orchard_Users_UserPartRecord;
@@ -204,7 +204,7 @@ SELECT * FROM blog_Orchard_Users_UserPartRecord;
 
 The format is wonky, but it looks like we've found a plaintext password for user james:
 
-james.png
+![james.png](../assets/mantis_assets/james.png)
 
 ### ZeroLogon
 
@@ -225,17 +225,17 @@ Exploit complete!
 ```
 Now that the DC password has been set to null, I can use impacket-secretsdump to drop the admin hash:
 
-zero.png
+![zero.png](../assets/mantis_assets/zero.png)
 
 And now that we have the administrator hash all we need to do is pass-the-hash to logon:
 
-shell.png
+![shell.png](../assets/mantis_assets/shell.png)
 
 From here we can grab both the user.txt and root.txt flags:
 
-user_flag.png
+![user_flag.png](../assets/mantis_assets/user_flag.png)
 
-root_flag.png
+![root_flag.png](../assets/mantis_assets/root_flag.png)
 
 ### Intented Route - Kerberos
 
@@ -256,7 +256,7 @@ Interesting! Looking around a bit I found that Impacket has a script for this. W
 
 And we get a shell back as nt authority\system:
 
-pac.png
+![pac.png](../assets/mantis_assets/pac.png)
 
 Thanks for following along!
 
