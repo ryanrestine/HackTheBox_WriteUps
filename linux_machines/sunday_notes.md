@@ -6,6 +6,8 @@
 
 ----------------------------------------------------------------------
 
+![Sunday.png](../assets/sunday_assets/Sunday.png)
+
 ### Enumeration
 
 I'll begin enumerating this box with an Nmap scan covering all TCP ports. To speed this along I'll also use the `--min-rate 10000` flag:
@@ -87,11 +89,11 @@ Its interresting that Finger is open on this box. Lets use PentestMonkey's Finge
 
 Cool, looks like we've got a couple of valid usernames.
 
-users.png
+![users.png](../assets/sunday_assets/users.png)
 
 ### Exploitation
 
-Before trying to bruteforce SSH, I tried just logging in with a username and a couple of basic passwords like root, admin, password, etc. And eneded up getting lucky trying sunny:sunday.
+Before trying to bruteforce SSH, I tried just logging in with a username and a couple of basic passwords like root, admin, password, etc. And ended up getting lucky trying sunny:sunday.
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Sunday]
@@ -112,7 +114,7 @@ sunday
 
 From here I can grab the user.txt flag in Sammy's home directory:
 
-user_flag.png
+![user_flag.png](../assets/sunday_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -133,7 +135,7 @@ Looking around a bit more I find a folder called `/backup` that contains what ap
 
 Lets copy this hash back to our attacking box, as well as Sammy's `/etc/passwd` entry, and we can use unshadow and JohnTheRipper to try to crack the hash:
 
-sammy.png
+![sammy.png](../assets/sunday_assets/sammy.png)
 
 Cool, lets `su sammy` and see what we can find:
 
@@ -148,11 +150,11 @@ User sammy may run the following commands on sunday:
 
 Interesting, looks like we can run wget as root. Heading over to https://gtfobins.github.io/gtfobins/wget/ we find the exact commands we'll need to exploit this:
 
-gtfo.png
+![gtfo.png](../assets/sunday_assets/gtfo.png)
 
 Lets run those commands and grab the root.txt flag:
 
-root_flag.png
+![root_flag.png](../assets/sunday_assets/root_flag.png)
 
 Thanks for following along!
 
