@@ -133,6 +133,20 @@ Unfortunately I'm unable to view or modify the file, but it appears to be printi
 
 Looking around a bit more I find a folder called `/backup` that contains what appears to be a portion of `/etc/shadow`. Weird. 
 
+```text
+sunny@sunday:/backup$ cat shadow.backup 
+mysql:NP:::::::
+openldap:*LK*:::::::
+webservd:*LK*:::::::
+postgres:NP:::::::
+svctag:*LK*:6445::::::
+nobody:*LK*:6445::::::
+noaccess:*LK*:6445::::::
+nobody4:*LK*:6445::::::
+sammy:$5$Ebkn8jlK$i6SSPa0.u7Gd.0oJOT4T421N2OvsfXqAT1vCoYUOigB:6445::::::
+sunny:$5$iRMbpnBv$Zh7s6D7ColnogCdiVE5Flz9vCZOMkUFxklRhhaShxv3:17636::::::
+```
+
 Lets copy this hash back to our attacking box, as well as Sammy's `/etc/passwd` entry, and we can use unshadow and JohnTheRipper to try to crack the hash:
 
 ![sammy.png](../assets/sunday_assets/sammy.png)
