@@ -43,7 +43,7 @@ Nmap done: 1 IP address (1 host up) scanned in 77.86 seconds
 
 Navigating to the webpage we can see the site is running Drupal.
 
-![site.png](../assets/bastard_assets/aite.png)
+![site.png](../assets/bastard_assets/site.png)
 
 And if we take a look at the page source we can see it is running Drupal 7 specifically (Note: Nmap picked this up for us as well):
 
