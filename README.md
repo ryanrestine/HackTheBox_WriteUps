@@ -27,6 +27,7 @@ A place to document various HTB CTF writeups
 
 - Access
 - Active
+- Bastard
 - Blackfield
 - Buff
 - Chatterbox
