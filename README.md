@@ -11,6 +11,7 @@ A place to document various HTB CTF writeups
 - DevOops
 - Irked
 - Knife
+- Kotarak
 - Mango
 - Nibbles
 - Posion
