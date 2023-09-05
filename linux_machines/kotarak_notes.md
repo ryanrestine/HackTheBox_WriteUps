@@ -6,6 +6,8 @@
 
 ----------------------------------------------------------------------
 
+![Kotarak.png](../assets/kotarak_assets/Kotarak.png)
+
 ### Enumeration
 
 I'll kick off enumerating this box with an Nmap scan covering all TCP ports. Here I'll also use the `sC` and `-sV` flags to use basic scripts and to enumerate versions
@@ -43,7 +45,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 58.93 seconds
 ```
 
-The Kotarak Web Hosting  on port 60000 seems linteresting, lets check that out first:
+The Kotarak Web Hosting on port 60000 seems linteresting, lets check that out first:
 
 site.png
 
