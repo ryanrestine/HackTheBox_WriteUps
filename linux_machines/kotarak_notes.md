@@ -173,7 +173,7 @@ atanas@kotarak-dmz:/root$ cat flag.txt
 Getting closer! But what you are looking for can't be found here.
 ```
 
-Interesting, it appears IP address 10.0.3.33 is using wget to try and access a file every 2 minutes. This must be running as a cronjob.  
+Interesting, it appears IP address 10.0.3.133 is using wget to try and access a file every 2 minutes. This must be running as a cronjob.  
 
 Looking at exploits for this version of wget we find: https://www.exploit-db.com/exploits/40064
 
