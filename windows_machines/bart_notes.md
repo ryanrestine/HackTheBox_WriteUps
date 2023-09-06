@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Bart.png
+![Bart.png](..assets/bart_assets/Bart.png)
 
 ### Enumeration
 
