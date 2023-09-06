@@ -28,6 +28,7 @@ A place to document various HTB CTF writeups
 
 - Access
 - Active
+- Bart
 - Bastard
 - Blackfield
 - Buff
