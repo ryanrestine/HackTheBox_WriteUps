@@ -40,27 +40,27 @@ Taking a look at the webpage we find a company page:
 
 taking a look at the page source we also find a comment left behind that includes a name:
 
-name.png
+![name.png](../assets/bart_assets/name.png)
 
 Because port 80 redirected to forum.bart.htb I wondered if there were more domains we could fuzz. Lets try using wfuzz:
 
-wfuzz.png
+![wfuzz.png](../assets/bart_assets/wfuzz.png)
 
 Ok cool, looks like there is also a monitor.bart.htb- lets add that to `/etc/hosts` as well.
 
 This leads us to a server monitor page. 
 
-monitor.png
+![monitor.png](../assets/bart_assets/monitor.png)
 
 Because we've found the username harvey, I tried some random passwords and got lucky logging in with the credentials harvey:potter, which we found in the page source comment on forum.bart.htb. 
 
-login.png
+![login.png](../assets/bart_assets/login.png)
 
-Looking in the Severs section of the page we find yet another domain to add to `/etc/hosts`
+Looking in the Servers section of the page we find yet another domain to add to `/etc/hosts`
 
 Navigating to the site we find another login page:
 
-dev.png
+![dev.png](../assets/bart_assets/dev.png)
 
 Trying the credentials harvey:potter again we get a verbose error message `The Password must be at least 8 characters`. But if we try a user we know won't exist like testing:testing123 we get the message `Invalid Username or Password`. This leads me to believe that the user harvey is a valid username here. 
 
@@ -68,7 +68,7 @@ Trying some more directory scanning we find the page http://internal-01.bart.htb
 
 Searching Google for simple_chat/register_form.php I find this GitHub page which contains source code for the page. https://github.com/magkopian/php-ajax-simple-chat/blob/master/simple_chat/register.php
 
-gh.png
+![gh.png](../assets/bart_assets/gh.png)
 
 Cool, looks like the page wants two fields uname and passwd. Lets try creating a new user using curl and making a POST request to /register.php
 
@@ -79,23 +79,23 @@ Cool, looks like the page wants two fields uname and passwd. Lets try creating a
 
 Nice, that seemed to work. Lets return to the login page and authenticate.
 
-in.png
+![in.png](../assets/bart_assets/in.png)
 
 Awesome, that worked! 
 
 Taking a look at the source code we find an interesting link and function:
 
-source.png
+![source.png](../assets/bart_assets/source.png)
 
 Capturing this in Burp and playing around with it a bit, I find that the User Agent field is vulnerable. I can inject a webshell into the field and get execution on the box:
 
-php.png
+![php.png](../assets/bart_assets/php.png)
 
-whoami.png
+![whoami.png](../assets/bart_assets/whoami.png)
 
 Heading over to https://www.revshells.com/ and grabbing a PowerShell reverse shell and URL encoding it, I can set up a NetCat listener and get a reverse shell back:
 
-burp.png
+![burp.png](../assets/bart_assets/burp.png)
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Bart]
@@ -150,11 +150,11 @@ C:\TEMP\JuicyPotato.exe -l 444 -p C:\TEMP\shell.bat -t * -c "{7A6D9C0A-1E7A-41B6
 
 And we will catch a shell back as nt authority\ system!
 
-jp.png
+![jp.png](../assets/bart_assets/jp.png)
 
 All we have to do now is grab the user.txt and root.txt flags:
 
-flags.png
+![flags.png](../assets/bart_assets/flags.png)
 
 Thanks for following along!
 
