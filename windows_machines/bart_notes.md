@@ -36,7 +36,7 @@ Ok looks like just port 80 is open here. Lets add forum.bart.htb to our `/etc/ho
 
 Taking a look at the webpage we find a company page:
 
-site.png
+![site.png](../assets/bart_assets/site.png)
 
 taking a look at the page source we also find a comment left behind that includes a name:
 
