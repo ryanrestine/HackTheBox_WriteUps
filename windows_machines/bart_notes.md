@@ -58,6 +58,8 @@ Because we've found the username harvey, I tried some random passwords and got l
 
 Looking in the Servers section of the page we find yet another domain to add to `/etc/hosts`
 
+![internal.png](../assets/bart_assets/internal.png)
+
 Navigating to the site we find another login page:
 
 ![dev.png](../assets/bart_assets/dev.png)
@@ -65,6 +67,8 @@ Navigating to the site we find another login page:
 Trying the credentials harvey:potter again we get a verbose error message `The Password must be at least 8 characters`. But if we try a user we know won't exist like testing:testing123 we get the message `Invalid Username or Password`. This leads me to believe that the user harvey is a valid username here. 
 
 Trying some more directory scanning we find the page http://internal-01.bart.htb/simple_chat/register_form.php. Navigating to the page we get the message `The page cannot be displayed because an internal server error has occurred.`
+
+![ferox.png](../assets/bart_assets/ferox.png)
 
 Searching Google for simple_chat/register_form.php I find this GitHub page which contains source code for the page. https://github.com/magkopian/php-ajax-simple-chat/blob/master/simple_chat/register.php
 
