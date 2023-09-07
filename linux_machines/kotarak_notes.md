@@ -49,7 +49,7 @@ The Kotarak Web Hosting on port 60000 seems linteresting, lets check that out fi
 
 ![site.png](../assets/kotarak_assets/site.png)
 
-Trying to enter www.hackthebox.com in the search box fowrards us to: http://10.10.10.55:60000/url.php?path=www.hackthebox.com%2F
+Trying to enter www.hackthebox.com in the search box forwards us to: http://10.10.10.55:60000/url.php?path=www.hackthebox.com%2F
 
 But if we search for 10.10.10.55:22 we get the message `SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.2 Protocol mismatch. ` So it does seem that the search feature is able to query ports on its localhost address. Lets see if there are any other ports open internally.
 
