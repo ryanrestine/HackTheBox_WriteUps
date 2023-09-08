@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Resolute.png
+![Resolute.png](../assets/resolute_assets/Resolute.png)
 
 ### Enumeration
 
@@ -98,13 +98,13 @@ Nice, looks like we've got a password here.
 
 Enum4linux also finds a list of users as well:
 
-users.png
+![users.png](../assets/resolute_assets/users.png)
 
 ### Exploitation
 
 Lets add these to a file called users.txt and try to spray the password we've found against this list:
 
-spray.png
+![spray.png](../assets/resolute_assets/spray.png)
 
 Cool, like like we've got a hit for user melanie. Lets try logging in with Evil-Winrm:
 
@@ -127,7 +127,7 @@ megabank\melanie
 ```
 From here we can grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/resolute_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -175,7 +175,7 @@ d-----        12/4/2019   5:15 AM                Windows
 
 Inside the `PSTranscripts` folder we find some interesting PowerShell logs/transcripts..
 
-creds.png
+![creds.png](../assets/resolute_assets/creds.png)
 
 Nice, we've disovered more credentials!
 
@@ -201,7 +201,7 @@ megabank\ryan
 
 Running `whoami /groups` we see that user ryan is in the DnsAdmins group:
 
-groups.png
+![groups.png](../assets/resolute_assets/groups.png)
 
 Nice, this should be easily exploitable.
 
@@ -258,7 +258,7 @@ SERVICE_NAME: dns
 
 I can confirm the file was downloaded from the SMB share, and I can now access the final root.txt flag as nt authority\ system:
 
-root_flag.png
+![root_flag.png](../assets/resolute_assets/root_flag.png)
 
 Thanks for following along!
 
