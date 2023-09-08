@@ -72,7 +72,7 @@ First I'll transfer over a copy of winPEAS to help with the enumeration for priv
 
 ![transfer.png](../assets/optimum_assets/transfer.png)
 
-Loking through the results I'm not seeing much. Because I know this is an old machine, I run `systeminfo` to see if I can get any more info:
+Looking through the results I'm not seeing much. Because I know this is an old machine, I run `systeminfo` to see if I can get any more info:
 
 ```text
 C:\Users\kostas\Documents>systeminfo
