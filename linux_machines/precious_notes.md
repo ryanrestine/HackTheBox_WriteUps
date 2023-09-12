@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Precious.png
+![Precious.png](../assets/precious_assets/Precious.png)
 
 ### Enumeration
 
@@ -38,7 +38,7 @@ Lets add precious.htb to our `/etc/hosts` file.
 
 Heading to the site on port 80 we find a webpage to pdf converter:
 
-site.png
+![site.png](../assets/precious_assets/site.png)
 
 Lets test this out. I'll create a file called test.txt:
 
@@ -54,17 +54,17 @@ In the input field on the site I type: http://10.10.14.72/test.txt
 
 Which fetched the file from my Python server and generates a PDF of my file:
 
-hi.pdf
+![hi.pdf](../assets/precious_assets/hi.pdf)
 
 Lets download this PDF and use exiftool to take a look at the metadata:
 
-exiftool.png
+![exiftool.png](../assets/precious_assets/exiftool.png)
 
 Cool, looks like we've discovered what technology is being used to generate the PDFs.
 
 Searching for exploits I find: https://github.com/CyberArchitect1/CVE-2022-25765-pdfkit-Exploit-Reverse-Shell
 
-git.png
+![git.png](../assets/precious_assets/git.png)
 
 Lets give this a shot!
 
@@ -72,7 +72,7 @@ Lets give this a shot!
 
 Updating the bolded values and setting up a NetCat listener I can catch a shell back as user Ruby:
 
-shell.png
+![shell.png](../assets/precious_assets/shell.png)
 
 Trying to grab the flag in user henry's `/home` folder we get an access denied error:
 
@@ -118,7 +118,9 @@ henry@precious:/home/ruby/.bundle$ whoami
 henry
 ```
 
-user_flag.png
+Note: these credentials also work for SSH as user Henry as well.
+
+![user_flag.png](../assets/precious_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -134,7 +136,7 @@ User henry may run the following commands on precious:
     (root) NOPASSWD: /usr/bin/ruby /opt/update_dependencies.rb
 ```
 
-Interesting, Taking a look at the file we see it is utilizing YAML.load, which is vulnerable to deserialization:
+Interesting, Taking a look at the script we see it is utilizing YAML.load, which is vulnerable to deserialization:
 
 ```ruby
 # Compare installed dependencies with those specified in "dependencies.yml"
@@ -246,7 +248,7 @@ Nice that worked!
 
 We can now grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/precious_assets/root_flag.png)
 
 Thanks for following along!
 
