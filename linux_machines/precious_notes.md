@@ -54,7 +54,7 @@ In the input field on the site I type: http://10.10.14.72/test.txt
 
 Which fetched the file from my Python server and generates a PDF of my file:
 
-![hi.pdf](../assets/precious_assets/hi.pdf)
+![hi.png](../assets/precious_assets/hi.png)
 
 Lets download this PDF and use exiftool to take a look at the metadata:
 
