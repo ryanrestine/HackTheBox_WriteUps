@@ -15,6 +15,7 @@ A place to document various HTB CTF writeups
 - Mango
 - Nibbles
 - Posion
+- Precious
 - Sense
 - Shocker
 - SolidState
