@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-shibboleth.png
+![shibboleth.png](../assets/shibboleth_assets/shibboleth.png)
 
 ### Enumeration
 
