@@ -33,7 +33,7 @@ Lets add shibboleth.htb to our `/etc/hosts` file.
 
 Heading to the website we see a site mostly containing anchor tags and lorem ipsum:
 
-site.png
+![site.png](../assets/shibboleth_assets/site.png)
 
 Though interestingly at the very bottom of the page we see it is running Zabbix:
 
@@ -85,17 +85,17 @@ Nmap done: 1 IP address (1 host up) scanned in 0.32 seconds
 
 Cool, it is running version 2 which can let attackers dump passsword hashes. lets try to exploit this in Metasploit:
 
-msf.png
+![msf.png](../assets/shibboleth_assets/msf.png)
 
 We can now try to crack this hash using JohnTheRipper:
 
-john.png
+![john.png](../assets/shibboleth_assets/john.png)
 
-Nice! We were able to crack the administrator's hash. Unfortunately we still have nowhere to use the credentials, so lets keep enumerating. 
+Nice! We were able to crack the administrator's hash. Unfortunately we still have no where to use the credentials, so lets keep enumerating. 
 
 Trying some subdomain fuzzing using wfuzz, we get a few matches:
 
-wfuzz.png
+![wfuzz.png](../assets/shibboleth_assets/wfuzz.png)
 
 Lets add these 3 to `/etc/hosts` as well:
 
@@ -109,11 +109,11 @@ I'm especially interested in zabbix.shibboleth.htb because we suspect we're deal
 
 Heading to the site we find a login page:
 
-zabbix.png
+![zabbix.png](../assets/shibboleth_assets/zabbix.png)
 
 Cool, we were able to login with the discovered credentials:
 
-login.png
+![login.png](../assets/shibboleth_assets/login.png)
 
 ### Exploitation
 
@@ -123,12 +123,11 @@ Searching for exploits I find: https://www.exploit-db.com/exploits/50816
 
 Setting up a NetCat listener and firing the exploit we get a shell back as user zabbix:
 
-shell.png
+![shell.png](../assets/shibboleth_assets/shell.png)
 
+This exploit is especially cool because it links the page where the shell was launched from:
 
-This exploit is especially cool bevause it links the page where the shell was launched from:
-
-exploit.png
+![exploit.png](../assets/shibboleth_assets/exploit.png)
 
 Which is good to know if you ever want to exploit this manually without using a public exploit.
 
@@ -139,7 +138,7 @@ zabbix@shibboleth:/home/ipmi-svc$ cat user.txt
 cat: user.txt: Permission denied
 ```
 
-There appears to be only one user here and we can `su` using the same password discovered before:
+There appears to be only one user here in the home directory and we can `su` using the same password discovered before:
 
 ```text
 zabbix@shibboleth:/home$ ls
@@ -150,7 +149,7 @@ ipmi-svc@shibboleth:/home$ whoami
 ipmi-svc
 ```
 
-user_flag.png
+![user_flag.png](../assets/shibboleth_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -158,7 +157,7 @@ Browsing around the target we find an interesting file `/etc/zabbix/zabbix_serve
 
 Which contains database credentials:
 
-creds.png
+![creds.png](../assets/shibboleth_assets/creds.png)
 
 Using these credentials to login to MySQL we see it is running version 10.3.25
 
@@ -178,7 +177,7 @@ MariaDB [(none)]>
 
 This version has a command execution vulnerability. https://github.com/Al1ex/CVE-2021-27928
 
-To exploit this first we'll need to craft a reverse shell executable using msfvenom:
+To exploit this first we'll need to generate a reverse shell executable using msfvenom:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Shibboleth]
@@ -194,7 +193,7 @@ Saved as: shell.so
 
 Next we can use Wget and a Python HTTP server to fetch it:
 
-transfer.png
+![transfer.png](../assets/shibboleth_assets/transfer.png)
 
 Then we can execute it with:
 
@@ -203,7 +202,7 @@ mysql -u zabbix -p -e 'SET GLOBAL wsrep_provider="/tmp/shell.so";'
 ```
 And we instantly get a shell back as root, and we can grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/shibboleth_assets/root_flag.png)
 
 Thanks for following along!
 
