@@ -17,6 +17,7 @@ A place to document various HTB CTF writeups
 - Posion
 - Precious
 - Sense
+- Shibboleth
 - Shocker
 - SolidState
 - Sunday
