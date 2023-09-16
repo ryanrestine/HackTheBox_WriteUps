@@ -339,7 +339,7 @@ And from there, Claire has WriteDacl rights over the Backup_Admins group, which 
 
 So from here we can use PowerView to change Claire's password (Note: You can see here the initial password I tried wasn't complex enough)
 
-![power.png](../assets/reel_assets/pwer.png)
+![power.png](../assets/reel_assets/power.png)
 
 We can now SSH in as user Claire with the password we set:
 
@@ -370,7 +370,7 @@ But there is a directory called Backup Scripts, and inside we can find the admin
 
 We can now SSH in as the administrator and grab the root.txt flag:
 
-![admin.png](../assets/reel_assets/admin.png)
+![root_flag.png](../assets/reel_assets/root_flag.png)
 
 Thanks for following along!
 
