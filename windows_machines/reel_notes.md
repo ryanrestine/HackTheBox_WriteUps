@@ -267,7 +267,7 @@ Nice, it worked!
 
 From here we can grab the user.txt flag from Nico's desktop:
 
-![user_flag.png](../assets/reel_assets/user_flag.png)
+![user_flag1.png](../assets/reel_assets/user_flag1.png)
 
 ### Privilege Escalation
 
