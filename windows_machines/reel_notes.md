@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Reel.png
+![Reel.png](../assets/reel_assets/reel.png)
 
 ### Enumeration
 
