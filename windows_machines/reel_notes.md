@@ -205,7 +205,7 @@ AppLocker procedure to be documented - hash rules for exe, msi and scripts (ps1,
 
 Trying to open 'Windows Event Forwarding.docx' we see the file is corrupted and can't be opened:
 
-broken.png
+![broken.png](../assets/reel_assets/broken.png)
 
 But we can use exiftool on the file to checkout the metadata and we discover an email address:
 
@@ -263,24 +263,24 @@ sendEmail -t nico@megabank.com -f ryan@test.com -u "Hi!" -m "click me please" -a
 
 Nice, it worked!
 
-exploit.png
+![exploit.png](../assets/reel_assets/exploit.png)
 
 From here we can grab the user.txt flag from Nico's desktop:
 
-user_flag.png
+![user_flag.png](../assets/reel_assets/user_flag.png)
 
 ### Privilege Escalation
 
 Also of interest in Nico's desktop is a file called cred.xml, which appears to have a password hash for user Tom:
 
-cred.png
+![cred.png](../assets/reel_assets/cred.png)
 
 To crack this PSCredential hash we can run:
 
 ```text
 powershell -c "$cred = Import-CliXml -Path cred.xml; $cred.GetNetworkCredential() | Format-List *"
 ```
-crack.png
+![crack.png](../assets/reel_assets/crack.png)
 
 Armed with this password we can now SSH in as user Tom:
 
@@ -312,7 +312,7 @@ Maybe we should re-run Cypher query against other groups we've created.
 
 And even more interesting, is there are ingestors in the BloodHound directory:
 
-ingest.png
+![ingest.png](../assets/reel_assets/ingest.png)
 
 Trying to run the SharpHound.exe ingestor is blocked:
 
@@ -327,19 +327,19 @@ Looking more closely at the files I see there is a file called acls.csv, which a
 
 Using impacket-smbserver I can copy the file back to my attacking machine to check it out.
 
-copy.png
+![copy.png](../assets/reel_assets/copy.png)
 
 Sorting through the contents to find ACL info on Tom, We see that Tom has WriteAccess to user Claire. 
 
 And from there, Claire has WriteDacl rights over the Backup_Admins group, which seems promising. 
 
-claire.png
+![claire.png](../assets/reel_assets/claire.png)
 
-backup.png
+![backup.png](../assets/reel_assets/backup.png)
 
 So from here we can use PowerView to change Claire's password (Note: You can see here the initial password I tried wasn't complex enough)
 
-power.png
+![power.png](../assets/reel_assets/pwer.png)
 
 We can now SSH in as user Claire with the password we set:
 
@@ -366,11 +366,11 @@ Access is denied.
 
 But there is a directory called Backup Scripts, and inside we can find the administrator's password:
 
-admin.png
+![admin.png](../assets/reel_assets/admin.png)
 
 We can now SSH in as the administrator and grab the root.txt flag:
 
-admin.png
+![admin.png](../assets/reel_assets/admin.png)
 
 Thanks for following along!
 
