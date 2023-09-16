@@ -44,6 +44,7 @@ A place to document various HTB CTF writeups
 - Monteverde
 - Netmon
 - Optimum
+- Reel
 - Resolute
 - Return
 - Sauna
