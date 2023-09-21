@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Blocky.png
+![Blocky.png](../assets/blocky_assets/Blocky.png)
 
 ### Enumeration
 
@@ -42,19 +42,19 @@ Looks like the Ip is forwarding to blocky.htb, so lets add that to our `/etc/hos
 
 Heading over to the website we find a WordPress site that is under construction:
 
-site.png
+![site.png](../assets/blocky_assets/site.png)
 
 Looking a bit closer at the site we find a potential username:
 
-notch.png
+![notch.png](../assets/blocky_assets/notch.png)
 
 Running Feroxbuster for directory fuzzing we find a `/plugins` page:
 
-ferox.png
+![ferox.png](../assets/blocky_assets/ferox.png)
 
 Which contains 2 .jar files we can download:
 
-files.png
+![files.png](../assets/blocky_assets/files.png)
 
 Lets inpect these files using jd-gui:
 
@@ -63,7 +63,7 @@ Lets inpect these files using jd-gui:
 └─$ jd-gui BlockyCore.jar
 ```
 
-creds.png
+![creds.png](../assets/blocky_assets/creds.png)
 
 Nice, looks like we've discovered some credentials. These appear to be database credentials, but lets see if either root or the user notch have any password resuse going on for SSH.
 
@@ -106,7 +106,7 @@ Blocky
 ```
 From here we can grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/blocky_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -134,7 +134,7 @@ uid=0(root) gid=0(root) groups=0(root)
 
 Now we can grab the final flag:
 
-root_flag.png
+![root_flag.png](../assets/blocky_assets/root_flag.png)
 
 Thanks for following along!
 
