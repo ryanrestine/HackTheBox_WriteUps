@@ -6,6 +6,7 @@ A place to document various HTB CTF writeups
 
 - Bank
 - Bashed
+- Blocky
 - Cap
 - Cronos
 - DevOops
