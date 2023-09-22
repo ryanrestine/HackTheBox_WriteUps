@@ -14,6 +14,7 @@ A place to document various HTB CTF writeups
 - Knife
 - Kotarak
 - Mango
+- Mirai
 - Nibbles
 - Posion
 - Precious
