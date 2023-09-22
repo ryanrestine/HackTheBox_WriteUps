@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Mirai.png
+![Mirai.png](../assets/mirai_assets/Mirai.png)
 
 ### Enumeration
 
@@ -50,15 +50,15 @@ Nmap done: 1 IP address (1 host up) scanned in 27.28 seconds
 
 For HTTP we have a blank page on port 80, and a Plex server sign in page on port 32400
 
-plex.png
+![plex.png](../assets/mirai_assets/plex.png)
 
 Running a directory scan against the site on port 80 we find an `/admin` page:
 
-ferox.png
+![ferox.png](../assets/mirai_assets/ferox.png)
 
-And heading to the site shows a pi-hole page, which is essentialy a DNS sinkhole built in a Raspberry Pi.
+And heading to the site shows a pi-hole page, which is essentialy a DNS sinkhole built with a Raspberry Pi.
 
-admin.png
+![admin.png](../assets/mirai_assets/admin.png)
 
 ### Exploitation
 
@@ -98,7 +98,7 @@ Nice, that worked!
 
 We can now grab the user.txt flag:
 
-user_flag.png
+![user_flag.png](../assets/mirai_assets/user_flag.png)
 
 ### Privilege Escalation
 
@@ -134,7 +134,7 @@ root@raspberrypi:~# cat root.txt
 I lost my original root.txt! I think I may have a backup on my USB stick...
 ```
 
-Usb materials are frequently stored in `/media` so lets check there:
+USB materials are frequently stored in `/media` so lets check there:
 
 ```text
 root@raspberrypi:~# cd /media
@@ -156,13 +156,13 @@ Do you know if there is any way to get them back?
 
 Hmmm, lets see if anything is mounted:
 
-mount.png
+![mount.png](../assets/mirai_assets/mount.png)
 
 Interesting, this points us to `/dev/sdb`
 
 And running `strings` against the file reveals the root.txt flag:
 
-strings.png
+![strings.png](../assets/mirai_assets/strings.png)
 
 Thanks for following along!
 
