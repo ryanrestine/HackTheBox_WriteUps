@@ -69,7 +69,7 @@ Nice, looks like we've discovered some credentials. These appear to be database 
 
 ### Exploitation
 
-No lock for the root user:
+No luck for the root user:
 
 ```text
 ┌──(ryan㉿kali)-[~/HTB/Blocky]
