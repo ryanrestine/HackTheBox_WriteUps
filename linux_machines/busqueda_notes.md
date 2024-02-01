@@ -39,11 +39,11 @@ We can see the site is attempting to redirect to http://searcher.htb/ so lets ad
 
 Navigating to the site on port 80 we find a page with search functionality:
 
-busqueda_site.png
+![busqueda_site.png](../assets/busqueda_assets/busqueda_site.png)
 
 At the bottom of the page we see it is running Flask as well as Searchor 2.4.0:
 
-busqueda_version.png
+![busqueda_version.png](../assets/busqueda_assets/busqueda_version.png)
 
 Looking for exploits for searcher 2.4.0 we find this GitHub feauturing a bash arbitrary code injection exploit:
 
@@ -80,13 +80,13 @@ curl -s -X POST $1/search -d "engine=Google&query=${evil_cmd}" 1> /dev/null
 
 We can exploit this vulnerability with the exploit script with no changes needed to the code:
 
-busqueda_shell.png
+![busqueda_shell.png](../assets/busqueda_assets/busqueda_shell.png)
 
 getting a shell back as user svc.
 
 We are now able to grab the user.txt flag:
 
-busqueda_user.png
+![busqueda_user.png](../assets/busqueda_assets/busqueda_user.png)
 
 ### Privilege Escalation
 
@@ -112,13 +112,13 @@ After loading up and running linpeas.sh to help enumerate a privilege escalation
 
 Heading to the gitea site we find a sign-in button:
 
-busqueda_gitea.png
+![busqueda_gitea.png](../assets/busqueda_assets/busqueda_gitea.png)
 
 This seems like progress, but we still don't have a password for cody.
 
 Going back to my shell for further enumeration I find a .git file in `/var/www/app` that has a config file containing cody's password:
 
-busqueda_password.png
+![busqueda_password.png](../assets/busqueda_assets/busqueda_password.png)
 
 cody:jh1usoih2bkjaspwe92
 
@@ -141,6 +141,7 @@ We are unable to read this script:
 svc@busqueda:/var/www/app/.git$ cat /opt/scripts/system-checkup.py
 cat: /opt/scripts/system-checkup.py: Permission denied
 ```
+
 But trying to run it to read a file normally prohibted to lower level users gets us this error:
 ```text
 svc@busqueda: sudo /usr/bin/python3 /opt/scripts/system-checkup.py /etc/shadow
@@ -166,7 +167,7 @@ Usage: /opt/scripts/system-checkup.py docker-inspect <format> <container_name>
 ```
 I had to reference the docker docs (ha) for this. I am super bad with Docker and it is definitely something I need to learn more about:
 
-busqueda_docker_docs.png
+![busqueda_docker_docs.png](../assets/busqueda_assets/busqueda_docker_docs.png)
 
 ```text
 svc@busqueda: sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspect --format='{{json .Config}}' gitea
@@ -178,7 +179,7 @@ Nice! Looks like we've discovered another credential: yuiu1hoiu4i5ho1uh
 
 We can use this to succesfully log into the gitea site as the administrator:
 
-busqueda_login.png
+![busqueda_login.png](../assets/busqueda_assets/busqueda_login.png)
 
 Taking a look at the sytem-checkup.py file we see it also is executing the full-checkup.sh file in `/opt/scripts`
 
@@ -210,7 +211,7 @@ sudo /usr/bin/python3 /opt/scripts/system-checkup.py full-checkup
 
 This catches us a shell back as root and we can grab the final flag:
 
-busqueda_root.png
+![busqueda_root.png](../assets/busqueda_assets/busqueda_root.png)
 
 Thanks for folllowing along!
 
