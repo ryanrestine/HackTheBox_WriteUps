@@ -106,6 +106,8 @@ Lets hang onto this info and keep enumerating.
 
 After loading up and running linpeas.sh to help enumerate a privilege escalation vector, we notice there is a gitea vhost running that was missed during enumeration. Lets add that to `/etc/hosts` and check it out:
 
+![busqueda_vhost.png](../assets/busqueda_assets/busqueda_vhost.png)
+
 ```
 10.10.11.208    searcher.htb gitea.searcher.htb
 ```
