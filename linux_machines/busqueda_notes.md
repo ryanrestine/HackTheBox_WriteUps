@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Busqueda.png
+![Busqueda.png](../assets/busqueda_assets/Busqueda.png)
 
 
 ### Enumeration
