@@ -118,7 +118,7 @@ Heading to the gitea site we find a sign-in button:
 
 This seems like progress, but we still don't have a password for cody.
 
-Going back to my shell for further enumeration I find a .git file in `/var/www/app` that has a config file containing cody's password:
+Going back to my shell for further enumeration I find a .git directory in `/var/www/app` that has a config file containing cody's password:
 
 ![busqueda_password.png](../assets/busqueda_assets/busqueda_password.png)
 
@@ -179,7 +179,7 @@ svc@busqueda: sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspec
 
 Nice! Looks like we've discovered another credential: yuiu1hoiu4i5ho1uh
 
-We can use this to succesfully log into the gitea site as the administrator:
+We can use this to successfully log into the gitea site as the administrator:
 
 ![busqueda_login.png](../assets/busqueda_assets/busqueda_login.png)
 
