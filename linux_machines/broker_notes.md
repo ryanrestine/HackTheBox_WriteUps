@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-![Broker.png](../assets/bank_assets/Broker.png)
+![Broker.png](../assets/broker_assets/Broker.png)
 
 
 ### Enumeration
@@ -115,7 +115,7 @@ Looking at the site on port 80 we are met with a login popup, which we can use a
 
 Once logged in we see it is running ActiveMQ
 
-![broker_80.png](../assets/bank_assets/broker_80.png)
+![broker_80.png](../assets/broker_assets/broker_80.png)
 
 ### Exploitation
 
@@ -125,7 +125,7 @@ Which sends a malicious poc.xml to the target and gets us a pseudo shell.
 
 First lets update the poc.xml file to our atticking IP:
 
-![broker_xml.png](../assets/bank_assets/broker_xml.png)
+![broker_xml.png](../assets/broker_assets/broker_xml.png)
 
 Then we can run the exploit:
 ```
@@ -192,7 +192,7 @@ activemq@broker:/opt/apache-activemq-5.15.15/bin$
 
 We can now grab the user.txt flag:
 
-![broker_user.png](../assets/bank_assets/broker_user.png)
+![broker_user.png](../assets/broker_assets/broker_user.png)
 
 ### Privilege Escalation
 
@@ -242,13 +242,13 @@ I'll update the line `sudo /opt/zimbra/common/sbin/nginx -c /tmp/nginx.conf` to 
 And for the curl request I'll update it to getch the root.txt flag for me:
 `curl http://localhost:1337/root/root.txt`
 
-![broker_root.png](../assets/bank_assets/broker_root.png)
+![broker_root.png](../assets/broker_assets/broker_root.png)
 
 And that's that! 
 
 There is a way to exploit this further to get a reverse shell from nginx as root outlined in the exploit article, but I chose to just grab the flag here. Alternatively, if you were feeling very lazy, you can access both flags from http://10.10.11.243:1338/ which is inexplicably hosting all files. 
 
-![broker_files.png](../assets/bank_assets/broker_files.png)
+![broker_files.png](../assets/broker_assets/broker_files.png)
 
 But where would the fun be in that? I guess I landed somewhere in the middle.
 
