@@ -239,7 +239,7 @@ curl http://localhost:1337/etc/shadow
 
 I'll update the line `sudo /opt/zimbra/common/sbin/nginx -c /tmp/nginx.conf` to `sudo /usr/sbin/nginx -c /tmp/nginx.conf`
 
-And for the curl request I'll update it to getch the root.txt flag for me:
+And for the curl request I'll update it to fetch the root.txt flag for me:
 `curl http://localhost:1337/root/root.txt`
 
 ![broker_root.png](../assets/broker_assets/broker_root.png)
