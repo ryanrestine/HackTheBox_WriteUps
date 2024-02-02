@@ -7,6 +7,7 @@ A place to document various HTB CTF writeups
 - Bank
 - Bashed
 - Blocky
+- Broker
 - Busqueda
 - Cap
 - Cronos
