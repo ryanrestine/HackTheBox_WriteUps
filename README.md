@@ -23,6 +23,7 @@ A place to document various HTB CTF writeups
 - Sense
 - Shibboleth
 - Shocker
+- Soccer
 - SolidState
 - Sunday
 - Tenten
