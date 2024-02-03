@@ -76,19 +76,19 @@ PORT     STATE SERVICE         VERSION
 
 Using Feroxbuster we can do directory scanning and find a `/tiny` directory leading us to a Tiny File Manager service.
 
-soccer_ferox.png
+![soccer_ferox.png](../assets/soccer_assets/soccer_ferox.png)
 
 Looking for default credentials we see that admin:admin@123 are default administrator credentials and we can use them to login to the site as admin:
 
-soccer_logged_in.png
+![soccer_logged_in.png](../assets/soccer_assets/soccer_logged_in.png)
 
 Looking around the target I find an upload feature, but am unable to write to the web root which is owned by root. I found I can create a new folder called test via the "New Item" feature, and in that folder I have write access permission to load  php-reverse-shell.php code. 
 
-soccer_dirs.png
+![soccer_dirs.png](../assets/soccer_assets/soccer_dirs.png)
 
 After confirming the php shell is loaded:
 
-soccer_php.png
+![soccer_php.png](../assets/soccer_assets/soccer_php.png)
 
 I can set up a netcat listener and click "Open" to trigger my reverse shell to catch a shell back as user www-data:
 
@@ -119,15 +119,15 @@ cat: user.txt: Permission denied
 
 Loading LinPEAS to the target we see there is a vhost that wasn't found during enumeration:
 
-soccer_vhost.png
+![soccer_vhost.png](../assets/soccer_assets/soccer_vhost.png)
 
 Adding this to out /etc/hosts file, we can create an account and login.
 
-soccer_tix.png
+![soccer_tix.png](../assets/soccer_assets/soccer_tix.png)
 
 We can see in the page source here some JS code that is reaching out to a websocket on port 9091:
 
-soccer_js.png
+![soccer_js.png](../assets/soccer_assets/soccer_js.png)
 
 Full transparency: I got stuck here for HOURS, and the following SQLMap commands were shamelessly lifted from 0xdf's writeup of the box found at: https://0xdf.gitlab.io/2023/06/10/htb-soccer.html. Thanks 0xdf!
 
@@ -179,7 +179,7 @@ Finally, we can dump the contents of the accounts table:
 
 Nice, SQLMap dropped user player's password for us:
 
-soccer_pw.png
+![soccer_pw.png](../assets/soccer_assets/soccer_pw.png)
 
 We can use this to SSH into the machine:
 
@@ -197,17 +197,17 @@ Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.4.0-135-generic x86_64)
 
 And grab the user.txt flag:
 
-soccer_user.png
+![soccer_user.png](../assets/soccer_assets/soccer_user.png)
 
 ### Privilege Escalation
 
-Loading LinPEAS onto the target we see that `doas` as the SUID bit set.
+Loading LinPEAS onto the target we see that `doas` has the SUID bit set.
 
-soccer_doas.png
+![soccer_doas.png](../assets/soccer_assets/soccer_doas.png)
 
 Also of interest we find that /usr/local/share/dstat is writable:
 
-soccer_lin2.png
+![soccer_lin2.png](../assets/soccer_assets/soccer_lin2.png)
 
 If we look at the doas.conf file we see we are permitted to run dstat with doas, as you would sudo.
 
@@ -230,5 +230,9 @@ echo 'import os; os.execv("/bin/sh", ["sh"])' > /usr/local/share/dstat/dstat_plu
 ```
 Nice, that worked. We can now grab the root.txt flag:
 
-soccer_root.png
+![soccer_root.png](../assets/soccer_assets/soccer_root.png)
+
+Thanks for following along!
+
+-Ryan
 
