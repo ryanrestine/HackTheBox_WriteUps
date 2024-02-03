@@ -197,7 +197,7 @@ Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.4.0-135-generic x86_64)
 
 And grab the user.txt flag:
 
-![soccer_user.png](../assets/soccer_assets/soccer_user.png)
+![soccer_users.png](../assets/soccer_assets/soccer_users.png)
 
 ### Privilege Escalation
 
