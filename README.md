@@ -41,6 +41,7 @@ A place to document various HTB CTF writeups
 - Buff
 - Chatterbox
 - Driver
+- Escape
 - Forest
 - Grandpa
 - Jeeves
