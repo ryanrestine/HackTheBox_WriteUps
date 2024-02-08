@@ -162,7 +162,7 @@ Lets now use Hydra to brute borce these passwords and see if we can SSH in with 
 
 Nice, Hydra found valid credentials: nadine:L1k3B1gBut7s@W0rk. (HR may want to take a closer look at Nadine with a password like that.)
 
-We can use this password to SSH in:
+We can use this password to login using impacket-smbexec:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/ServMon]
@@ -177,6 +177,8 @@ servmon\nadine
 And grab the first flag:
 
 ![servmon_user.png](../assets/servmon_assets/servmon_user.png)
+
+Note: These credentials also work for SSH, which I ended up switching over to for privilege escalation.
 
 ### Privilege Escalation
 
