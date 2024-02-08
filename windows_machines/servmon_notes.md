@@ -166,19 +166,16 @@ We can use this password to login using impacket-smbexec:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/ServMon]
-└─$ impacket-smbexec nadine@10.10.10.184                    
-Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+└─$ ssh nadine@10.10.10.184
+nadine@10.10.10.184's password: 
+Microsoft Windows [Version 10.0.17763.864]
 (c) 2018 Microsoft Corporation. All rights reserved.
-
-nadine@SERVMON C:\Users\Nadine>whoami
-servmon\nadine
 ```
 
 And grab the first flag:
 
 ![servmon_user.png](../assets/servmon_assets/servmon_user.png)
 
-Note: These credentials also work for SSH, which I ended up switching over to for privilege escalation.
 
 ### Privilege Escalation
 
