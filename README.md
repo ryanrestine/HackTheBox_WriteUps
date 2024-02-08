@@ -56,5 +56,6 @@ A place to document various HTB CTF writeups
 - Sauna
 - Search
 - SecNotes
+- ServMon
 - Tally
 - Timelapse
