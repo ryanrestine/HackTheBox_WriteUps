@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-ServMon.png
+![ServMon.png](../assets/servmon_assets/ServMon.png)
 
 ### Enumeration
 
