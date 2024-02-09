@@ -38,6 +38,8 @@ Nmap done: 1 IP address (1 host up) scanned in 23.67 seconds
 
 Checking out the site on port 80 we see a netowrk monitoring company called Play, and get a domain panda.htb. Lets add that to `/etc/hosts`. 
 
+![pandora_play](../assets/pandora_assets/pandora_play.png)
+
 Not finding much pf interest on port 80, I dedcided to scan for open UDP ports and found SNMP open:
 
 ```
@@ -64,13 +66,13 @@ And find the public string.
 
 Lets further enumerate this:
 
-pandora_snmp.png
+![pandora_snmp.png](../assets/pandora_assets/pandora_snmp.png)
 
-Nice, looks like we've got a username and maybe a password?
+Nice, looks like we've got a username. Not sure wha the 'Mississippi' is though..
 
 Continuing to dig through the results, we find that daniel was a username, and find a record of his password too.
 
-pandora_daniel_cred.png
+![pandora_daniel_cred.png](../assets/pandora_assets/pandora_daniel_cred.png)
 
 From here we can SSH in as user daniel:
 
@@ -115,13 +117,16 @@ We find two things immediatley of interest.
 
 One is a a  file with the SUID bit set called pandora_backup that is owned by root, but can be executed by matt
 
-pandora_suid.png
+![pandora_suid.png](../assets/pandora_assets/pandora_suid.png)
 
 We'll have to revisit this if/when we gain access as user matt.
 
-Even more interesting is the discovery of a vhost, that can only be accessed by localhost:
+Even more interesting now though is the discovery of a vhost, that can only be accessed by localhost:
 
-pandora_vhost.png
+![pandora_network.png](../assets/pandora_assets/pandora_network.png)
+
+![pandora_vhost.png](../assets/pandora_assets/pandora_vhost.png)
+
 
 This is a great find. 
 
@@ -134,13 +139,13 @@ Lets set up the port forwarding needed to access the site:
 
 We can now navigate to the internal site in our browser at http://127.0.0.1 
 
-pandora_internal.png
+![pandora_internal.png](../assets/pandora_assets/pandora_internal.png)
 
 We know from the LinPEAS findings that matt is likely the administrator for the site, but as of now we don't know his password.
 
 Trying to login as user daniel we get the following error:
 
-pandora_error.png
+![pandora_error.png](../assets/pandora_assets/pandora_error.png)
 
 Looking for unauthenticated exploits I find: https://github.com/shyam0904a/Pandora_v7.0NG.742_exploit_unauthenticated
 
@@ -168,13 +173,13 @@ pandora
 
 Nice, that worked!
 
-Next I'll set up a listener and grab a Python revers shell oneliner from revshell.com, so i can spawn a proper reverse shell:
+Next I'll set up a listener and grab a Python revers shell oneliner from revshells.com, so I can spawn a proper reverse shell:
 
-pandora_shello.png
+![pandora_shello.png](../assets/pandora_assets/pandora_shello.png)
 
 I can now grab that user.txt flag:
 
-pandora_user.png
+![pandora_user.png](../assets/pandora_assets/pandora_user.png)
 
 ### Privilege Escalation
 
@@ -224,9 +229,9 @@ matt
 
 I got stuck here for ages. This should be working to get me root, but everytime I ran it I just came back into a bash shell as ...matt... But why?
 
-Looking around for answers I found 0xdf's writeup of the box, and he explains why in his "Beyond Root" section. Apparently there is an issue with Apache /mpm-itk and the inheritence of SUID privileges. Its an interesting read and I reccomend it: https://0xdf.gitlab.io/2022/05/21/htb-pandora.html#beyond-root
+Looking around for answers I found 0xdf's writeup of the box, and he explains why in his "Beyond Root" section. Apparently there is an issue with Apache /mpm-itk and the inheritence of SUID privileges. Its an interesting read and I reccomend it, even if I don't totally understand it all: https://0xdf.gitlab.io/2022/05/21/htb-pandora.html#beyond-root
 
-Anways, the workaround here is getting SSH access as Matt, which allows us to exploit the pandora_backup as attempted before, but this time successfully.
+Anyways, the workaround here is getting SSH access as Matt, which allows us to exploit the pandora_backup as attempted before, but this time successfully.
 
 To get SSH access first we'll need to generate some keys. I'll set this up on the target, and then transfer the id_rsa back over to my attacking machine:
 
@@ -306,7 +311,7 @@ Nice, that worked this time!
 
 Lets grab the final flag:
 
-pandora_root.png
+![pandora_root.png](../assets/pandora_assets/pandora_root.png)
 
 Thanks for following along!
 
