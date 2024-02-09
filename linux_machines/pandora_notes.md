@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Pandora.png
+![Pandora.png](../assets/pandora_assets/Pandora.png)
 
 ### Enumeration
 
