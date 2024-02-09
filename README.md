@@ -18,6 +18,7 @@ A place to document various HTB CTF writeups
 - Mango
 - Mirai
 - Nibbles
+- Pandora
 - Posion
 - Precious
 - Sense
