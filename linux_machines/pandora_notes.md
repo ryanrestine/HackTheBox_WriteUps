@@ -72,7 +72,7 @@ Nice, looks like we've got a username. Not sure wha the 'Mississippi' is though.
 
 Continuing to dig through the results, we find that daniel was a username, and find a record of his password too.
 
-![pandora_daniel_cred.png](../assets/pandora_assets/pandora_daniel_cred.png)
+![pandora_daniel_creds.png](../assets/pandora_assets/pandora_daniel_creds.png)
 
 From here we can SSH in as user daniel:
 
