@@ -43,6 +43,7 @@ A place to document various HTB CTF writeups
 - Chatterbox
 - Driver
 - Escape
+- Flight
 - Forest
 - Grandpa
 - Jeeves
