@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Flight.png
+![Flight.png](../assets/flight_assets/Flight.png)
 
 ### Enumeration
 
