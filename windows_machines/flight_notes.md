@@ -164,6 +164,8 @@ Nice, it looks like S.Moon is using the same password as svc_apache.
 
 Unfortuantely we still don't have local auth privileges on the target, but what is interesting is we now have both read and write access to the Shared SMB share, whereas svc_apache only had read permissions.
 
+![flight_smoon_shares.png](../assets/flight_assets/flight_smoon_shares.png)
+
 This makes me think we may be able to achieve more NTLM theft by puting a malicious file in the Shared share, setting up another Responder listener, and capturing the hash of whoever click on our file; just like we did for svc_apache.
 
 Unfortunately the attempts I made were getting denied:
