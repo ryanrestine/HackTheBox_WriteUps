@@ -82,15 +82,15 @@ Lets add intelligence.htb to our `/etc/hosts` file.
 
 Checking out the site on port 80, we find a static looking site with lorem ipsum.
 
-intelligence_site.png
+![intelligence_site.png](../assets/intelligence_assets/intelligence_site.png)
 
 Scrolling down we find a couple of links to download PDFs:
 
-intelligence_downloads.png
+![intelligence_downloads.png](../assets/intelligence_assets/intelligence_downloads.png)
 
 Both files appear just to also be lorem ipsum:
 
-intelligence_first_pdf.png
+![intelligence_first_pdf.png](../assets/intelligence_assets/intelligence_first_pdf.png)
 
 We can download the PDFs to our machine and use exiftool to inspect the metadata:
 
@@ -284,7 +284,7 @@ File 2020-01-04-upload.pdf downloaded successfully
 
 Once the script is finished we can check that all the found PDFs were downloaded:
 
-intelligence_lotsa_pdfs.png
+![intelligence_lotsa_pdfs.png](../assets/intelligence_assets/intelligence_lotsa_pdfs.png)
 
 Using exiftool again in conjunction with `grep` we can isolate and discover several more usernames:
 
@@ -393,7 +393,7 @@ pdfs/2020-06-04-upload.txt:After logging in please change your password as soon 
 ```
 Nice, we got a hit. 2020-06-04-upload.txt seems very interesting!
 
-intelligence_pw.png
+![intelligence_pw.png](../assets/intelligence_assets/intelligence_pw.png)
 
 Awesome, we've discovered the default account setup password: NewIntelligenceCorpUser9876
 
@@ -407,7 +407,7 @@ SMB         intelligence.htb 445    DC               [+] intelligence.htb\Tiffan
 
 Seeing which shares Tiffany.Molina can read we see she can access the IT and Users  non-default shares.
 
-intelligence_tiff-shares.png
+![intelligence_tiff_shares.png](../assets/intelligence_assets/intelligence_tiff_shares.png
 
 Looking in the IT share we find a downdector.ps1 script:
 
@@ -462,11 +462,11 @@ And wait for the downdetector.ps1 script to run (could take up to 5 minutes)
 
 Nice, that worked! We captured Ted.Graves hash as his script attempted to authenticate to our record:
 
-intelligence_responder.png
+![intelligence_responder.png](../assets/intelligence_assets/intelligence_responder.png)
 
 Lets try cracking it in John:
 
-intelligence_john1.png
+![intelligence_john1.png](../assets/intelligence_assets/intelligence_john1.png)
 
 Cool, we now have Ted.Graves password: Mr.Teddy
 
@@ -499,7 +499,7 @@ INFO: Compressing output into 20240213112552_bloodhound.zip
 
 Looking through the results after marking Ted.Graves and Tiffany.Molina as 'owned' we can see that Ted.Graves can read the GMSA password of service account svc_int:
 
-intelligence_bloodhound.png
+![intelligence_bloodhound.png](../assets/intelligence_assets/intelligence_bloodhound.png)
 
 We can read the GMSA password with gMSADUmper.py https://github.com/micahvandeusen/gMSADumper:
 
@@ -578,9 +578,9 @@ intelligence\administrator
 
 And grab both the flags:
 
-intelligence_user.png
+![intelligence_user.png](../assets/intelligence_assets/intelligence_user.png)
 
-intelligence_root.png
+![intelligence_root.png](../assets/intelligence_assets/intelligence_root.png)
 
 Thanks for following along!
 
