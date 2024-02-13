@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Intelligence.png
+![Intelligence.png](../assets/intelligence_assets/Intelligence.png)
 
 ### Enumeration
 
