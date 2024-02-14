@@ -260,7 +260,7 @@ with open("pdf_dates_list.txt", "w") as file:
 print("Output has been saved to pdf_dates_list.txt")
 ```
 
-Running the script from a directory I called `pdfs` we can see the discovered PDFs being downloaded by curl:
+Running the script from a directory I called `pdfs` we can see the discovered PDFs being downloaded by the script:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Intelligence/pdfs]
