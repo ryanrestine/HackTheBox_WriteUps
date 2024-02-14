@@ -46,6 +46,7 @@ A place to document various HTB CTF writeups
 - Flight
 - Forest
 - Grandpa
+- Intelligence
 - Jeeves
 - Jerry
 - Mantis
