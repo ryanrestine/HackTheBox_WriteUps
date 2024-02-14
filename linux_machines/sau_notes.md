@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Sau.png
+![Sau.png](../assets/sau_assets/Sau.png)
 
 ### Enumeration
 
@@ -60,7 +60,7 @@ Interesting how port 80 and 8338 are returning on the Nmap scan, but are filtere
 
 Looking at port 55555 we see it is a web page running Request Baskets:
 
-sau_site.png
+![sau_site.png](../assets/sau_assets/sau_site.png)
 
 At the bottom of the page we also get the version number running:
 
@@ -104,7 +104,7 @@ This creates a basket for us, and gives us the authorization key to access it.
 
 Now if we navigate to the created basket we can see port 80 is running maltrail V0.53
 
-sau_internal.png
+![sau_internal.png](../assets/sau_assets/sau_internal.png)
 
 Looking for maltrail exploits I find an unauthenticated RCE: https://github.com/spookier/Maltrail-v0.53-Exploit
 
@@ -120,11 +120,11 @@ Running exploit on http://10.10.11.224:55555/dbvzpu/login
 
 Gets me a shell us user puma:
 
-sau_shell.png
+![sau_shell.png](../assets/sau_assets/sau_shell.png)
 
 I can now access the user.txt flag in puma's home directory:
 
-sau_user.png
+![sau_user.png](../assets/sau_assets/sau_user.png)
 
 ### Privilege Escalation
 
@@ -144,7 +144,7 @@ Cool, this should be straightforward. Checking out https://gtfobins.github.io/gt
 
 I find:
 
-sau_gtfo.png
+![sau_gtfo.png](../assets/sau_assets/sau_gtfo.png)
 
 I can then run:
 
@@ -157,7 +157,7 @@ WARNING: terminal is not fully functional
 
 To drop into a root shell, permitting me to read the final flag:
 
-sau_root.png
+![sau_root.png](../assets/sau_assets/sau_root.png)
 
 Thanks for following along!
 
