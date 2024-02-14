@@ -407,7 +407,7 @@ SMB         intelligence.htb 445    DC               [+] intelligence.htb\Tiffan
 
 Seeing which shares Tiffany.Molina can read we see she can access the IT and Users  non-default shares.
 
-![intelligence_tiff_shares.png](../assets/intelligence_assets/intelligence_tiff_shares.png
+![intelligence_tiff_shares.png](../assets/intelligence_assets/intelligence_tiff_shares.png)
 
 Looking in the IT share we find a downdector.ps1 script:
 
