@@ -110,6 +110,8 @@ Looking for maltrail exploits I find an unauthenticated RCE: https://github.com/
 
 This exploit targets the username parameter and injects a reverse shell into it.
 
+![sau_mal_exploit](../assets/sau_assets/sau_mal_exploit.png)
+
 Running the exploit against the basket targeting maltrail:
 
 ```
