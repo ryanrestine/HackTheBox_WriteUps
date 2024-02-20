@@ -68,7 +68,7 @@ Lets further enumerate this:
 
 ![pandora_snmp.png](../assets/pandora_assets/pandora_snmp.png)
 
-Nice, looks like we've got a username. Not sure wha the 'Mississippi' is though..
+Nice, looks like we've got a username. Not sure what the 'Mississippi' is though..
 
 Continuing to dig through the results, we find that daniel was a username, and find a record of his password too.
 
@@ -149,7 +149,7 @@ Trying to login as user daniel we get the following error:
 
 Looking for unauthenticated exploits I find: https://github.com/shyam0904a/Pandora_v7.0NG.742_exploit_unauthenticated
 
-Which exploits a SQL injection vulnerability in pandora FMS and inpersonates the administrator, dropping us into a webshell.
+Which exploits a SQL injection vulnerability in pandora FMS and impersonates the administrator, dropping us into a webshell.
 
 Lets try it:
 
