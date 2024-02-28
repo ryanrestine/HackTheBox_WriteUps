@@ -70,7 +70,7 @@ but if we go to bank.htb we are forwarded to bank.htb/login.php where met with a
 
 ![login.png](../assets/bank_assets/login.png)
 
-Cool, now  that we know PHP is being used we can do some directory busting, and make sure to include fuxxing for .php pages as well.
+Cool, now  that we know PHP is being used we can do some directory busting, and make sure to include fuzzing for .php pages as well.
 
 ![directory.png](../assets/bank_assets/directory.png)
 
