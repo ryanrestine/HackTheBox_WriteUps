@@ -12,6 +12,7 @@ A place to document various HTB CTF writeups
 - Cap
 - Cronos
 - DevOops
+- Devvortex
 - Irked
 - Knife
 - Kotarak
