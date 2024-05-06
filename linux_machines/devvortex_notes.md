@@ -39,7 +39,7 @@ Lets add http://devvortex.htb to `/etc/hosts`
 
 Checking out the site we find a page offering developer services:
 
-devvortex_site.png
+![devvortex_site.png](../assets/devvortex_assets/devvortex_site.png)
 
 After not finding much during directory fuzzing, I scanned for vhosts and found dev.devvortex.htb, which I also added to `/etc/hosts`. 
 
@@ -83,7 +83,7 @@ Target: http://dev.devvortex.htb/
 
 Heading to this directory we see the site is running Joomla:
 
-devvortex_admin.png
+![devvortex_admin.png](../assets/devvortex_assets/devvortex_admin.png)
 
 Looking for Joola exploit I find this information disclosure vulnerability: https://github.com/Acceis/exploit-CVE-2023-23752
 
@@ -116,7 +116,7 @@ DB encryption 0
 
 I am able to use Lewis' credentials to login to the Joomla site.
 
-devvortex_login.png
+![devvortex_login.png](../assets/devvortex_assets/devvortex_login.png)
 
 Because we have administrator access, we should have an easy time getting remote code execution from here. Lets go to System > Templates > Administrator Templates > index.php and overwrite the file with PentestMonkey's php-reverse-shell.php. Now when we refresh the page and navigate back to the site, we catch a shell as www-data:
 
@@ -147,11 +147,11 @@ cat: user.txt: Permission denied
 
 However the credentials we discovered earlier were actually to the joomla mysql DB, so lets login on the target and see if we can discover any other credentials:
 
-devvortex_logan_hash.png
+![devvortex_logan_hash.png](../assets/devvortex_assets/devvortex_logan_hash.png)
 
 Nice, looks like we've found a hash for user logan. Lets try cracking it:
 
-devvortex_john.png
+![devvortex_john.png](../assets/devvortex_assets/devvortex_john.png)
 
 John was able to crack the bcrypt hash for us: `logan:tequieromucho`
 
@@ -164,7 +164,7 @@ logan@devvortex:~$ whoami
 logan
 ```
 
-devvortex_user.png
+![devvortex_user.png](../assets/devvortex_assets/devvortex_user.png)
 
 ### Privilege Escalation
 
@@ -194,7 +194,7 @@ Next we can select `V` which will open up a terminal as root. from there we can 
 
 We can now grab the final flag:
 
-devvortext_root.png
+![devvortext_root.png](../assets/devvortex_assets/devvortex_root.png)
 
 Thanks for following along!
 
