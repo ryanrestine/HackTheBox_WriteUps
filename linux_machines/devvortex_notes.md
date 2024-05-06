@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-![Devvortex.png](../Devvortex.png)
+![Devvortex.png](../assets/Devvortex.png)
 
 ### Enumeration
 
