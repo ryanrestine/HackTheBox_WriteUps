@@ -43,7 +43,7 @@ Interestingly though, the login page redirects to data.analytical.htb, so lets a
 
 Navigating to this page presents me with a login to metabase:
 
-![analytics_metabase_login.php](../assets/analytics_assets/analytics_metabase.png)
+![analytics_metabase_login.php](../assets/analytics_assets/analytics_metabase_login.png)
 
 Searching for exploits I find: https://www.assetnote.io/resources/research/chaining-our-way-to-pre-auth-rce-in-metabase-cve-2023-38646 which details vulnerabilities we can chain together to achieve RCE on the target.
 
