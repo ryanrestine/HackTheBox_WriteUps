@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Analytics.png
+![Analytics.png](../assets/analytics_assets/Analytics.png)
 
 ### Enumeration
 
