@@ -37,19 +37,19 @@ Lets add analytical.htb to `/etc/hosts`
 
 Checking out the site on port 80 we find a largely static page:
 
-analytics_site.png
+![analytics_site.png](../assets/analytics_assets/analytics_site.png)
 
 Interestingly though, the login page redirects to data.analytical.htb, so lets also add that to `/etc/hosts`
 
 Navigating to this page presents me with a login to metabase:
 
-analytics_metabase_login.php
+![analytics_metabase_login.php](../assets/analytics_assets/analytics_metabase.png)
 
 Searching for exploits I find: https://www.assetnote.io/resources/research/chaining-our-way-to-pre-auth-rce-in-metabase-cve-2023-38646 which details vulnerabilities we can chain together to achieve RCE on the target.
 
 First, we can navigate to http://data.analytical.htb/api/session/properties to obtain the setup-token we'll need:
 
-analytics_setup_token.png
+![analytics_setup_token.png](../assets/analytics_assets/analytics_setup_token.png)
 
 Next, I searched for public exploits for the vulnerability and found: https://github.com/securezeron/CVE-2023-38646/blob/main/CVE-2023-38646-Reverse-Shell.py
 
@@ -94,7 +94,7 @@ Nice, here is a new user and their password. lets use these to SSH in as metalyt
 
 From here I can grab the user.txt flag:
 
-analytics_user.png
+![analytics_user.png](../assets/analytics_assets/analytics_user.png)
 
 ### Privilege Escalation
 
@@ -131,7 +131,7 @@ root
 
 I can then grab the final flag:
 
-analytics_root.png
+![analytics_root.png](../assets/analytics_assets/analytics_root.png)
 
 Thanks for following along!
 
