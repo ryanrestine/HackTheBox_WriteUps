@@ -4,6 +4,7 @@ A place to document various HTB CTF writeups
 
 ## Linux 🐧
 
+- Analytics
 - Bank
 - Bashed
 - Blocky
