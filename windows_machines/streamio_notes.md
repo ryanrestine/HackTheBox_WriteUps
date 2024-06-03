@@ -78,7 +78,7 @@ Port 80 is a default IIS landing page, and directory fuzzing didn't turn up anyt
 
 Port 443 however is hosting a movie streaming site:
 
-streamio_443.png
+![streamio_443.png](../assets/streamio_assets/streamio_443.png)
 
 After enumerating the site and not finding much of value, I fuzzed for vhosts and found watch.streamIO.htb.
 
@@ -107,7 +107,7 @@ Requests/sec.: 0
 
 Lets add that to `/etc/hosts` as well and navigate to the site.
 
-streamio_watch.png
+![streamio_watch.png](../assets/streamio_assets/streamio_watch.png)
 
 Kicking off some directory scanning against the vhost we find a search.php page:
 
@@ -135,19 +135,19 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 /Search.php           (Status: 200) [Size: 253887]
 ```
 
-streamio_search_page.png
+![streamio_search_page.png](../assets/streamio_assets/streamio_search_page.png)
 
 Clicking "watch" to stream a movie we get the following error:
 
-streamio_security_error.png
+![streamio_security_error.png](../assets/streamio_assets/streamio_security_error.png)
 
 Interesting.
 
 Beginning to test the search function for a possible SQL injection we get redirected to /blocked.php
 
-streamio_blocked.png
+![streamio_blocked.png](../assets/streamio_assets/streamio_blocked.png)
 
-Seems like were on the right path here. And thankfully we are able to go back to the search page and resume searching/ testing without actually being blocked.
+Seems like are on the right path here. And thankfully we are able to go back to the search page and resume searching/ testing without actually being blocked.
 
 Continuing testing we can begin trying UNION injections.
 
@@ -170,7 +170,7 @@ Now that we have this knowledge we can check the version with:
 cn' UNION select 1,@@version,3,4,5,6-- -	
 ```
 
-streamio_version.png
+![streamio_version.png](../assets/streamio_assets/streamio_version.png)
 
 
 Lets now look at the databases:
