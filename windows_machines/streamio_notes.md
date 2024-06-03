@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-StreamIO.png
+![StreamIO.png](../assets/streamio_assets/StreamIO.png)
 
 ### Enumeration
 
