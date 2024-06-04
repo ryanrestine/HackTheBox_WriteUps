@@ -38,21 +38,21 @@ Based on these results lets add horizontall.htb to `/etc/hosts`
 
 Checking out the page on port 80 we find a site with no links or any functionality.
 
-horizontall_site.png
+![horizontall_site.png](../assets/horizontall_assets/horizontall_site.png)
 
 But taking a look at the page source we can see a JS directory that looks out of place:
 
-horizontall_link.png
+![horizontall_link.png](../assets/horizontall_assets/horizontall_link.png)
 
 Heading to this site reveals a bunch of code with no styling or formatting:
 
-horizontall_code.png
+![horizontall_code.png](../assets/horizontall_assets/horizontall_code.png)
 
 Wanting to inspect this further, I copy the code into https://lelinhtinh.github.io/de4js/ to clean it up and make it more readable.
 
-Skimming through the cleaned-up output I notice a VHOST:
+Skimming through the cleaned-up output I notice a VHOST being referenced:
 
-horizontall_vhost.htb
+![horizontall_vhost.htb](../assets/horizontall_assets/horizontall_vhost.png)
 
 Adding this to `/etc/hosts` and heading to the site we see a basing "Welcome" message.
 
@@ -95,7 +95,7 @@ by Ben "epi" Risher 🤓                 ver: 2.9.1
 
 Heading to the admin page we find a strapi login:
 
-horizontall_strapi_login.png
+![horizontall_strapi_login.png](../assets/horizontall_assets/horizontall_strapi_login.png)
 
 ### Exploitation
 
@@ -131,15 +131,15 @@ horizontall
 
 And I can now grab the user.txt flag:
 
-horizontall_user.png
+![horizontall_user.png](../assets/horizontall_assets/horizontall_user.png)
 
 ### Privilege Escalation
 
 Loading linpeas on to the target to help enumerate a privilege escalation vector, I notice that a few more ports are open internally:
 
-horizontall_ports.png
+![horizontall_ports.png](../assets/horizontall_assets/horizontall_ports.png)
 
-We also found in the linpeas results developer's password:
+We also found in the linpeas results the user developer's password:
 
 ```
   "defaultConnection": "default",
@@ -228,7 +228,7 @@ On the target:
 
 We can now navigate to 127.0.0.1:8000 in the browser and find a Laravel page.
 
-horizontal_laravel.png
+![horizontal_laravel.png](../assets/horizontall_assets/horizontall_laravel.png)
 
 Looking for exploits I find: https://github.com/joshuavanderpoll/CVE-2021-3129 which exploits Laravel version 8 and earlier that are running in debug mode.
 
@@ -302,7 +302,7 @@ horizontall
 
 Unfortuantely this exploit crashes pretty fast, so you'll either want to fully stabilize your shell, or grab that root flag quickly.
 
-horizontall_root.png
+![horizontall_root.png](../assets/horizontall_assets/horizontall_root.png)
 
 Thanks for following along!
 
