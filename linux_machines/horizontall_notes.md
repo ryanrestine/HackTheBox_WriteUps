@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-![Horizontall.png](../assets/horizontall_assets/Horizontal.png)
+![Horizontall.png](../assets/horizontall_assets/Horizontall.png)
 
 ### Enumeration
 
