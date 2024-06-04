@@ -214,7 +214,7 @@ mysql> select * from strapi_administrator;
 
 But unfortunately I was unable to crack this password.
 
-Going back to the open internal ports, I can use Chisel to set up a tunnel to try to access whatever is running internal on port 8000:
+Going back to the open internal ports, I can use Chisel to set up a tunnel to try to access whatever is running internally on port 8000:
 
 On my Kali box:
 ```
@@ -302,7 +302,7 @@ horizontall
 
 Unfortuantely this exploit crashes pretty fast, so you'll either want to fully stabilize your shell, or grab that root flag quickly.
 
-![horizontall_root.png](../assets/horizontall_assets/horizontall_root.png)
+![hotizontall_root.png](../assets/horizontall_assets/hotizontall_root.png)
 
 Thanks for following along!
 
