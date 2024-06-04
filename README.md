@@ -14,6 +14,7 @@ A place to document various HTB CTF writeups
 - Cronos
 - DevOops
 - Devvortex
+- Horizontall
 - Irked
 - Knife
 - Kotarak
