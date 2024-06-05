@@ -51,7 +51,7 @@ Using Wappalyzer we can see the site is running CMS Made Simple.
 
 ### Exploitation
 
-Looking for public expploits I find: https://gist.github.com/kriss-u/321f0418778697e2ec919f04664ceb4b
+Looking for public exploits I find: https://gist.github.com/kriss-u/321f0418778697e2ec919f04664ceb4b
 
 Lets give the exploit a shot:
 
