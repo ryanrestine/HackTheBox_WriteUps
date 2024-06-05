@@ -41,7 +41,7 @@ Checking out the page on port 80 it looks like a blog in the making, but doesn't
 
 There is a note about DOS protection in place, so I'll hold off on directory fuzzing and Nikto for now.
 
-Nmap catches that there is a robots/txt page listing `/writeup` as a disallowed entry.
+Nmap catches that there is a robots.txt page listing `/writeup` as a disallowed entry.
 
 Navigating to that page we find a couple of HTB writeups:
 
@@ -102,7 +102,7 @@ From here we can SSH in and grab the user.txt flag:
 
 ### Privilege Escalation
 
-Loading linpeas we see that we are able to write to `/usr/local/bin` and `/usr/local/games` which are also in our `$PATH`. This is definitiely uncommon enough to warrant looking into.
+Loading linpeas we see that we are able to write to `/usr/local/bin` and `/usr/local/games` which are also in our `$PATH`. This is definitely uncommon enough to warrant looking into.
 
 ![writeup_lp.png](../assets/writeup_assets/writeup_lp.png)
 
@@ -125,7 +125,7 @@ bash-4.4# hostname
 writeup
 ```
 
-Nice that worked! You can see above I set the SUID bit on bash (something only the root user could do), and when I started a new SSH session the root cronjob executed the script and I was able to drop into a root shell.
+Nice that worked! You can see above `run-parts` will SUID bit on bash (something only the root user could do), and when I started a new SSH session the root cronjob executed the script and I was able to drop into a root shell.
 
 ![writeup_root_flag.png](../assets/writeup_assets/writeup_root_flag.png)
 
