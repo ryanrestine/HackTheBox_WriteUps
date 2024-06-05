@@ -62,7 +62,7 @@ Lets give the exploit a shot:
 
 Nice, the exploit was able to get jkr's password hash:
 
-![writeup_pw.png](../assets/writeup_assets/writeup_writeup_pw.png)
+![writeup_pw.png](../assets/writeup_assets/writeup_pw.png)
 
 Lets add the hash and the salt to a file called jkr_hash and attempt to crack it:
 
