@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Writeup.png
+![Writeup.png](../assets/writeup_assets/Writeup.png)
 
 ### Enumeration
 
@@ -37,7 +37,7 @@ Nmap done: 1 IP address (1 host up) scanned in 29.12 seconds
 
 Checking out the page on port 80 it looks like a blog in the making, but doesn't yet contain any real content.
 
-writeup_site.png
+![writeup_site.png](../assets/writeup_assets/writeup_site.png)
 
 There is a note about DOS protection in place, so I'll hold off on directory fuzzing and Nikto for now.
 
@@ -45,7 +45,7 @@ Nmap catches that there is a robots/txt page listing `/writeup` as a disallowed 
 
 Navigating to that page we find a couple of HTB writeups:
 
-writeup_writeup.png
+![writeup_writeup.png](../assets/writeup_assets/writeup_writeup.png)
 
 Using Wappalyzer we can see the site is running CMS Made Simple.
 
@@ -62,7 +62,7 @@ Lets give the exploit a shot:
 
 Nice, the exploit was able to get jkr's password hash:
 
-writeup_pw.png
+![writeup_pw.png](../assets/writeup_assets/writeup_writeup_pw.png)
 
 Lets add the hash and the salt to a file called jkr_hash and attempt to crack it:
 
@@ -98,7 +98,7 @@ Awesome, Hashcat was able to crack this for us: `jkr:raykayjay9`
 
 From here we can SSH in and grab the user.txt flag:
 
-writeup_user_flag.png
+![writeup_user_flag.png](../assets/writeup_assets/writeup_user_flag.png)
 
 ### Privilege Escalation
 
@@ -106,7 +106,7 @@ Loading linpeas we see that we are able to write to `/usr/local/bin` and `/usr/l
 
 Lets load up pspy64 and get it listening for processes and then SSH in again in a separate shell:
 
-writeup_cron.png
+![writeup_cron.png](../assets/writeup_assets/writeup_cron.png)
 
 Interesting, it appears that once we SSH'd in, the root user issues a cronjob using `run-parts`, but luckily for us it does not use the absolute path. We should be able to hijack this by writing our own malicious run-parts file in `/usr/local/bin` and then it will execute as the root user when an SSH connection is opened. Lets try it:
 
@@ -125,7 +125,7 @@ writeup
 
 Nice that worked! You can see above I set the SUID bit on bash (something only the root user could do), and when I started a new SSH session the root cronjob executed the script and I was able to drop into a root shell.
 
-writeup_root_flag.png
+![writeup_root_flag.png](../assets/writeup_assets/writeup_root_flag.png)
 
 Thanks for following along!
 
