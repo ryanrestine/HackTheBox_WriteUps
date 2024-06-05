@@ -35,6 +35,7 @@ A place to document various HTB CTF writeups
 - Traverxec
 - Valenintine
 - Validation
+- Writeup
 
 ## Windows 🪟
 
