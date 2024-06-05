@@ -104,6 +104,8 @@ From here we can SSH in and grab the user.txt flag:
 
 Loading linpeas we see that we are able to write to `/usr/local/bin` and `/usr/local/games` which are also in our `$PATH`. This is definitiely uncommon enough to warrant looking into.
 
+![writeup_lp.png](../assets/writeup_assets/writeup_lp.png)
+
 Lets load up pspy64 and get it listening for processes and then SSH in again in a separate shell:
 
 ![writeup_cron.png](../assets/writeup_assets/writeup_cron.png)
