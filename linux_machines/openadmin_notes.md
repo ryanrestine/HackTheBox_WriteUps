@@ -49,7 +49,7 @@ Looking at the `/music` page we find a site that has a couple of links.
 
 And interestingly clicking on the "Login" button redirects us to a `/ona` page, running OpenNetAdmin.
 
-![openadmin_ona.png](../assets/openadmin_assets/openadmin_ona.png)
+![openadmin_ona_page.png](../assets/openadmin_assets/openadmin_ona_page.png)
 
 Searching for opennetadmin exploits I find: https://github.com/amriunix/ona-rce
 
@@ -156,7 +156,7 @@ So it looks like there is an internal page running, and accessing it will give m
 
 Loading linpeas to help enumerate, we can confirm there is an internal.openadmin.htb page running on port 52846
 
-![openadmin_ports.png](../assets/openadmin_assets/openadmin_openadmin_ports.png)
+![openadmin_ports.png](../assets/openadmin_assets/openadmin_ports.png)
 
 ![openadmin_internal_host.png](../assets/openadmin_assets/openadmin_internal_host.png)
 
