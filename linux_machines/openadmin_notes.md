@@ -37,19 +37,19 @@ Nmap done: 1 IP address (1 host up) scanned in 15.68 seconds
 
 Looking at port 80 we find an Apache landing page:
 
-![openadmin_apache.png](..assets/openadmin_assets/openadmin_apache.png)
+![openadmin_apache.png](../assets/openadmin_assets/openadmin_apache.png)
 
 Kicking off some directory fuzzing we find several pages:
 
-![openadmin_dirs.png](..assets/openadmin_assets/openadmin_dirs.png)
+![openadmin_dirs.png](../assets/openadmin_assets/openadmin_dirs.png)
 
 Looking at the `/music` page we find a site that has a couple of links.
 
-![openadmin_music.png](..assets/openadmin_assets/openadmin_music.png)
+![openadmin_music.png](../assets/openadmin_assets/openadmin_music.png)
 
 And interestingly clicking on the "Login" button redirects us to a `/ona` page, running OpenNetAdmin.
 
-![openadmin_ona.png](..assets/openadmin_assets/openadmin_ona.png)
+![openadmin_ona.png](../assets/openadmin_assets/openadmin_ona.png)
 
 Searching for opennetadmin exploits I find: https://github.com/amriunix/ona-rce
 
@@ -67,7 +67,7 @@ Nice, lets exploit this.
 
 ### Exploitation
 
-![openadmin_pseudo.png](..assets/openadmin_assets/openadmin_pseudo.png)
+![openadmin_pseudo.png](../assets/openadmin_assets/openadmin_pseudo.png)
 
 Lets issue a reverse shell one-liner to catch a proper shell back:
 
@@ -130,11 +130,11 @@ Looking through the folder reveals some interesting files:
 
 index.php show a hash for Jimmy:
 
-![openadmin_jimmy_hash.png](..assets/openadmin_assets/openadmin_jimmy_hash.png)
+![openadmin_jimmy_hash.png](../assets/openadmin_assets/openadmin_jimmy_hash.png)
 
 Which I can crack in crackstation:
 
-![openadmin_crackstation](..assets/openadmin_assets/openadmin_crackstation.png)
+![openadmin_crackstation](../assets/openadmin_assets/openadmin_crackstation.png)
 
 and main.php is also interesting:
 
@@ -156,9 +156,9 @@ So it looks like there is an internal page running, and accessing it will give m
 
 Loading linpeas to help enumerate, we can confirm there is an internal.openadmin.htb page running on port 52846
 
-![openadmin_ports.png](..assets/openadmin_assets/openadmin_openadmin_ports.png)
+![openadmin_ports.png](../assets/openadmin_assets/openadmin_openadmin_ports.png)
 
-![openadmin_internal_host.png](..assets/openadmin_assets/openadmin_internal_host.png)
+![openadmin_internal_host.png](../assets/openadmin_assets/openadmin_internal_host.png)
 
 Lets load Chisel to the target to set up a tunnel so we can access it.
 
@@ -174,11 +174,11 @@ On the target:
 
 Once setup, we can access the internal page at 127.0.0.1:52846 and see the login page:
 
-![openadmin_internal_logon.png](..assets/openadmin_assets/openadmin_internal_logon.png)
+![openadmin_internal_logon.png](../assets/openadmin_assets/openadmin_internal_logon.png)
 
 and we can login with jimmy:Revealed
 
-![openadmin_id_rsa.png](..assets/openadmin_assets/openadmin_id_rsa.png)
+![openadmin_id_rsa.png](../assets/openadmin_assets/openadmin_id_rsa.png)
 
 We can copy the id_rsa and change modes on it, but when going to use it we see it is passphrase protected.
 
@@ -198,7 +198,7 @@ Enter passphrase for key 'joanna_id_rsa':
 
 Lets use ssh2john and JTR to try and crack the passphrase.
 
-![openadmin_john.png](..assets/openadmin_assets/openadmin_john.png)
+![openadmin_john.png](../assets/openadmin_assets/openadmin_john.png)
 
 Nice, we were able to crack it: bloodninjas
 
@@ -213,7 +213,7 @@ Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-70-generic x86_64)
 
 And grab the user.txt flag:
 
-![openadmin_user_flag.png](..assets/openadmin_assets/openadmin_user_flag.png)
+![openadmin_user_flag.png](../assets/openadmin_assets/openadmin_user_flag.png)
 
 ### Privilege Escalation
 
@@ -244,13 +244,13 @@ drwxr-x---  7 www-data www-data 4096 Nov 21  2019 ona
 
 Lets head over to GTFOBins and grab the command we'll need to exploit this.
 
-![openadmin_gtfobins.png](..assets/openadmin_assets/openadmin_gtfobins.png)
+![openadmin_gtfobins.png](../assets/openadmin_assets/openadmin_gtfobins.png)
 
 We can then run: `/bin/nano /opt/priv` then press `control+r` and `control+x` to enter a command, and finaly run `reset; sh 1>&0 2>&0` and we will drop into a root shell.
 
 We can now grab the final flag:
 
-![openadmin_root.png](..assets/openadmin_assets/openadmin_root.png)
+![openadmin_root.png](../assets/openadmin_assets/openadmin_root.png)
 
 Thanks for following along!
 
