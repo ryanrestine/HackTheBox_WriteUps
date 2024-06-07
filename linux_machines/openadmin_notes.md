@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-OpenAdmin.png
+![OpenAdmin.png](..assets/openadmin_assets/OpenAdmin.png)
 
 ### Enumeration
 
