@@ -21,6 +21,7 @@ A place to document various HTB CTF writeups
 - Mango
 - Mirai
 - Nibbles
+- OpenAdmin
 - Pandora
 - Posion
 - Precious
