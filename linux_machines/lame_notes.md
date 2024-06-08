@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Lame.png
+![Lame.png](../assets/lame_assets/Lame.png)
 
 ### Enumeration
 
@@ -64,15 +64,15 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 65.37 seconds
 ```
 
-Ok, looks just like FTP, SSH and SMB are open on the target.
+Ok, looks just like FTP, SSH and SMB are open on the target for TCP.
 
 FTP has anonymous login enabled, but there was nothing in there.
 
 Moving over to SMB we can see we have read/write access to the `/tmp` share:
 
-lame_smb_shares.png
+![lame_smb_shares.png](../assets/lame_assets/lame_smb_shares.png)
 
-Logging into the share we find a pretty generic `/tmp` folder:
+Logging into the share with smbclient we find a pretty generic `/tmp` folder:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Lame]
@@ -109,13 +109,13 @@ We can fire off the exploit with no changes needed to the code with:
 
 And we catch a shell back in our listener as root:
 
-lame_shell.png
+![lame_shell.png](../assets/lame_assets/lame_shell.png)
 
 Nice, we can now grab both the user.txt flag and the root.txt flag:
 
-lame_user.png
+![lame_user.png](../assets/lame_assets/lame_user.png)
 
-lame_root.png
+![lame_root.png](../assets/lame_assets/lame_root.png)
 
 Thanks for following along!
 
