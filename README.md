@@ -18,6 +18,7 @@ A place to document various HTB CTF writeups
 - Irked
 - Knife
 - Kotarak
+- Lame
 - Mango
 - Mirai
 - Nibbles
