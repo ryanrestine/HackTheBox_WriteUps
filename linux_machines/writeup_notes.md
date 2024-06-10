@@ -110,7 +110,7 @@ Lets load up pspy64 and get it listening for processes and then SSH in again in 
 
 ![writeup_cron.png](../assets/writeup_assets/writeup_cron.png)
 
-Interesting, it appears that once we SSH'd in, the root user issues a cronjob using `run-parts`, but luckily for us it does not use the absolute path. We should be able to hijack this by writing our own malicious run-parts file in `/usr/local/bin` and then it will execute as the root user when an SSH connection is opened. Lets try it:
+Interesting, it appears that once we SSH'd in, there is a cronjob using `run-parts` and it's running with root permissions, but luckily for us it does not use the absolute path. We should be able to hijack this by writing our own malicious run-parts file in `/usr/local/bin` and then it will execute as the root user when an SSH connection is opened. Lets try it:
 
 ```
 jkr@writeup:/usr/local/bin$ echo "/bin/chmod 4755 /bin/bash" > /usr/local/bin/run-parts
