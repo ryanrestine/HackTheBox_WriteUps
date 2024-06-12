@@ -43,19 +43,19 @@ Kicking off some directory scanning with dirsearch we find a /actuator/sessions 
 
 Navigating to the page we find a username and a cookie or token:
 
-cozyhosting_cookie.png
+![cozyhosting_cookie.png](../assets/cozyhosting_assets/cozyhosting_cookie.png)
 
 Looks like kanderson's session is open. 
 
-Now that we have this token, we can head back to our directory fuzzing and find an `/admin` page. Navigate to the site (forwards to `/login` ) and replace the current session cookie with the kanderson's and navigate back to `/admin` to be logged in.
+Now that we have this token, we can head back to our directory fuzzing and find an `/admin` page. Navigate to the site (forwards to `/login` ) and in a cookie editor or devtools replace the current session cookie with the kanderson's and navigate back to `/admin` to be logged in.
 
-cozyhosting_admin.png
+![cozyhosting_admin.png](../assets/cozyhosting_assets/cozyhosting_admin.png)
 
 Scrolling down we see a potential for SSH access with a private key.
 
-cozyhosting_ssh.png
+![cozyhosting_ssh.png](../assets/cozyhosting_assets/cozyhosting_ssh.png)
 
-Looking at the page source we find a `/executessh` endpoint that takes a POST request (this could also have been discovered in `/actuator/mappings`.
+Looking at the page source we find a `/executessh` endpoint that takes a POST request (this could also have been discovered in `/actuator/mappings`).
 
 However when we enter the hostname cozyhosting and the username kanderson, the connection fails.
 
@@ -63,13 +63,13 @@ Lets capture this in Burp to inspect more closely.
 
 Here again we can confirm the request fails:
 
-cozyhosting_burp1.png
+![cozyhosting_burp1.png](../assets/cozyhosting_assets/cozyhosting_burp1.png)
 
 ### Exploitation
 
 Playing with these fields a bit we get an interesting error when trying command injection in the username field:
 
-cozyhosting_burp2.png
+![cozyhosting_burp2.png](../assets/cozyhosting_assets/cozyhosting_burp2.png)
 
 So looks like the application is legitimately trying to run SSH, and also appears to be vulnerable to command injection. 
 
@@ -113,23 +113,22 @@ Poking around more I find a .jar file in `/app`.
 
 I can copy that back over to my machine using a python3 http.server and wget:
 
-cozyhosting_wget.png
+![cozyhosting_wget.png](../assets/cozyhosting_assets/cozyhosting_wget.png)
 
-using jd-gui we can open this up and begin inspecting it.
+Using `jd-gui` we can open this up and begin inspecting it.
 
-Firstly in application.properties I discovered postgres credentials, but was unable to authenticate as user postres with them.
+Firstly, in application.properties I discovered postgres credentials.
 
-cozyhosting_postgres_pw.png
+![cozyhosting_postgres_pw.png](../assets/cozyhosting_assets/cozyhosting_postgres_pw.png)
 
 I also found a login attempt to an internal site on port 8080 from kanderson:
 ```
-curl", "localhost:8080/login", "--request", "POST", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-raw", "username=kanderson&password=MRdEQuv6~6P9", "-v" });
-  }
+curl", "localhost:8080/login", "--request", "POST", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-raw", "username=kanderson&password=MRdEQuv6~6P9", "-v" });}
 ```
 
-Unfortunately kanderson is not a valid user in our shell, but we'll definitely keep this in mind. That said this was from a file called FakeUser.class, so we'll see..
+Unfortunately kanderson is not a valid user in our shell, but we'll definitely keep this in mind. That said, this was from a file called FakeUser.class, so we'll see..
 
-Going back to the postres credentials, I decided to begin enumerating the DB on the target with them. I can login to postgres with `postgres:Vg&nvzAQ7XxR`
+Going back to the postgres credentials, I decided to begin enumerating the DB on the target with them. I can login to postgres with `postgres:Vg&nvzAQ7XxR`
 
 ```
 app@cozyhosting:/app$ psql -h localhost -U postgres
@@ -203,7 +202,7 @@ Cool. I think we've already discovered kanderson's hash from the `.jar` file, so
 
 Nice, john was able to crack the hash for us:
 
-cozyhosting_jtr.png
+![cozyhosting_jtr.png](../assets/cozyhosting_assets/cozyhosting_jtr.png)
 
 No dice using the cracked password for root, but it does work for josh:
 
@@ -233,7 +232,7 @@ Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-82-generic x86_64)
 
 We can now grab the user.txt flag:
 
-cozyhosting_user_flag.png
+![cozyhosting_user_flag.png](../assets/cozyhosting_assets/cozyhosting_user_flag.png)
 
 ### Privilege Escalation
 
@@ -251,13 +250,13 @@ User josh may run the following commands on localhost:
 
 This should make for an easy root. Lets head to GTFOBins.com for the command we'll need:
 
-cozyhosting_gtfobins.png
+![cozyhosting_gtfobins.png](../assets/cozyhosting_assets/cozyhosting_gtfobins.png)
 
 `sudo /usr/bin/ssh -o ProxyCommand=';sh 0<&2 1>&2' x`
 
 Nice that worked, we can now grab the final flag:
 
-cozyhosting_root_flag.png
+![cozyhosting_root_flag.png](../assets/cozyhosting_assets/cozyhosting_root_flag.png)
 
 Thanks for following along!
 
