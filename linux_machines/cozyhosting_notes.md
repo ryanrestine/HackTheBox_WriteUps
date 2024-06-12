@@ -37,7 +37,7 @@ Lets add cozyhosting.htb to `/etc/hosts`
 
 Checking out the page we find a simple site:
 
-site.png
+![cozyhosting_site.png](../assets/cozyhosting_assets/cozyhosting_site.png)
 
 Kicking off some directory scanning with dirsearch we find a /actuator/sessions page. This must be running spring boot. 
 
