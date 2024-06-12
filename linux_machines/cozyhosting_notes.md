@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-CozyHosting.png
+![CozyHosting.png](../assets/cozyhosting_assets/CozyHosting.png)
 
 ### Enumeration
 
