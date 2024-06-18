@@ -102,13 +102,8 @@ Anyways, opening 'Currency Volume Report.xlsm' we are warned that the file conta
 
 ![querier_macro_warning.png](../assets/querier_assets/querier_macro_warning.png)
 
-Looking at the contents it appears to be a blank document, but if we go to Tools > Edit Macros, we find something strange:
+Looking at the contents it appears to be a blank document.
 
-![querier_macro.png](../assets/querier_assets/querier_macro.png)
-
-It appears that when the macro is run a Powershell download cradle attempts to download a file called shell.ps1 and then execute it.
-
-This is bizarre. 
 
 Going back to smbclient I confirm we can't write to the share:
 
