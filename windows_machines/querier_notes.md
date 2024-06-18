@@ -100,7 +100,7 @@ I've heard CME is being deprecated and functionality is moving over to netexec. 
 
 Anyways, opening 'Currency Volume Report.xlsm' we are warned that the file contains macros.
 
-![querier_macro_warning.png](../assets/querier_assets/querier_macro_warning)
+![querier_macro_warning.png](../assets/querier_assets/querier_macro_warning.png)
 
 Looking at the contents it appears to be a blank document, but if we go to Tools > Edit Macros, we find something strange:
 
