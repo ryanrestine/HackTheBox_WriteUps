@@ -61,6 +61,7 @@ A place to document various HTB CTF writeups
 - Monteverde
 - Netmon
 - Optimum
+- Querier
 - Reel
 - Resolute
 - Return
