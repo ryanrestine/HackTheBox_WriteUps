@@ -37,17 +37,17 @@ Nmap done: 1 IP address (1 host up) scanned in 16.58 seconds
 
 Looking at port 80 we find a site offering server storage:
 
-tabby_mega_site.png
+![tabby_mega_site.png](../assets/tabby_assets/tabby_mega_site.png)
 
 If we follow the link concerning news about a data breach we are forwarded to http://megahosting.htb/news.php?file=statement, so lets add megahosting.htb to `/etc/hosts`
 
 Now we can access http://megahosting.htb/news.php?file=statement which is an apology regarding a data breach:
 
-tabby_whoops.png
+![tabby_whoops.png](../assets/tabby_assets/tabby_whoops.png)
 
 Looking at port 8080 we find a Tomcat It Works landing page:
 
-tabby_8080.png
+![tabby_8080.png](../assets/tabby_assets/tabby_8080.png)
 
 Going back to http://megahosting.htb/news.php?file=statement I want to test this for LFI. Lets use ffuf for this:
 
@@ -98,7 +98,7 @@ Nice, looks like we've found a vulnerability.
 
 We can access `/etc/passwd` at: http://megahosting.htb/news.php?file=%20/../../../../../../../../../../etc/passwd
 
-tabby_lfi1.png
+![tabby_lfi1.png](../assets/tabby_assets/tabby_lfi1.png)
 
 We can use `curl` and grep for bash to see which users have bash shells:
 
@@ -120,15 +120,17 @@ Looking back at the Tomcaat landing page we can confirm it is running tomcat ver
 
 After a lot of trial and error I finally found it at: view-source:http://megahosting.htb/news.php?file=/../../../../usr/share/tomcat9/etc/tomcat-users.xml
 
-tabby_tomcat_users.png
+![tabby_tomcat_users.png](../assets/tabby_assets/tabby_tomcat_users.png)
 
 We now have the credentials `<user username="tomcat" password="$3cureP4s5w0rd123!"`
 
 However, trying to login at http://megahosting.htb:8080/manager/html I get an access denied:
 
-tabby_roles.png
+![tabby_roles.png](../assets/tabby_assets/tabby_roles.png)
 
 Going back and looking at my credentials, I see the tomcat user only has access to `manager-script` and not `manager-gui`. 
+
+![tabby_roles2.png](../assets/tabby_assets/tabby_roles2.png)
 
 This means I'll need to upload my malicious .war file manually in the command line, rather than using the GUI in `/manager`.
 
@@ -202,7 +204,7 @@ We can then use zip2john to prep the file:
 
 And then easily crack it with john:
 
-tabby_john.png
+![tabby_john.png](../assets/tabby_assets/tabby_john.png)
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Tabby/zip]
@@ -228,15 +230,17 @@ ash
 
 We can now grab the user.txt flag:
 
-tabby_user_flag.png
+![tabby_user_flag.png](../assets/tabby_assets/tabby_user_flag.png)
 
 ### Privilege Escalation
 
 Not initially seeing much of interest, I load LinPEAS and discover ash is in the lxd group.
 
+![tabby_group.png](../assets/tabby_assets/tabby_group.png)
+
 I got stuck here forever and ended up looking at 0xdf's writeup at: https://0xdf.gitlab.io/2020/11/07/htb-tabby.html
 
-Rather than building and alpine instance locally and transferring it over, I used this writeup that 0xdf mentions:https://blog.m0noc.com/2018/10/lxc-container-privilege-escalation-in.html?m=1
+Rather than building and alpine instance locally and transferring it over, I used this writeup that 0xdf mentions: https://blog.m0noc.com/2018/10/lxc-container-privilege-escalation-in.html?m=1
 
 Firstly I run:
 
@@ -316,7 +320,7 @@ root.txt  snap
 
 And grab the final flag:
 
-tabby_root_flag.png
+![tabby_root_flag.png](../assets/tabby_assets/tabby_root_flag.png)
 
 Thanks for following along!
 
