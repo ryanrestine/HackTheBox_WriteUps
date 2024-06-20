@@ -34,6 +34,7 @@ A place to document various HTB CTF writeups
 - Soccer
 - SolidState
 - Sunday
+- Tabby
 - Tenten
 - Traverxec
 - Valenintine
