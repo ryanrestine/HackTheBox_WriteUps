@@ -5,7 +5,7 @@
 ### Difficulty: Easy
 --------------------------------------------
 
-Tabby.png
+![Tabby.png](../assets/tabby_assets/Tabby.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
