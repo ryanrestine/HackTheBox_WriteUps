@@ -58,6 +58,7 @@ A place to document various HTB CTF writeups
 - Intelligence
 - Jeeves
 - Jerry
+- Love
 - Mantis
 - Monteverde
 - Netmon
