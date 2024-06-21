@@ -5,7 +5,7 @@
 ### Difficulty: Easy
 --------------------------------------------
 
-Love.png
+![Love.png](../assets/love_assets/Love.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -74,11 +74,11 @@ PORT      STATE SERVICE      VERSION
 
 Looking at the site on port 80 we find a Voting System using PHP login.
 
-love_port80.png
+![love_port80.png](../assets/love_assets/love_port80.png)
 
 Looking at port 443, we get a forbidden error. But if we look at the site's certificate we can gather a bit more info:
 
-love_certificate.png
+![love_certificate.png](../assets/love_assets/love_certificate.png)
 
 Looks like we've got a potential username as well as some domains. Lets add these to `/etc/hosts`
 
@@ -114,23 +114,23 @@ Content-Type: application/octet-stream
 Content-Disposition: form-data; name="add"
 ```
 
-love_burp.png
+![love_burp.png](../assets/love_assets/love_burp.png)
 
 We can send that over and confirm our shell.php file was added to `/images`
 
-love_shell_image.php
+![love_shell_image.php](../assets/love_assets/love_shell_image.png)
 
-we can then navigate to http://love.htb/images/shell.php
+We can then navigate to http://love.htb/images/shell.php
 
-love_webshell.png
+![love_webshell.png](../assets/love_assets/love_webshell.png)
 
-Lets improve this exploit by passing in a php webshell so we can execute other commands:
+Lets improve this exploit by passing in a proper php webshell so we can execute other commands:
 
-love_burp2.png
+![love_burp2.png](../assets/love_assets/love_burp2.png)
 
 Now we can execute different system commands:
 
-love_systeminfo.png
+![love_systeminfo.png](../assets/love_assets/love_systeminfo.png)
 
 Lets set up a nc listener and grab a URL encoded powershell reverse shell oneliner from revshells.com
 
@@ -151,9 +151,9 @@ PS C:\xampp\htdocs\omrs\images> hostname
 Love
 ```
 
-We can then grab the user.txt flag:
+We can now grab the user.txt flag:
 
-love_user_flag.png
+![love_user_flag.png](../assets/love_assets/love_user_flag.png)
 
 ### Privilege Escalation
 
@@ -197,9 +197,9 @@ This is helpful because our shell is quite unstable. We can use these credential
 ```
 Loading up winPEAS we find:
 
-love_wp.png
+![love_wp.png](../assets/love_assets/love_wp.png)
 
-Nice, this should make for an easy privilege escalation. MSI files will run with the permissions of whichever user is trying to install them, and because alwaysinstallelevated are set to true for both the machine and the user, we can generate a malicious .msi file that contains a shell, and when installed will execute with admin permissions. Lets try it out. 
+Nice, this should make for an easy privilege escalation. MSI files will run with the permissions of whichever user is installing them, and because alwaysinstallelevated are set to true for both the machine and the user, we can generate a malicious .msi file that contains a shell, and when installed will execute with admin permissions. Lets try it out. 
 
 First we'll create our shell.msi file:
 
@@ -234,7 +234,7 @@ The Windows Installer Service could not be accessed. This can occur if the Windo
 
 However, we get an error. Not sure why though..
 
-Interestingly, if I catch a reverse shell back and issue the same command, I am able to catch a shell back from the .msi file as system:
+Interestingly, if I catch a reverse shell back and issue the same command outside of evil-winrm, I am able to catch a shell back from the .msi file as system:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Love]
@@ -279,7 +279,7 @@ Something about my winrm session kept me from exploiting this, even if I'm not s
 
 Anyways, we can now grab the final flag:
 
-love_root_flag.png
+![love_root_flag.png](../assets/love_assets/love_root_flag.png)
 
 Thanks for following along!
 
