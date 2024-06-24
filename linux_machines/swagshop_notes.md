@@ -119,7 +119,7 @@ mechanize._form_controls.AmbiguityError: more than one control matching name 'lo
 
 Lets comment out line 53:
 
-#[swagshop_comment.png](../assets/swagshop_assets/swagshop_comment.png)
+![swagshop_comment.png](../assets/swagshop_assets/swagshop_comment.png)
 
 ### Exploitation
 
