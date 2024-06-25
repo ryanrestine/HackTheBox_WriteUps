@@ -51,13 +51,13 @@ We can now access the naxios site:
 
 And follow the access nagios link to the login page:
 
-monitored_login.png
+![monitored_login.png](../assets/monitored_assets/monitored_login.png)
 
 Based on experience I know that there are some vulnerabilities with NagiosXI, but we're likely going to need some credentials. 
 
 Its interesting that LDAP is open on this Linux target, but after enumerating it for a while I didn't find anything of interest.
 
-Checkin if SNMP was open on UDP port 161, we find it is and the public community string is in use:
+Checking if SNMP was open on UDP port 161, we find it is and the public community string is in use:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Monitored]
@@ -83,7 +83,7 @@ Using snmp-check we find and interesting command being issued:
 └─$ snmp-check 10.129.96.132
 ```
 
-monitored_snmp_hash.png
+![monitored_snmp_hash.png](../assets/monitored_assets/monitored_snmp_hash.png)
 
 These appear to be credentials for a user named svc. `svc:XjH7VCehowpR1xZB`
 
@@ -91,17 +91,17 @@ Thinking this may be a hash I was unable to crack it. I was also unable to SSH i
 
 Going back to my dirsearch output that I kicked off at the beginning of the box, I find a `/nagios` directory, and I can use these credentials to access the site:
 
-monitored_core.png
+![monitored_core.png](../assets/monitored_assets/monitored_core.png)
 
 This page is running Nagios Core. But I'm not finding much of interest here.
 
 Going back tot he original login and trying the discovered credentials again, I see the error message reads: `The specified user account has been disabled or does not exist.`
 
-monitored_disabled.png
+![monitored_disabled.png](../assets/monitored_assets/monitored_disabled.png)
 
 Full disclosure I got stuck here for ages. Not sure I would have found the way forward if not watching Ippsec's video about interacting with the api because we have a service account's credentials.
 
-Looking at how to interact with the api we can find this thread: https://support.nagios.com/forum/viewtopic.php?p=310411#p310411 which provides us with the commands we'll need. 
+Looking at how to interact with the api we can find this thread: https://support.nagios.com/forum/viewtopic.php?p=310411#p310411 which provides us with the command we'll need. 
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Monitored]
@@ -119,7 +119,7 @@ Cool. We can now take this token and use it to login to the Nagios dashboard. ht
 
 Nice, that worked!
 
-monitored_in.png
+![monitored_in.png](../assets/monitored_assets/monitored_in.png)
 
 ### Exploitation
 
@@ -142,7 +142,7 @@ Lets use SQLMap as outlined in the article to exploit this:
 
 Nice, SQL map exploited the injection for us and we now have the nagiosadmin hash and API key:
 
-monitored_admin_api_key.png
+![monitored_admin_api_key.png](../assets/monitored_assets/monitored_admin_api_key.png)
 
 We can now create a new user with admin privileges:
 
@@ -154,11 +154,11 @@ We can now create a new user with admin privileges:
 
 I can then login with my created credentials, accept the ToS, update my password, and access the dashboard, this time with admin privileges:
 
-monitored_in2.png
+![monitored_in2.png](../assets/monitored_assets/monitored_in2.png)
 
 Now lets navigate to Configure > Core Config Manager > Commands and set up a reverse shell.
 
-monitored_shell_setup.png
+![monitored_shell_setup.png](../assets/monitored_assets/monitored_shell.png)
 
 We can then set up a listener, click "Apply Configuration"
 
@@ -183,7 +183,7 @@ monitored
 
 We can now grab the user.txt flag:
 
-monitored_user_flag.png
+![monitored_user_flag.png](../assets/monitored_assets/monitored_user_flag.png)
 
 ### Privilege Escalation
 
@@ -294,7 +294,7 @@ uid=1001(nagios) gid=1001(nagios) euid=0(root) groups=1001(nagios),1002(nagcmd)
 
 We can now grab the final flag:
 
-monitored_root_flag.png
+![monitored_root_flag.png](../assets/monitored_assets/monitored_root_flag.png)
 
 Thanks for following along!
 
