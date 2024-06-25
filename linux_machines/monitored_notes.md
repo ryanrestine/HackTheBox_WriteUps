@@ -5,7 +5,7 @@
 ### Difficulty: Medium
 --------------------------------------------
 
-Monitored.png
+![Monitored.png](../assets/monitored_assets/Monitored.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -47,7 +47,7 @@ We can see that port 80 is trying to redirect to https://nagios.monitored.htb/ s
 
 We can now access the naxios site:
 
-monitored_site.png
+![monitored_site.png](../assets/monitored_assets/monitored_site.png)
 
 And follow the access nagios link to the login page:
 
