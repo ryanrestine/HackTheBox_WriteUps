@@ -158,7 +158,7 @@ I can then login with my created credentials, accept the ToS, update my password
 
 Now lets navigate to Configure > Core Config Manager > Commands and set up a reverse shell.
 
-![monitored_shell_setup.png](../assets/monitored_assets/monitored_shell.png)
+![monitored_shell_setup.png](../assets/monitored_assets/monitored_shell_setup.png)
 
 We can then set up a listener, click "Apply Configuration"
 
