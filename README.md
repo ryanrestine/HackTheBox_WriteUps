@@ -22,6 +22,7 @@ A place to document various HTB CTF writeups
 - Lame
 - Mango
 - Mirai
+- Monitored
 - Nibbles
 - OpenAdmin
 - Pandora
