@@ -5,7 +5,7 @@
 ### Difficulty: Easy
 --------------------------------------------
 
-Remote.png
+![Remote.png](../assets/remote_assets/Remote.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -81,7 +81,7 @@ Nmap done: 1 IP address (1 host up) scanned in 89.21 seconds
 
 Looking at port 80 we find a site, mostly featuring lorem ipsum:
 
-remote_site.png
+![remote_site.png](../assets/remote_assets/remote_site.png)
 
 Kicking off some directory scanning we find several different endpoints:
 
