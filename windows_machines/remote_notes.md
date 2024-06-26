@@ -85,7 +85,7 @@ Looking at port 80 we find a site, mostly featuring lorem ipsum:
 
 Kicking off some directory scanning we find several different endpoints:
 
-remote_dirs.png
+![remote_dirs.png](../assets/remote_assets/remote_dirs.png)
 
 Before really digging into HTML I want to explore RPC on port 111.
 
@@ -107,32 +107,31 @@ I'm going to mount this in my `/tmp`:
 
 We can then inspect the contents:
 
-remote_files.png
+![remote_files.png](../assets/remote_assets/remote_files.png)
 
 Looking through the files we find an Umbraco.sdf file.
 
 We can run `strings` against it and find a few potential usernames:
 
-remote_users.png
+![remote_users.png](../assets/remote_assets/remote_users.png)
 
 Sifting through all the data returned from `strings`, we finally reach the top of the output and discover an admin sha1 hash:
 
-remote_admin_hash.png
+![remote_admin_hash.png](../assets/remote_assets/remote_admin_hash.png)
 
 Which we can crack using crackstation:
 
-remote_crack.png
+![remote_crack.png](../assets/remote_assets/remote_crack.png)
 
 We can then login to the `/umbraco` page with `admin@htb.local:baconandcheese`
 
-remote_in.png
+![remote_in.png](../assets/remote_assets/remote_in.png)
 
 Clicking on the admin profile button we can see the version `Umbraco version 7.12.4`
 
 Looking for exploits we find: https://github.com/noraj/Umbraco-RCE
 
 ### Exploitation
-
 
 Giving the exploit a shot we can confirm execution:
 
@@ -144,15 +143,15 @@ iis apppool\defaultapppool
 
 Lets now grab a base64 encoded powershell reverse shell and catch a callback to our listener:
 
-remote_shell.png
+![remote_shell.png](../assets/remote_assets/remote_shell.png)
 
 We can now grab the user.txt flag:
 
-remote_user_flag.png
+![remote_user_flag.png](../assets/remote_assets/remote_user_flag.png)
 
 ### Privilege Escalation
 
-Running `whoami /all` we see that seImpersonatePrivileges is enabled:
+Running `whoami /all` we see that SeImpersonatePrivilege is enabled:
 
 ```
 Privilege Name                Description                               State   
@@ -166,7 +165,7 @@ SeCreateGlobalPrivilege       Create global objects                     Enabled
 SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
 ```
 
-Lets copy over juicypotatoNG and nc.exe to the target to exploit this.
+Lets copy over juicypotatoNG and nc64.exe to the target to exploit this.
 
 Once we have our files in place we can set up a new listener and run:
 
@@ -191,7 +190,7 @@ nt authority\system
 
 And we can grab the final flag:
 
-remote_root_flag.png
+![remote_root_flag.png](../assets/remote_assets/remote_root_flag.png)
 
 Thanks for following along!
 
