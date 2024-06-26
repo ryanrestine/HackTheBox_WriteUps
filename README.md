@@ -67,6 +67,7 @@ A place to document various HTB CTF writeups
 - Optimum
 - Querier
 - Reel
+- Remote
 - Resolute
 - Return
 - Sauna
