@@ -41,15 +41,15 @@ Navigating to the webpage we find a generic "It Works" message:
 
 Kicking off some directory fuzzing we find several endpoints off of `/torrent`
 
-popcorn_dirs.png
+![popcorn_dirs.png](../assets/popcorn_assets/popcorn_dirs.png)
 
 Looking at the `/torrent` page we find a torrent hosting site:
 
-popcorn_torrent.png
+![popcorn_torrent.png](../assets/popcorn_assets/popcorn_torrent.png)
 
 Clicking around I see I'll need to login to do much of anything. After a few unsuccessful login attempts using generic credentials, I registered my own account:
 
-popcorn_register.png
+![popcorn_register.png](../assets/popcorn_assets/popcorn_register.png)
 
 I can now login with the credentials `test:password`
 
@@ -63,11 +63,13 @@ And if I simply change the file name from cmd.php to cmd.torrent I receive the s
 
 Looking around the site I see that a torrent file of kali linux has been uploaded. I can download my own kali torrent file and upload it to the site at http://popcorn.htb/torrent/torrents.php?mode=upload
 
-popcorn_upload.png
+![popcorn_upload.png](../assets/popcorn_assets/popcorn_upload.png)
 
 Looking at my uploaded torrent I can see we have the option to edit it and upload a screen shot for it.
 
 We also notice there is some filtering in place, so lets rename our cmd.php script cmd.php.png and capture the upload in Burp.
+
+![popcorn_screen1.png](../assets/popcorn_assets/popcorn_screen1.png)
 
 Once sent we get confirmation our "image" has been uploaded:
 
@@ -79,23 +81,23 @@ Upload Completed.
 Please refresh to see the new screenshot.
 ```
 
-popcorn_burp1.png
+![popcorn_burp1.png](../assets/popcorn_assets/popcorn_burp1.png)
 
 Based on our directory fuzzing we know there is an `/upload` directory, so lets look for our file there.
 
-popcorn_image.png
+![popcorn_image.png](../assets/popcorn_assets/popcorn_image.png)
 
 Nice, the upload worked. Lets rename the file from cmd.php.png to cmd.php in Burp and try sending it again. 
 
-popcorn_burp2.png
+![popcorn_burp2.png](../assets/popcorn_assets/popcorn_burp2.png)
 
 Cool, that worked.
 
-popcorn_load.png
+![popcorn_load.png](../assets/popcorn_assets/popcorn_load.png)
 
 We can now confirm we have code execution:
 
-popcorn_hostname.png
+![popcorn_hostname.png](../assets/popcorn_assets/popcorn_hostname.png)
 
 Lets grab a Python reverse shell one liner from revshells.com, URL encode it, and issue it as a cmd to catch a shell back as www-data:
 
@@ -114,21 +116,21 @@ popcorn
 
 We can now grab the user.txt flag:
 
-popcorn_user_flag.png
+![popcorn_user_flag.png](../assets/popcorn_assets/popcorn_user_flag.png)
 
 ### Privilege Escalation
 
-Loading LinPEAS to help enumerate, we see the target it likely vulnerable to the kernel exploit Dirty Cow.
+Loading LinPEAS to help enumerate, we see the target is likely vulnerable to the kernel exploit Dirty Cow.
 
-popcorn_lp.png
+![popcorn_lp.png](../assets/popcorn_assets/popcorn_lp.png)
 
 Lets transfer that over, compile it and execute it.
 
-popcorn_dirty.png
+![popcorn_dirty.png](../assets/popcorn_assets/popcorn_dirty.png)
 
 Cool that worked. We can now grab the final flag:
 
-popcorn_root_flag.png
+![popcorn_root_flag.png](../assets/popcorn_assets/popcorn_root_flag.png)
 
 Thanks for following along!
 
