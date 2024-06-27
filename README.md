@@ -27,6 +27,7 @@ A place to document various HTB CTF writeups
 - OpenAdmin
 - Pandora
 - Posion
+- Popcorn
 - Precious
 - Sau
 - Sense
