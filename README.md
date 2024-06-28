@@ -21,6 +21,7 @@ A place to document various HTB CTF writeups
 - Kotarak
 - Lame
 - Mango
+- Mentor
 - Mirai
 - Monitored
 - Nibbles
