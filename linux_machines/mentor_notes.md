@@ -37,7 +37,7 @@ Lets add mentorquotes.htb to `/etc/hosts`
 
 Looking at the page we find a simple site with several different quotes on it:
 
-mentor_site.png
+![mentor_site.png](../assets/mentor_assets/mentor_site.png)
 
 Looking for vhosts we discover api.mentorquotes.htb, so lets add that to `/etc/hosts` as well.
 
