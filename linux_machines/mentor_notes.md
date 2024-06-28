@@ -138,7 +138,7 @@ Identified Community strings
 	1) 10.129.228.102  public (v1)(RO)
 ```
 
-Cool, snmpbrute found another community string: internal. Weird the onesixtyone didn't. 
+Cool, snmpbrute found another community string: internal. Weird that onesixtyone didn't. 
 
 Inspecting this using snmpwalk we find a potential password:
 
