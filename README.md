@@ -52,6 +52,7 @@ A place to document various HTB CTF writeups
 - Bart
 - Bastard
 - Blackfield
+- Bounty
 - Buff
 - Chatterbox
 - Driver
