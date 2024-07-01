@@ -27,6 +27,7 @@ A place to document various HTB CTF writeups
 - Nibbles
 - OpenAdmin
 - Pandora
+- Pilgrimage
 - Posion
 - Popcorn
 - Precious
