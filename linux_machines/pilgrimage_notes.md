@@ -39,11 +39,11 @@ Lets add pilgrimage.htb to `/etc/hosts`.
 
 Looking at the site we find an "online image shrinker"
 
-pilgrimage_site.png
+![pilgrimage_site.png](../assets/pilgrimage_assets/pilgrimage_site.png)
 
 I've been in the habit of rescanning a target with Nmap once I've added it to my `/etc/hosts` file because occasionally you can uncover more information from HTTP, and this box was no different:
 
-pilgrimage_nmap2.png
+![pilgrimage_nmap2.png](../assets/pilgrimage_assets/pilgrimage_nmap2.png)
 
 Nmap has found a `/.git` directory. This is definitely worth investigating.
 
@@ -58,7 +58,7 @@ We can use this script with:
 └─$ python ~/Tools/exploits/git_dumper.py http://pilgrimage.htb/.git/ git
 ```
 
-We can run `git log` to see there has only been one, initial commit for the site.
+We can run `git log` to see there has only been one initial commit for the site.
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Pilgrimage/git]
@@ -74,7 +74,7 @@ We also discover the username emily.
 
 Using `git show` to inspect this we can see the site is using a PHP library called Bulletproof to handle the image upload:
 
-pilgrimage_show.png
+![pilgrimage_show.png](../assets/pilgrimage_assets/pilgrimage_show.png)
 
 Looking for exploits surrounding Bulletproof, we find this issues page on the developer's GitHub: https://github.com/samayo/bulletproof/issues/90
 
@@ -96,11 +96,11 @@ Lets try getting some PHP coded execution via the image upload.
 
 First I'll create an account using `test:password`
 
-pilgrimage_register.png
+![pilgrimage_register.png](../assets/pilgrimage_assets/pilgrimage_register.png)
 
-Next I can head to google and find a picture of a dog to embed my PHP into:
+Next I can head to Google and find a picture of a dog to embed my PHP into:
 
-pilgrimage_search.png
+![pilgrimage_search.png](../assets/pilgrimage_assets/pilgrimage_search.png)
 
 First I tried simply adding my php code as comment to the image using exiftool, but had no luck:
 
@@ -154,17 +154,17 @@ Lets now load our output.png file for shrinking.
 
 Once loaded and shrunk the page gives us the URL to access our file:
 
-pilgrimage_url.png
+![pilgrimage_url.png](../assets/pilgrimage_assets/pilgrimage_url.png)
 
 We can then right click on our image and select 'Save Image As'.
 
 From here the exploit directs us to use `identify` to grab the Raw Profile hex of the encoded `/etc/passwd`, but I was having install issues and rather than troubleshooting I just used exiftool to grab it:
 
-pilgrimage_raw.png
+![pilgrimage_raw.png](../assets/pilgrimage_assets/pilgrimage_raw.png)
 
 We can then decode it using CyberChef https://gchq.github.io/CyberChef:
 
-pilgrimage_pass
+![pilgrimage_pass](../assets/pilgrimage_assets/pilgrimage_pass.png)
 
 Awesome, that worked.
 
@@ -181,6 +181,8 @@ Then upload the image, and trying to grab the hex using exiftool I see that noth
 
 Going back to the git code we can see in login.php there is a sqlite3 DB in use, and passwords are verified against the file `/var/db/pilgrimage`. 
 
+![pilgrimage_login.png](../assets/pilgrimage_assets/pilgrimage_login.png)
+
 Lets try accessing that with our exploit.
 
 ```
@@ -190,12 +192,11 @@ Lets try accessing that with our exploit.
 
 Once we've loaded the file and downloaded the shrunken file, we find a bunch of null hex:
 
-pilgrimage_raw2.png
+![pilgrimage_raw2.png](../assets/pilgrimage_assets/pilgrimage_raw2.png)
 
 However going through and pasting the hex we do find back in cyberchef, we find what appears to be emily's password: `emily:abigchonkyboi123`
 
-pilgrimage_chef.png
-
+![pilgrimage_chef.png](../assets/pilgrimage_assets/pilgrimage_chef.png)
 
 We can use this to SSH in as user emily:
 
@@ -217,11 +218,11 @@ pilgrimage
 ```
 Where we can grab the user.txt flag:
 
-pilgrimage_user_flag.png
+![pilgrimage_user_flag.png](../assets/pilgrimage_assets/pilgrimage_user_flag.png)
 
 ### Privilige Escalation
 
-Looking in emily's home directory, we find binwalk in her `.config` folder:
+Looking in emily's home directory, we find binwalk info in her `.config` folder:
 
 ```
 emily@pilgrimage:~$ cd .config
@@ -310,7 +311,7 @@ root@pilgrimage:~/quarantine#
 
 Where we can grab the final flag:
 
-pilgrimage_root_flag.png
+![pilgrimage_root_flag.png](../assets/pilgrimage_assets/pilgrimage_root_flag.png)
 
 Thanks for following along!
 
