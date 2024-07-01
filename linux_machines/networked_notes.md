@@ -5,7 +5,7 @@
 ### Difficulty: Easy
 --------------------------------------------
 
-Networked.png
+![Networked.png](../assets/networked_assets/Networked.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -42,21 +42,21 @@ Join us at the pool party this Sat to get a glimpse
 
 Looking at the page source we find a comment:
 
-networked_site.png
+![networked_site.png](../assets/networked_assets/networked_site.png)
 
 Trying to navigate to `/upload` and `/gallery` these pages dont exist.
 
 We can however add.php and access a file upload feature at `/upload.php`
 
-networked_upload.png
+![networked_upload.png](../assets/networked_assets/networked_upload.png)
 
-We can kick off some directory scanning which yields some interesting more results:
+We can kick off some directory scanning which yields some interesting results:
 
-networked_dirs.png
+![networked_dirs.png](../assets/networked_assets/networked_dirs.png)
 
 Looking at `/backup` we find a tar file:
 
-networked_backup.png
+![networked_backup.png](../assets/networked_assets/networked_backup.png)
 
 We can extract the contents of the tarball with:
 
@@ -133,9 +133,9 @@ I can then upload the file to `/upload.php`
 
 I can confirm my file was successfully loaded in photos.php:
 
-networked_photos.png
+![networked_photos.png](../assets/networked_assets/networked_photos.png)
 
-And looking at the source for photos.php from the source code I can see I can access my file at 10.129.141.31/uploads/10_10_14_216.php.png
+And looking at photos.php from the source code I can see I can access my file at 10.129.141.31/uploads/10_10_14_216.php.png
 
 ```php
 echo '<td class="tg-0lax">';
@@ -254,7 +254,7 @@ python -c 'import pty;pty.spawn("/bin/bash")'
 
 We can now grab the user.txt flag:
 
-networked_user_flag.png
+![networked_user_flag.png](../assets/networked_assets/networked_user_flag.png)
 
 ### Privilege Escalation
 
@@ -319,7 +319,7 @@ root
 
 We can now grab the final flag:
 
-networked_root_flag.png
+![networked_root_flag.png](../assets/networked_assets/networked_root_flag.png)
 
 Thanks for following along!
 
