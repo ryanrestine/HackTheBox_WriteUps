@@ -42,11 +42,11 @@ We also see the domain name siteisup.htb, so lets add that to `/etc/hosts`
 
 Fuzzing for directories we find a `/.git` page at http://siteisup.htb/dev/.git/
 
-updown_dir_git.png
+![updown_dir_git.png](../assets/updown_assets/updown_dir_git.png)
 
 Lets use git_dumper.py to copy these files back locally for inspection
 
-updown_gitdumper.png
+![updown_gitdumper.png](../assets/updown_assets/updown_gitdumper.png)
 
 We can run the command `git log` to see various commits:
 
@@ -86,27 +86,27 @@ Date:   Wed Oct 20 18:30:39 2021 +0200
 
 Scrolling through the various commits we find a few that seem interesting:
 
-updown_git_log.png
+![updown_git_log.png](../assets/updown_assets/updown_git_log.png)
 
 Taking a look at the commit updating the .htaccess file we see that we'll need to use a custom header to access the dev VHOST.
 
-updown_git_show.png
+![updown_git_show.png](../assets/updown_assets/updown_git_show.png)
 
 Fistly, lets add dev.siteisup.htb to `/etc/hosts`
 
 We can confirm we get a 403 forbidden error:
 
-updown_403.png
+![updown_403.png](../assets/updown_assets/updown_403.png)
 
 Next we can head to Burp and add the custom header.
 
 Lets go to Proxy > Settings > scroll down to "Match and Replace" and enter "Special-Dev: only4dev"
 
-updown_header.png
+![updown_header.png](../assets/updown_assets/updown_header.png)
 
 Clicking OK and intercepting a request on the dev site, we can now access http://dev.siteisup.htb/
 
-updown_dev.png
+![updown_dev.png](../assets/updown_assets/updown_dev.png)
 
 Looks like we now have a file upload feature.
 
@@ -138,13 +138,13 @@ So looks like any PHP, Python, Perl, PHTML, etc shell we try to load here will b
 
 We can try something that doesn't appear to be filtered like Ruby, but get an error:
 
-updown_fail1.png
+![updown_fail1.png](../assets/updown_assets/updown_fail1.png)
 
 We should probably also confirm the blacklisting is actually active by attempting to upload a forbidden extension:
 
 Trying to upload a copy of php-reverse-shell.php we can see the blacklisting is hooked up and working:
 
-updown_ext.png
+![updown_ext.png](../assets/updown_assets/updown_ext.png)
 
 We also can't try something like shell.PhP because the extension filter is using the `/i` flag making these rules case-insensitive.
 
@@ -169,19 +169,19 @@ info.test: Zip archive data, at least v1.0 to extract, compression method=store
 
 I can now load my info.test file and see it was uploaded to `/uploads`
 
-updown_test.png
+![updown_test.png](../assets/updown_assets/updown_test.png)
 
 I can then access it with: http://dev.siteisup.htb/?page=phar://uploads/c3f4d354ef602dcc6c0964c8dccd3473/info.test/info
 
 Showing me the phpinfo page:
 
-updown_info.php
+![updown_info.php](../assets/updown_assets/updown_info.php)
 
 Lets right click on the page and select "save page as". I'll save two copies, one phpinfo.php as well as phpinfo.html
 
 Looking through the file we find a bunch of disabled functions.
 
-updown_disable.png
+![updown_disable.png](../assets/updown_assets/updown_disable.png)
 
 This will make creating and executing a reverse shell or system commands more difficult.
 
@@ -249,6 +249,8 @@ Lets save this as shell.php, zip it, and access it the same way we did phpinfo:
 shell.test: Zip archive data, at least v2.0 to extract, compression method=deflate
 ```
 
+http://dev.siteisup.htb/?page=phar://uploads/d7277a23a231582b4878ef918bee690c/shell.test/shell
+
 Uploading this and accessing it with phar we catch a shell back as www-data:
 
 ```
@@ -275,7 +277,7 @@ cat: user.txt: Permission denied
 
 Loading linpeas to help enumerate a lateral movement to user developer, we find a SUID in their home directory:
 
-updown_suid.png
+![updown_suid.png](../assets/updown_assets/updown_suid.png)
 
 Looking at the folder we find two files:
 
@@ -299,7 +301,7 @@ else:
 
 Looks like the script is importing request, sending a GET request, if it receives a 200 back the site is up, and anything else we get site is down.
 
-These scripts our owned by user developer, and siteisup has the SUID bit set, so the script will run with their in their context with their permissions.
+These scripts are owned by user developer, and siteisup has the SUID bit set, so the script will run with their in their context with their permissions.
 
 Normally I would try to create my own requests.py file, that way my script is called when the requests module is imported, but I don't have write access to the directory:
 
@@ -360,7 +362,7 @@ Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.4.0-122-generic x86_64)
 
 We can now grab the user.txt flag:
 
-updown_user_flag.png
+![updown_user_flag.png](../assets/updown_assets/updown_user_flag.png)
 
 ### Privilege Escalation
 
@@ -377,7 +379,7 @@ User developer may run the following commands on localhost:
 
 Heading to https://gtfobins.github.io/gtfobins/easy_install/#sudo we can grab the commands we'll need:
 
-updown_gtfo.png
+![updown_gtfo.png](../assets/updown_assets/updown_gtfo.png)
 
 ```
 developer@updown:~$ TF=$(mktemp -d)
@@ -387,7 +389,7 @@ developer@updown:~$ sudo /usr/local/bin/easy_install $TF
 
 This drops us into a root shell where we can grab the final flag:
 
-updown_root_flag.png
+![updown_root_flag.png](../assets/updown_assets/updown_root_flag.png)
 
 Thanks for following along!
 
