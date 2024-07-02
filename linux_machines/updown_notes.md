@@ -175,7 +175,7 @@ I can then access it with: http://dev.siteisup.htb/?page=phar://uploads/c3f4d354
 
 Showing me the phpinfo page:
 
-![updown_info.php](../assets/updown_assets/updown_info.php)
+![updown_info.png](../assets/updown_assets/updown_info.png)
 
 Lets right click on the page and select "save page as". I'll save two copies, one phpinfo.php as well as phpinfo.html
 
