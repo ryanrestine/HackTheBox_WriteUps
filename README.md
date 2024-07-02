@@ -42,6 +42,7 @@ A place to document various HTB CTF writeups
 - Tabby
 - Tenten
 - Traverxec
+- UpDown
 - Valenintine
 - Validation
 - Writeup
