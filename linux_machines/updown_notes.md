@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-UpDown.png
+![UpDown.png](../assets/updown_assets/UpDown.png)
 
 ### Enumeration
 
@@ -36,7 +36,7 @@ Nmap done: 1 IP address (1 host up) scanned in 18.34 seconds
 
 Checking out the site on port 80 we find a page to check whether websites are up or not.
 
-updown_site.png
+![updown_site.png](../assets/updown_assets/updown_site.png)
 
 We also see the domain name siteisup.htb, so lets add that to `/etc/hosts`
 
