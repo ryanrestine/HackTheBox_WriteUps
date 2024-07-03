@@ -5,7 +5,7 @@
 ### Difficulty: Easy
 --------------------------------------------
 
-Arctic.png
+![Arctic.png](../assets/arctic_assets/Arctic.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -28,15 +28,15 @@ Nmap done: 1 IP address (1 host up) scanned in 330.82 seconds
 
 Looking at port 8500 we find an index.
 
-arctic_8500.png
+![arctic_8500.png](../assets/arctic_assets/arctic_8500.png)
 
 This is looking like ColdFusion. Clicking into CFIDE we fan an administrator page:
 
-arctic_administrator.png
+![arctic_administrator.png](../assets/arctic_assets/arctic_administrator.png)
 
 Following the administrator link we find a ColdFusion 8 login page.
 
-arctic_cf8.png
+![arctic_cf8.png](../assets/arctic_assets/arctic_cf8.png)
 
 Looking for exploits I find this unauthenticated RCE exploit for Cold Fusion 8: https://www.exploit-db.com/exploits/50057
 
@@ -78,7 +78,7 @@ arctic
 
 From here I can grab the user.txt flag:
 
-arctic_user_flag.png
+![arctic_user_flag.png](../assets/arctic_assets/arctic_user_flag.png)
 
 ### Privilege Escalation
 
@@ -175,7 +175,7 @@ arctic
 
 We can now grab the root.txt flag:
 
-arctic_root_flag.png
+![arctic_root_flag.png](../assets/arctic_assets/arctic_root_flag.png)
 
 Thanks for following along!
 
