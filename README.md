@@ -17,6 +17,7 @@ A place to document various HTB CTF writeups
 - Devvortex
 - Horizontall
 - Irked
+- Jarvis
 - Knife
 - Kotarak
 - Lame
