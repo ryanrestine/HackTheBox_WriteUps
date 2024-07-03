@@ -52,6 +52,7 @@ A place to document various HTB CTF writeups
 
 - Access
 - Active
+- Arctic
 - Bart
 - Bastard
 - Blackfield
