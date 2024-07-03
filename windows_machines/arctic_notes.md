@@ -30,7 +30,7 @@ Looking at port 8500 we find an index.
 
 ![arctic_8500.png](../assets/arctic_assets/arctic_8500.png)
 
-This is looking like ColdFusion. Clicking into CFIDE we fan an administrator page:
+This is looking like ColdFusion. Clicking into CFIDE we find an administrator page:
 
 ![arctic_administrator.png](../assets/arctic_assets/arctic_administrator.png)
 
