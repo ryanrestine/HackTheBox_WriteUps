@@ -5,7 +5,7 @@
 ### Difficulty: Medium
 --------------------------------------------
 
-Jarvis.png
+![Jarvis.png](../assets/jarvis_assets/Jarvis.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -41,7 +41,7 @@ Nmap done: 1 IP address (1 host up) scanned in 21.14 seconds
 
 Looking at the page on port 80 we find a hotel site:
 
-jarvis_site.png
+![jarvis_site.png](../assets/jarvis_assets/jarvis_site.png)
 
 Spending some time manually enumerating the site I'm not seeing much functionality other than the `cod` parameter showing users rooms to book.
 
