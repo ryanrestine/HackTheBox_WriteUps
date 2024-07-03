@@ -45,7 +45,7 @@ Looking at the page on port 80 we find a hotel site:
 
 Spending some time manually enumerating the site I'm not seeing much functionality other than the `cod` parameter showing users rooms to book.
 
-jarvis_cod.png
+![jarvis_cod.png](../assets/jarvis_assets/jarvis_cod.png)
 
 Lets explore this parameter and see if it is vulnerable to IDOR or SQL Injection.
 
@@ -57,11 +57,11 @@ We can begin enumerating how many columns there are by using `order by`.
 
 We can keep incrementally increasing our count from 1 to 7, and continue fetching the same results:
 
-jarvis_7.png
+![jarvis_7.png](../assets/jarvis_assets/jarvis_7.png)
 
 But once we get to 8 we get an unexpected result:
 
-jarvis_8.png
+![jarvis_8.png](../assets/jarvis_assets/jarvis_8.png)
 
 This lets us know we have 7 columns.
 
@@ -71,7 +71,7 @@ Going back to the browser we can now grab the version number at:
 http://10.129.229.137/room.php?cod=cod=00%20UNION%20SELECT%201,(select%20@@version),3,4,5,6,7;--%20-
 ```
 
-jarvis_version.png
+![jarvis_version.png](../assets/jarvis_assets/jarvis_version.png)
 
 Cool, Lets use `LOAD_FILE` to try displaying the `/etc/passwd file`:
 
@@ -79,7 +79,7 @@ Cool, Lets use `LOAD_FILE` to try displaying the `/etc/passwd file`:
 http://10.129.229.137/room.php?cod=cod=00%20UNION%20SELECT%201,%20LOAD_FILE(%22/etc/passwd%22),%203,%204,5,6,7--%20-
 ```
 
-jarvis_passwd.png
+![jarvis_passwd.png](../assets/jarvis_assets/jarvis_passwd.png)
 
 Nice, We also see there is a user named pepper on the box.
 
@@ -95,7 +95,7 @@ Lets go back and list the databases:
 http://10.129.229.137/room.php?cod=00%20UNION%20SELECT%201,%20group_concat(schema_name),%203,%204,%205,%206,%207%20from%20information_schema.schemata;--%20-
 ```
 
-jarvis_dbs.png
+![jarvis_dbs.png](../assets/jarvis_assets/jarvis_dbs.png)
 
 ### Exploitation
 
@@ -107,7 +107,7 @@ Rather than working through all the dbs and tables and columns, which can be rea
 
 We can confirm execution at: http://10.129.229.137/shell.php?0=whoami
 
-jarvis_webshell.png
+![jarvis_webshell.png](../assets/jarvis_assets/jarvis_webshell.png)
 
 We can now grab a reverse shell one-liner from revshells.com:
 
@@ -231,13 +231,13 @@ uid=1000(pepper) gid=1000(pepper) groups=1000(pepper)
 
 we can now grab the user.txt flag:
 
-jarvis_user_flag.png
+![jarvis_user_flag.png](../assets/jarvis_assets/jarvis_user_flag.png)
 
 ### Privilege Escalation
 
 Running LinPEAS we see that `/bin/systemctl` has the SUID bit set.
 
-jarvis_lp.png
+![jarvis_lp.png](../assets/jarvis_assets/jarvis_lp.png)
 
 I almost always turn to gtfobins.com for sudo and SUID abuse, but for systemctl specifically I've had the best luck with this PoC: https://gist.github.com/A1vinSmith/78786df7899a840ec43c5ddecb6a4740
 
@@ -273,7 +273,7 @@ Followed by:
 
 Where we then catch a shell back as root and can grab the final flag:
 
-jarvis_root_flag.png
+![jarvis_root_flag.png](../assets/jarvis_assets/jarvis_root_flag.png)
 
 Thanks for following along!
 
