@@ -5,7 +5,7 @@
 ### Difficulty: Easy
 --------------------------------------------
 
-Codify.png
+![Codify.png](../assets/codify_assets/Codify.png)
 
 I'll begin enumerating this box by scanning all TCP ports with Nmap and use the `--min-rate 10000` flag to speed things up. I'll also use the `-sC` and `-sV` to use basic Nmap scripts and to enumerate versions:
 
@@ -37,15 +37,15 @@ Lets add codify.htb to `/etc/hosts`
 
 Looking at the site on port 80 we find a service to run node.js in a sandbox:
 
-codify_site.png
+![codify_site.png](../assets/codify_assets/codify_site.png)
 
 Looking at the `/limitations` link we can see which modules are blacklisted:
 
-codify_limitations.png
+![codify_limitations.png](../assets/codify_assets/codify_limitations.png)
 
 Taking a look at the About Us page we see the sandbox is using VM2:
 
-codify_vm2.png
+![codify_vm2.png](../assets/codify_assets/codify_vm2.png)
 
 Looking for VM2 exploits we find this sandbox escape: https://www.exploit-db.com/exploits/51898
 
@@ -89,7 +89,7 @@ console.log(vm.run(code));
 
 Lets give it a shot:
 
-codify_pwd.png
+![codify_pwd.png](../assets/codify_assets/codify_pwd.png)
 
 Nice that worked. We have code execution here. Lets update the code to spawn a reverse shell for us.
 
@@ -141,7 +141,7 @@ joshua
 
 We can now grab the user.txt flag:
 
-codify_user_flag.png
+![codify_user_flag.png](../assets/codify_assets/codify_user_flag.png)
 
 ### Privilege Escalation
 
@@ -225,7 +225,7 @@ joshua@codify:/opt/scripts$ ls -la /var/backups/mysql
 ls: cannot access '/var/backups/mysql/.': Permission denied
 ```
 
-Lets establish another shell as joshua via SSH, load pspy, and see if we can spy on this process.
+Lets establish another shell as joshua via SSH, load pspy, and see if we can spy on this process as its executed.
 
 First we'll transfer pspy64 and make it executable:
 
@@ -247,7 +247,7 @@ joshua@codify:/tmp$ ./pspy64
 
 Once pspy is running we can execute the script again, and capture the root password in pspy:
 
-codify_pspy.png
+![codify_pspy.png](../assets/codify_assets/codify_pspy.png)
 
 ```
 root:kljh12k3jhaskjh12kjh3
@@ -255,7 +255,7 @@ root:kljh12k3jhaskjh12kjh3
 
 We can use this to `su -` and grab the root flag:
 
-codify_root_flag.png
+![codify_root_flag.png](../assets/codify_assets/codify_root_flag.png)
 
 Thanks for following along!
 
