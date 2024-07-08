@@ -11,6 +11,7 @@ A place to document various HTB CTF writeups
 - Broker
 - Busqueda
 - Cap
+- Codify
 - CozyHosting
 - Cronos
 - DevOops
