@@ -38,11 +38,11 @@ Lets add help.htb to `/etc/hosts`
 
 Looking at port 80 we find a default apache landing page:
 
-help_80.png
+![help_80.png](../assets/help_assets/help_80.png)
 
 And on port 3000 we find:
 
-help_3000.png
+![help_3000.png](../assets/help_assets/help_3000.png)
 
 Running gobuster against port 80 we find the `/support` endpoint:
 
@@ -69,7 +69,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 
 Which is running HelpDeskZ:
 
-help_helpdeskz.png
+![help_helpdeskz.png](../assets/help_assets/help_helpdeskz.png)
 
 But we don't have any credentials to login with.
 
@@ -180,13 +180,13 @@ Interestingly `User` with a capital C failed, but `user` did not:
 ```
 We can then paste this hash into crackstation to crack it:
 
-help_crack.png
+![help_crack.png](../assets/help_assets/help_crack.png)
 
 `helpme@helme.com:godhelpmeplz`
 
 Trying to use these credentials to login to the helpdeskz site we get this error:
 
-help_csrf.png
+![help_csrf.png](../assets/help_assets/help_csrf.png)
 
 Weird. But if I click the "Remember Me" button I am able to login fine.
 
@@ -209,7 +209,7 @@ http://help.htb/support/uploads/tickets/49d78d219f092fd13dc9328e2d57c414.php
 <SNIP>
 ```
 
-Once a file is found we catch a shell back in our listener:
+Once a file match is found we catch a shell back in our listener:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Help]
@@ -229,13 +229,13 @@ help
 
 We can now grab the user.txt flag:
 
-help_user_flag.png
+![help_user_flag.png](../assets/help_assets/help_user_flag.png)
 
 ### Privilege Escalation
 
 Loading LinPEAS onto the target we can see the kernel is outdated and likely vulnerable to several kernel exploits:
 
-help_lp2.png
+![help_lp2.png](../assets/help_assets/help_lp2.png)
 
 Interestingly dirtycow did not work here. 
 
@@ -244,7 +244,7 @@ help@help:/tmp$ uname -a
 Linux help 4.4.0-116-generic #140-Ubuntu SMP Mon Feb 12 21:23:04 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
-Searching for exploits against this version I find: https://www.exploit-db.com/exploits/44298
+Searching for exploits against this specific kernel version I find: https://www.exploit-db.com/exploits/44298
 
 We can transfer this over to the target, compile it and drop into a root shell:
 
@@ -272,10 +272,10 @@ root
 
 We can now grab the final flag:
 
-help_root_flag.png
+![help_root_flag.png](../assets/help_assets/help_root_flag.png)
 
 Thanks for following along!
 
 -Ryan
 
--------------
+------------------------------
