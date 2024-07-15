@@ -16,6 +16,7 @@ A place to document various HTB CTF writeups
 - Cronos
 - DevOops
 - Devvortex
+- Help
 - Horizontall
 - Irked
 - Jarvis
