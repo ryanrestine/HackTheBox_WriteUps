@@ -58,6 +58,8 @@ Clicking into the page source we see we have the ability to login as a guest at 
 
 Navigating here we are forwarded to `/issues.php` which has an exchange between admin and a user called Hazard, who has an attachment and states they need to be added as a user as well as mentioning issues with a Cisco router.
 
+![htb_heist_issues.png](../assets/heist_assets/htb_heist_issues.png)
+
 Clicking on the attachment we find some interesting information:
 
 ![htb_heist_config.png](../assets/heist_assets/htb_heist_config.png)
@@ -107,7 +109,7 @@ Lets add our known users to a file called users.txt and the cracked passwords to
 
 ![htb_heist_cme1.png](../assets/heist_assets/htb_heist_cme1.png)
 
-We've found valid credentials: `hazard"stealth1agent`
+We've found valid credentials: `hazard:stealth1agent`
 
 Lets use these credentials in crackmapexec, this time with the `--rid-brute` flag to try to discover more users:
 
@@ -256,7 +258,7 @@ Cool, looks like we've found something:
 
 ![htb_heist_strings.png](../assets/heist_assets/htb_heist_strings.png)
 
-`administrator: 4dD!5}x/re8]FBuZ`
+`administrator:4dD!5}x/re8]FBuZ`
 
 
 Lets use these credentials to log back in with evil-winrm:
