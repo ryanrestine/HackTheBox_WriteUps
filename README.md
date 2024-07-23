@@ -66,6 +66,7 @@ A place to document various HTB CTF writeups
 - Flight
 - Forest
 - Grandpa
+- Heist
 - Intelligence
 - Jeeves
 - Jerry
