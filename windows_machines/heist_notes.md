@@ -50,7 +50,7 @@ Nmap done: 1 IP address (1 host up) scanned in 110.20 seconds
 
 Looking at the site we find a Login portal for a support page:
 
-htb_heist_site.png
+![htb_heist_site.png](../assets/heist_assets/htb_heist_site.png)
 
 Clicking into the page source we see we have the ability to login as a guest at `/login.php?guest=true`
 
