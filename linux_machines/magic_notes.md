@@ -34,11 +34,11 @@ Nmap done: 1 IP address (1 host up) scanned in 19.59 seconds
 
 Looking at the site on port 80 we find several pictures and GIFs, and notice a login link at the bottom of the page, mentioning we can upload photos:
 
-htb_magic_site.png
+![htb_magic_site.png](../assets/magic_assets/htb_magic_site.png)
 
 Following the link we find a simple login page:
 
-htb_magic_login.png
+![htb_magic_login.png](../assets/magic_assets/htb_magic_login.png)
 
 While we play with this lets kick off some directory fuzzing:
 
@@ -47,11 +47,11 @@ While we play with this lets kick off some directory fuzzing:
 └─$ feroxbuster --url http://10.129.64.156 -q -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt  -x php html zip txt -o 80_dirs.txt
 ```
 
-Trying different common passwords yielded nothing, bt we were able to successfully authenticate with a SQL injection login bypass ` admin' or '1'='1'#`
+Trying different common passwords yielded nothing, but we were able to successfully authenticate with a SQL injection login bypass ` admin' or '1'='1'#`
 
 Trying to upload a web shell we get the error:
 
-htb_magic_sorry.png
+![htb_magic_sorry.png](../assets/magic_assets/htb_magic_sorry.png)
 
 Grabbing a copy of PentestMonkey's php-reverse-shell.php and adding the .png magic bytes to the top (`GIF89a;`) and renaming the file shell.php.png:
 
@@ -62,7 +62,7 @@ Grabbing a copy of PentestMonkey's php-reverse-shell.php and adding the .png mag
 
 Gets me this error:
 
-htb_magic_what.png
+![htb_magic_what.png](../assets/magic_assets/htb_magic_what.png)
 
 Lets try a different approach. 
 
@@ -70,7 +70,7 @@ Lets try a different approach.
 
 I'll download a picture of a dog from Google, rename the image dog.php.jpg and use exiftool to write a comment to the image containing a simple php webshell:
 
-htb_magic_google.png
+![htb_magic_google.png](../assets/magic_assets/htb_magic_google.png)
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Magic]
@@ -83,17 +83,17 @@ htb_magic_google.png
 
 I find we can successfully upload this file.
 
-htb_magic_uploaded.png
+![htb_magic_uploaded.png](../assets/magic_assets/htb_magic_upload.png)
 
 But where is it uploaded to?
 
 Going back to our directory fuzzing output:
 
-htb_magic_dirs.png
+![htb_magic_dirs.png](../assets/magic_assets/htb_magic_dirs.png)
 
 We find we can confirm code execution with: http://10.129.64.156/images/uploads/dog.php.jpg?cmd=id
 
-htb_magic_confirm.png
+![htb_magic_confirm.png](../assets/magic_assets/htb_magic_confirm.png)
 
 Interestingly, it appears the file gets scrubbed quickly, because a minute or two later the same request yields a 404 not found error. 
 
@@ -131,7 +131,7 @@ Ok, looks like we'll need to upgrade to user theseus to access this.
 
 Looking around the box we find some credentials in `/var/www/Magic/db.php5`
 
-htb_magic_creds.png
+![htb_magic_creds.png](../assets/magic_assets/htb_magic_creds.png)
 
 Unfortunately for us we can't just use these to `su theseus`:
 
@@ -239,13 +239,13 @@ theseus
 
 We can now access the user.txt flag:
 
-htb_magic_user_flag.png
+![htb_magic_user_flag.png](../assets/magic_assets/htb_magic_user_flag.png)
 
 ### Privilege Escalation
 
 Loading linpeas onto the target we find an unknown SUID binary `/bin/sysinfo`
 
-htb_magic_SUID.png
+![htb_magic_SUID.png](../assets/magic_assets/htb_magic_SUID.png)
 
 Lets take a look at the permissions:
 
@@ -256,11 +256,11 @@ theseus@ubuntu:/tmp$ ls -la /bin/sysinfo
 
 Running the binary we see it does exactly what we'd expect, print out system information:
 
-htb_magic_run.png
+![htb_magic_run.png](../assets/magic_assets/htb_magic_run.png)
 
-Running strings against the binary we can see it is using `lshw` without providing the absolute PATH:
+Running `strings` against the binary we can see it is using `lshw` without providing the absolute PATH:
 
-htb_magic_strings.png
+![htb_magic_strings.png](../assets/magic_assets/htb_magic_strings.png)
 
 Lets create our own `lshw` that sets the SUID bit on `/bin/bash` in the `/temp` directory:
 
@@ -300,7 +300,7 @@ uid=1000(theseus) gid=1000(theseus) euid=0(root) groups=1000(theseus),100(users)
 
 We can now grab the root.txt flag:
 
-htb_magic_root_flag.png
+![htb_magic_root_flag.png](../assets/magic_assets/htb_magic_root_flag.png)
 
 Thanks for following along!
 
