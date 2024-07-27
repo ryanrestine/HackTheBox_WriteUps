@@ -85,7 +85,7 @@ I'll download a picture of a dog from Google, rename the image dog.php.jpg and u
 
 I find we can successfully upload this file.
 
-![htb_magic_uploaded.png](../assets/magic_assets/htb_magic_upload.png)
+![htb_magic_uploaded.png](../assets/magic_assets/htb_magic_uploaded.png)
 
 But where is it uploaded to?
 
@@ -247,7 +247,7 @@ We can now access the user.txt flag:
 
 Loading linpeas onto the target we find an unknown SUID binary `/bin/sysinfo`
 
-![htb_magic_SUID.png](../assets/magic_assets/htb_magic_SUID.png)
+![htb_magic_suid.png](../assets/magic_assets/htb_magic_suid.png)
 
 Lets take a look at the permissions:
 
