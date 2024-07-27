@@ -49,6 +49,8 @@ While we play with this lets kick off some directory fuzzing:
 
 Trying different common passwords yielded nothing, but we were able to successfully authenticate with a SQL injection login bypass ` admin' or '1'='1'#`
 
+![htb_magic_in.png](../assets/magic_assets/htb_magic_in.png)
+
 Trying to upload a web shell we get the error:
 
 ![htb_magic_sorry.png](../assets/magic_assets/htb_magic_sorry.png)
