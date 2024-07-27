@@ -23,6 +23,7 @@ A place to document various HTB CTF writeups
 - Knife
 - Kotarak
 - Lame
+- Magic
 - Mango
 - Mentor
 - Mirai
