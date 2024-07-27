@@ -273,6 +273,8 @@ theseus@ubuntu:/tmp$ cat >> lshw
 theseus@ubuntu:/tmp$ chmod +x lshw 
 ```
 
+Note: I didn't test it but this attack path would likely also work on `fdisk ` and `cat` as well, since no PATH was provided for those commands either.
+
 We can then update the PATH:
 
 ```
