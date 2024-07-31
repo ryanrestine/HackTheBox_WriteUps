@@ -310,7 +310,7 @@ Followed by:
 └─$ bloodhound
 ```
 
-Marking user oliver as 'owned' we see he has ForceChangePassword rights over user smith, who has GenericWrite privileges for user maria, who in turn has the GenericAll privilege over the domain admins group.
+Marking user oliver as 'owned' we see he has ForceChangePassword rights over user smith, who has GenericWrite privileges for user maria, who in turn has the WriteOwner privilege over the domain admins group.
 
 ![htb_object_bloodhound](../assets/object_assets/htb_object_bloodhound.png)
 
@@ -492,7 +492,7 @@ Trying this with evil-winrm we can successfully authenticate as maria:
 
 Note: the target IP keeps changing because this box took me forever and I stopped, started, and reverted several times.
 
-Now for the last ACL abuse step, we can think back to our bloodhound results and recall that maria had GenericAll access over the domain admins group.
+Now for the last ACL abuse step, we can think back to our bloodhound results and recall that maria had WriteOwner access over the domain admins group.
 
 First we'll need to assign maria as owner of the group with PowerView:
 
