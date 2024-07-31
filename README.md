@@ -75,6 +75,7 @@ A place to document various HTB CTF writeups
 - Mantis
 - Monteverde
 - Netmon
+- Object
 - Optimum
 - Querier
 - Reel
