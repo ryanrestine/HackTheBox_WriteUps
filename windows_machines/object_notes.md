@@ -36,6 +36,8 @@ Nmap done: 1 IP address (1 host up) scanned in 27.93 seconds
 
 Looking at the site on port 80 we find a simple page with a link to the company's automation server at object.htb:8080, so lets add that to `/etc/hosts`.
 
+![htb_object_site80](../assets/object_assets/htb_object_site80.png)
+
 Looking at port 8080 we find there is a Jenkins instance running:
 
 ![htb_object_jenkins.png](../assets/object_assets/htb_object_jenkins.png)
@@ -278,7 +280,7 @@ Followed by:
 
 Marking user oliver as 'owned' we see he has ForceChangePassword rights over user smith, who has GenericWrite privileges for user maria, who in turn has the GenericAll privilege over the domain admins group.
 
-![htb_object_bloodhound](../assets/object_assets/htb_object_blooadhound.png)
+![htb_object_bloodhound](../assets/object_assets/htb_object_bloodhound.png)
 
 
 So first lets change smith's password so we can access their account and privileges.
