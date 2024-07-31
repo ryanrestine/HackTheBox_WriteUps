@@ -38,39 +38,39 @@ Looking at the site on port 80 we find a simple page with a link to the company'
 
 Looking at port 8080 we find there is a Jenkins instance running:
 
-htb_object_jenkins.png
+![htb_object_jenkins.png](../assets/object_assets/htb_object_jenkins.png)
 
 Lets create a profile for jenkins:
 
-htb_object_register.png
+![htb_object_register.png](../assets/object_assets/htb_object_register.png)
 
 We do not have access to the `/script` endpoint to execute Groovy scripts.
 
-Also, we can create a job (attempting to insert a powershell reverse shell to execute), but seemingly don't have the ability to actually Build it. 
+Also, we can create a job (attempting to insert a powershell reverse shell to execute), but seemingly don't have the ability to actually Build it as there is no Build Now button. 
 
 We can list users at: http://object.htb:8080/asynchPeople/
 
-htb_object_list.png
+![htb_object_list.png](../assets/object_assets/htb_object_list.png)
 
 Appears just our created test user and admin are present.
 
 Looking around at https://cloud.hacktricks.xyz/pentesting-ci-cd/jenkins-security/jenkins-rce-creating-modifying-project I see that even though we do not have a Build button in the GUI, we can set the Build Trigger to `* * * * *` essentially setting the project on a cron job to build every minute.
 
-htb_object_hacktricks.png
+![htb_object_hacktricks.png](../assets/object_assets/htb_object_hacktricks.png)
 
 Putting a Powershell reverse shell in the Build command:
 
-htb_object_ps_fail.png
+![htb_object_ps_fail.png](../assets/object_assets/htb_object_ps_fail.png)
 
 We can click on the build history and on Console Output and see that the reverse shell failed, but due to the verbosity of the output we discover the username oliver:
 
-htb_object_oliver.png
+![htb_object_oliver.png](../assets/object_assets/htb_object_oliver.png)
 
 Lets simplify things and remove the powershell one liner and replace it with the command `hostname`
 
 We can then wait for the cron to build the project and checking the console out put we see it worked:
 
-htb_object_hostname.png
+![htb_object_hostname.png](../assets/object_assets/htb_object_hostname.png)
 
 For whatever reason (I have no idea why) as I was testing this the cronjob stopped working and Building my project.
 
@@ -80,17 +80,17 @@ In my user profile I clicked Configure and then on "generate api token".
 
 I was then able to copy this token and select "Trigger Builds Remotely" in Build Triggers and paste in my token:
 
-htb_object_token.png
+![htb_object_token.png](../assets/object_assets/htb_object_token.png)
 
 From here I could navigate to http://object.htb:8080/job/test3/build?token=11c0dc40ee30d57297499d3a11a89d1fbc which would trigger a build on my project, this time running the command `systeminfo`
 
-htb_object_systeminfo.png
+![htb_object_systeminfo.png](../assets/object_assets/htb_object_systeminfo.png)
 
 So so far we can confirm we have code execution, as we are able to run system commands, however I've been unable to spawn a reverse shell.
 
 We can confirm who are users on the domain with `net users /domain`
 
-htb_object_net_users.png
+![htb_object_net_users.png](../assets/object_assets/htb_object_net_users.png)
 
 We can also query the firewall settings:
 
@@ -119,9 +119,11 @@ FileName                              %systemroot%\system32\LogFiles\Firewall\pf
 MaxFileSize                           4096
 ```
 
+### Foothold 
+
 We can view Jenkins files:
 
-htb_object_jenkins_files.png
+![htb_object_jenkins_files.png](../assets/object_assets/htb_object_jenkins_files.png)
 
 Lets also look at the `.jenkins` folder running in oliver's directory, specifically the `users` directory:
 
@@ -175,7 +177,7 @@ C:\Users\oliver\AppData\Local\Jenkins\.jenkins\workspace\test3>type C:\Users\oli
 Finished: SUCCESS
 ```
 
-Cool, looks like we have some hashes. Lets grab the jenkins master.key from `C:\Users\oliver\AppData\Local\Jenkins\.jenkins\secrets\master.key`:
+Cool, looks like we have some hashes. Lets grab the Jenkins master.key from `C:\Users\oliver\AppData\Local\Jenkins\.jenkins\secrets\master.key`:
 
 ```
 Started by remote host 10.10.14.214
@@ -242,6 +244,8 @@ object\oliver
 jenkins
 ```
 
+![htb_object_user_flag](../assets/object_assets/htb_object_user_flag.png)
+
 ### Privilege Escalation
 
 Not finding much for privilege escalation I decided to load SharpHound to see what else I could enumerate:
@@ -273,6 +277,8 @@ Followed by:
 ```
 
 Marking user oliver as 'owned' we see he has ForceChangePassword rights over user smith, who has GenericWrite privileges for user maria, who in turn has the GenericAll privilege over the domain admins group.
+
+![htb_object_bloodhound](../assets/object_assets/htb_object_blooadhound.png)
 
 
 So first lets change smith's password so we can access their account and privileges.
@@ -439,7 +445,7 @@ Info: Download successful!
 
 Opening the file with libre office we find 3 passwords:
 
-htb_object_engines.png
+![htb_object_engines.png](../assets/object_assets/htb_object_engines.png)
 
 The credential `W3llcr4ft3d_4cls` seems particularly interesting.
 
@@ -505,7 +511,7 @@ The command completed successfully.
 
 And we can grab the final flag:
 
-htb_object_root_flag.png
+![htb_object_root_flag.png](../assets/object_assets/htb_object_root_flag.png)
 
 Thanks for following along!
 
