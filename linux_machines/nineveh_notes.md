@@ -88,6 +88,8 @@ Lets take this idea and try to create a webshell. We'll create a new db called s
 
 CLicking `create` and returning to the shell.php db page we see it is being stored in `/var/tmp/shell.php` which means until we get deeper access to the target it doesn't seem usable to us yet.
 
+![nineveh_path.png](../assets/nineveh_assets/nineveh_path.png)
+
 Lets take step back and perform more thorough directory fuzzing:
 
 For port 80:
