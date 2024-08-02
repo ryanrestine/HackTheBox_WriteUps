@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Nineveh.png
+![Nineveh.png](../assets/nineveh_assets/Nineveh.png)
 
 ### Enumeration
 
