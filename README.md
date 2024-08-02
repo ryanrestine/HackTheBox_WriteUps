@@ -29,6 +29,7 @@ A place to document various HTB CTF writeups
 - Mirai
 - Monitored
 - Nibbles
+- Nineveh
 - OpenAdmin
 - Pandora
 - Pilgrimage
