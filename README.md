@@ -9,6 +9,7 @@ A place to document various HTB CTF writeups
 - Bashed
 - Blocky
 - Broker
+- Builder
 - Busqueda
 - Cap
 - Codify
