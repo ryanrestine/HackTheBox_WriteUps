@@ -44,7 +44,7 @@ We also notice a `/register` endpoint, as well as an admin page that redirects t
 
 Lets register an account `test@test.com:password` and login:
 
-htb_usage_in.png
+![htb_usage_in.png](../assets/usage_assets/htb_usage_in.png)
 
 We find here a few blog entries about Server-Side Language Penetration Testing.
 
@@ -52,7 +52,7 @@ Not seeing much, I began testing the various fields on the site and found an int
 
 If I enter in a single quote `'` the server throws us an error.
 
-htb_usage_error.png
+![htb_usage_error.png](../assets/usage_assets/htb_usage_error.png)
 
 This is definitely worth investigating for a SQL injection.
 
@@ -108,7 +108,7 @@ Parameter: email (POST)
     Payload: _token=YiNzrNxWRNzcxuA3dihvcYSKaLEJg5pek2yqT5tz&email=test' AND 6371=(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS A, INFORMATION_SCHEMA.COLUMNS B, INFORMATION_SCHEMA.COLUMNS C WHERE 0 XOR 1)-- kmNV
 ```
 
-Cool, so now we know the parameter is vulnerable, and that there are 8 columns.
+Cool, so now we know the parameter is vulnerable to blind injection, and that there are 8 columns.
 
 Lets dig deeper and enumerate the databases with:
 
@@ -158,21 +158,21 @@ Both the `admin_users` and the `users` seem interesting, but let's check out `ad
 
 Cool, we were able to dump the administrator hash:
 
-htb_usage_hash.png
+![htb_usage_hash.png](../assets/usage_assets/htb_usage_hash.png)
 
 We can crack this using john:
 
-htb_usage_john.png
+![htb_usage_john.png](../assets/usage_assets/htb_usage_john.png)
 
 We are now able able to login `/admin`:
 
-htb_usage_admin.png
+![htb_usage_admin.png](../assets/usage_assets/htb_usage_admin.png)
 
 ### Exploitation
 
 Browsing around the site I see we have a place to edit the admin's profile and there is an upload form for a new avatar.
 
-htb_usage_edit.png
+![htb_usage_edit.png](../assets/usage_assets/htb_usage_edit.png)
 
 Forms like this are definitely worth checking out.
 
@@ -186,7 +186,7 @@ Let's try loading a simple php webshell:
 
 Looks like we've got an error here:
 
-htb_usage_error1.png
+![htb_usage_error1.png](../assets/usage_assets/htb_usage_error1.png)
 
 Let's rename the file and try again, this time capturing the request in Burp:
 
@@ -197,13 +197,13 @@ Let's rename the file and try again, this time capturing the request in Burp:
 
 Then, once the request has been captured in Burp, let's rename the file back to cmd.php and forward the request.
 
-htb_usage_burp1.png
+![htb_usage_burp1.png](../assets/usage_assets/htb_usage_burp1.png)
 
 We can now access our webshell at http://admin.usage.htb/uploads/images/cmd.php?cmd=whoami
 
-htb_usage_whoami.png
+![htb_usage_whoami.png](../assets/usage_assets/htb_usage_whoami.png)
 
-Lets URL Encode a reverse shell and issue it as our command to catch a shell back as user dash:
+Lets URL Encode a reverse Busybox shell and issue it as our command to catch a shell back as user dash:
 
 ```
 ┌──(ryan㉿kali)-[~/HTB/Usage]
@@ -220,7 +220,7 @@ dash@usage:/var/www/html/project_admin/public/uploads/images$
 
 We can now grab the user.txt flag:
 
-htb_usage_user.png
+![htb_usage_user.png](../assets/usage_assets/htb_usage_user.png)
 
 ### Privilege Escalation
 
@@ -265,7 +265,7 @@ drwx------ 2 dash dash 4096 Aug 24  2023 .ssh
 
 We can run `strings` against the .monitrc file and discover a password:
 
-htb_usage_monit.png
+![htb_usage_monit.png](../assets/usage_assets/htb_usage_monit.png)
 
 This doesn't work for the root user, but it does work to `su xander`, who can run with sudo something called `usage_management`.
 
@@ -312,7 +312,7 @@ Everything is Ok
 
 Running `strings` against it we can see it is using 7z with the wildcard `*`.
 
-htb_usage_strings.png
+![htb_usage_strings.png](../assets/usage_assets/htb_usage_strings.png)
 
 This is likely a solid path forward.
 
@@ -363,7 +363,7 @@ b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
 <SNIP>
 ```
 
-Let's remove all the `: No more files` and don't forget to add an empty line at the bottom and save it as root_id_rsa and `chmod 600` it.
+Let's remove all the `: No more files` (don't forget to add an empty line at the bottom) and save it as root_id_rsa and `chmod 600` it.
 
 We can then use this to login as the root user:
 
@@ -375,7 +375,7 @@ Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-101-generic x86_64)
 
 We can then grab the final flag:
 
-htb_usage_root.png
+![htb_usage_root.png](../assets/usage_assets/htb_usage_root.png)
 
 Thanks for following along!
 
