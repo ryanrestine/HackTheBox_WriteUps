@@ -49,6 +49,7 @@ A place to document various HTB CTF writeups
 - Tenten
 - Traverxec
 - UpDown
+- Usage
 - Valenintine
 - Validation
 - Writeup
