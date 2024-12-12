@@ -310,7 +310,7 @@ Archive size: 54826351 bytes (53 MiB)
 Everything is Ok
 ```
 
-Running `strings` against it we can see it is using 7z with the wildcard `*`.
+Running `strings` against it we can see it is using 7z with the wildcard `*` from `/var/www/html`.
 
 ![htb_usage_strings.png](../assets/usage_assets/htb_usage_strings.png)
 
