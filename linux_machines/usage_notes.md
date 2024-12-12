@@ -38,7 +38,7 @@ Lets add usage.htb to `/etc/hosts`
 
 Looking at the site on port 80 we find a login:
 
-htb_usage_site.png
+![htb_usage_site.png](../assets/usage_assets/htb_usage_site.png)
 
 We also notice a `/register` endpoint, as well as an admin page that redirects to `admin.usage.htb`, so lets add that to `/etc/hosts` as well.
 
