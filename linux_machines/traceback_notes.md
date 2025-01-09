@@ -37,26 +37,25 @@ Nmap done: 1 IP address (1 host up) scanned in 18.31 seconds
 
 Looking at the site on port 80 we find:
 
-htb_traceback_site.png
+![htb_traceback_site.png](../assets/traceback_assets/htb_traceback_site.png)
 
 After several failed directory fuzzing attempts using my go-to wordlists in attempt to find the webshell mentioned, I decided to try a wordlist from SecLists for common backdoors and got a hit:
 
-htb_traceback_dir.png
+![htb_traceback_dir.png](../assets/traceback_assets/htb_traceback_dir.png)
 
 Navigating to the directory we find a login:
 
-htb_traceback_backdoor.png
+![htb_traceback_backdoor.png](../assets/traceback_assets/htb_traceback_backdoor.png)
 
 Luckily for us we can successfully authenticate using `admin:admin`
 
-htb_traceback_in.png
+![htb_traceback_in.png](../assets/traceback_assets/htb_traceback_in.png)
 
 ### Exploitation
 
 Clicking on the console tab we find we can execute commands:
 
-htb_traceback_whoami
-
+![htb_traceback_whoami](../assets/traceback_assets/htb_traceback_whoami.png)
 
 Let's issue a reverse shell oneliner to catch a reverse shell:
 ```
@@ -111,17 +110,17 @@ User webadmin may run the following commands on traceback:
 
 We can use this to execute system commands as the user sysadmin using the `os.execute` command in luvit:
 
-htb_traceback_bash.png
+![htb_traceback_bash.png](../assets/traceback_assets/htb_traceback_bash.png)
 
 We can now grab the first flag:
 
-htb_traceback_user.png
+![htb_traceback_user.png](../assets/traceback_assets/htb_traceback_user.png)
 
 ### Privilege Escalation
 
 Loading linpeas onto the target we find:
 
-htb_traceback_lp.png
+![htb_traceback_lp.png](../assets/traceback_assets/htb_traceback_lp.png)
 
 These are writable message of the day files, which are triggered when a user SSH's into the machine.
 
@@ -242,7 +241,7 @@ Nice, that worked.
 
 We can now grab the final flag:
 
-htb_traceback_root.png
+![htb_traceback_root.png](../assets/traceback_assets/htb_traceback_root.png)
 
 Thanks for following along!
 
