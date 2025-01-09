@@ -1,12 +1,12 @@
 # HTB - TraceBack
 
-##### Ip: 10.129.245.136
-##### Name: TraceBack
-##### Rating: Easy
+### Ip: 10.129.245.136
+### Name: TraceBack
+### Rating: Easy
 
 ------------------------------------------------
 
-TraceBack.png
+![TraceBack.png](../assets/traceback_assets/TraceBack.png)
 
 #### Enumeration
 
