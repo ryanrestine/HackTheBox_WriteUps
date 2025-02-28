@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-Topology.png
+![Topology.png](../assets/topology_assets/Topology.png)
 
 #### Enumeration
 
@@ -37,7 +37,7 @@ Nmap done: 1 IP address (1 host up) scanned in 23.63 seconds
 
 Looking at the site we find a page for a university mathematics department:
 
-htb_topology_site.png
+![htb_topology_site.png](../assets/topology_assets/htb_topology_site.png)
 
 The site has a link for "LaTeX Equation Generator - create .PNGs of LaTeX equations in your browser" which attempts to forward to latex.topology.htb, so let's add that to `/etc/hosts`.
 
