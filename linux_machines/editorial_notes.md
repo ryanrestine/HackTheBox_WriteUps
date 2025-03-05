@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-Editorial.png
+![Editorial.png](../assets/editorial_assets/Editorial.png)
 
 #### Enumeration
 
@@ -37,7 +37,7 @@ Let's add editorial.htb to `/etc/hosts`.
 
 Looking at the site it appears to be a publishing company, with an upload form to "Publish With Us":
 
-htb_editorial_publish.png
+![htb_editorial_publish.png](../assets/editorial_assets/htb_editorial_publish.png)
 
 Trying to submit a test request we get the message:
 
