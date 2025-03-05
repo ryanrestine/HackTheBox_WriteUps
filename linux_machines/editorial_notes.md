@@ -47,7 +47,7 @@ Trying to submit a test request we get the message:
 
 Trying this again and capturing the request in Burp, curiously the most interesting parts of the upload form, the book URL and the cover image are absent:
 
-htb_editorial_burp.png
+![htb_editorial_burp.png](../assets/editorial_assets/htb_editorial_burp.png)
 
 However we can set up a nc listener and point the bookurl back to our machine, and rather than hitting "submit" we can click "preview" which gets us a hit back:
 
@@ -66,19 +66,19 @@ Connection: keep-alive
 
 Let's capture this in Burp again, but this time use localhost on port 22 as the bookurl:
 
-htb_editorial_burp2.png
+![htb_editorial_burp2.png](../assets/editorial_assets/htb_editorial_burp2.png)
 
 We are given an image link, and note the response size of 61.
 
 Looking at the page source we know this to be the src image:
 
-htb_editorial_html.png
+![htb_editorial_html.png](../assets/editorial_assets/htb_editorial_html.png)
 
-Lets grab a list of common HTTP ports from SecLists: https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/Infrastructure/common-http-ports.txt
+Let's grab a list of common HTTP ports from SecLists: https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/Infrastructure/common-http-ports.txt
 
 and use these with Burp Intruder to see if there are any internal ports open on the target:
 
-htb_editorial_intruder.png
+![htb_editorial_intruder.png](../assets/editorial_assets/htb_editorial_intruder.png)
 
 Cool, we've got a different response size from port 5000, which makes me wonder if this is open internally.
 
@@ -86,11 +86,11 @@ Cool, we've got a different response size from port 5000, which makes me wonder 
 
 Sending this request we receive a new link:
 
-htb_editorial_burp3.png
+![htb_editorial_burp3.png](../assets/editorial_assets/htb_editorial_burp3.png)
 
 But trying to visit the link in the browser gives us a 404:
 
-htb_editorial_404.png
+![htb_editorial_404.png](../assets/editorial_assets/htb_editorial_404.png)
 
 Strangely, re-sending the request and generating a new link works this time, and I can use curl to access the response:
 
@@ -106,7 +106,7 @@ Trying them each out by entering them into the URL field, pressing enter, and th
 
 `http://127.0.0.1:5000/api/latest/metadata/messages/authors` proved to be the most interesting:
 
-htb_editorial_image.png
+![htb_editorial_image.png](../assets/editorial_assets/htb_editorial_image.png)
 
 ```
 {"template_mail_message":"Welcome to the team! We are thrilled to have you on board and can't wait to see the incredible content you'll bring to the table.\n\nYour login credentials for our internal forum and authors site are:\nUsername: dev\nPassword: dev080217_devAPI!@\nPlease be sure to change your password as soon as possible for security purposes.\n\nDon't hesitate to reach out if you have any questions or ideas - we're always here to support you.\n\nBest regards, Editorial Tiempo Arriba Team."}
@@ -123,7 +123,7 @@ We can use these to SSH into the target:
 
 And grab the user.txt flag:
 
-htb_editorial_user.png
+![htb_editorial_user.png](../assets/editorial_assets/htb_editorial_user.png)
 
 ### Privilege Escalation
 
@@ -141,11 +141,11 @@ Let's run `git log` to view the various commits.
 
 The note: `downgrading prod to dev` seems interesting, so let's grab this commit, along with the one just before it, and use `git diff` with the commit numbers to see what's changed:
 
-htb_editorial_log.png
+![htb_editorial_log.png](../assets/editorial_assets/htb_editorial_log.png)
 
 Cool, we found another password, one seemingly powerful enough to be used in production:
 
-htb_editorial_diff.png
+![htb_editorial_diff.png](../assets/editorial_assets/htb_editorial_diff.png)
 
 `080217_Producti0n_2023!@`
 
@@ -230,7 +230,7 @@ editorial
 
 And grab the final flag:
 
-htb_editorial_root.png
+![htb_editorial_root.png](../assets/editorial_assets/htb_editorial_root.png)
 
 Thanks for following along!
 
