@@ -15,6 +15,7 @@ A place to document various HTB CTF writeups
 - Codify
 - CozyHosting
 - Cronos
+- Curling
 - DevOops
 - Devvortex
 - Editorial
