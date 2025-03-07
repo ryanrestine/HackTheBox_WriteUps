@@ -29,6 +29,7 @@ A place to document various HTB CTF writeups
 - Magic
 - Mango
 - Mentor
+- MetaTwo
 - Mirai
 - Monitored
 - Nibbles
