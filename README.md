@@ -94,5 +94,6 @@ A place to document various HTB CTF writeups
 - Search
 - SecNotes
 - ServMon
+- SolarLab
 - Tally
 - Timelapse
