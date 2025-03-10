@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-![SolarLab.png](../assets/solarlab_assets/Solarlab.png)
+![SolarLab.png](../assets/solarlab_assets/SolarLab.png)
 
 #### Enumeration
 
