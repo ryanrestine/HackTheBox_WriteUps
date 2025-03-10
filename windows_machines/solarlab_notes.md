@@ -340,7 +340,7 @@ This is interesting but claudias and alexanderk are not users on the local machi
 
 Locally there are only 3 users: administrator, blake and openfire.
 
-Let's use nxc to see if these password work for any of the box users:
+Let's use nxc to see if these passwords work for any of the box users:
 
 ![htb_solarlab_new_pass.png](../assets/solarlab_assets/htb_solarlab_new_pass.png)
 
