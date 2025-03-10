@@ -6,7 +6,7 @@
 
 ------------------------------------------------
 
-SolarLab.png
+![SolarLab.png](../assets/solarlab_assets/Solarlab.png)
 
 #### Enumeration
 
@@ -46,11 +46,11 @@ Let's add solarlab.htb to `/etc/hosts`.
 
 Looking at the site we find a page for a company that makes an 'unhackable' messaging app:
 
-htb_solarlab_site.png
+![htb_solarlab_site.png](../assets/solarlab_assets/htb_solarlab_site.png)
 
 While our directory scan runs we can use nxc to see if we can read any SMB shares:
 
-htb_solarlab_shares.png
+![htb_solarlab_shares.png](../assets/solarlab_assets/htb_solarlab_shares.png)
 
 Cool, looks like we have read access to the Documents share.
 
@@ -85,7 +85,7 @@ details-file.xlsx  old_leave_request_form.docx  Training-Request-Form.docx  Trav
 
 The details file contains user credentials:
 
-htb_solarlab_details.png
+![htb_solarlab_details.png](../assets/solarlab_assets/htb_solarlab_details.png)
 
 Adding these to a users.txt and passwords.txt file and trying them out, we find nxc and CME are registering all combinations as valid, because it seems any credentials passed into SMB are for some reason being authenticated as guest? This may mean these usernames don't exist? I'm not really sure about that.
 
@@ -159,9 +159,9 @@ spaul
 
 We can unzip the contents of the .xlsx file and inside we find:
 
-htb_solarlab_paul.png
+![htb_solarlab_paul.png](../assets/solarlab_assets/htb_solarlab_paul.png)
 
-Which now confirms the username's are likely just first name, at least on the machine, as well as that the user paul likely exists on the target.
+Which now confirms the usernames are likely just first name, at least on the machine, as well as that the user paul likely exists on the target.
 
 Bruteforcing with our updated lists with:
 
@@ -173,8 +173,7 @@ SMB         10.129.231.39   445    SOLARLAB         [*] Windows 10 / Server 2019
 
 We find that the username blake is valid, as well as confirm his password:
 
-htb_solarlab_blake.png
-
+![htb_solarlab_blake.png](../assets/solarlab_assets/htb_solarlab_blake.png)
 
 We also find that none of these passwords work for the admin account (no big surprise there):
 
@@ -243,17 +242,17 @@ Nmap done: 1 IP address (1 host up) scanned in 253.61 seconds
 
 So let's add report.solarlab.htb for port 6791 to `/etc/hosts` and count this is a good lesson to not rush nmap with the `--min-rate` flag.
 
-htb_solarlab_login.png
+![htb_solarlab_login.png](../assets/solarlab_assets/htb_solarlab_login.png)
 
 If we try to login with blake's credentials we get a "User not Found" error, and the same goes for paul.
 
 Going back to my full users list and trying different naming conventions for blake I find we can login with `blakeb:ThisCanB3typedeasily1@`
 
-htb_solarlab_in.png
+![htb_solarlab_in.png](../assets/solarlab_assets/htb_solarlab_in.png)
 
 Let's generate a time off request and attach the machine info card picture to the PDF:
 
-htb_solarlab_pdf.png
+![htb_solarlab_pdf.png](../assets/solarlab_assets/htb_solarlab_pdf.png)
 
 Downloading the file and using exiftool, we see that it was creating using ReportLab PDF Library:
 
@@ -303,7 +302,7 @@ Let's grab a B64 encoded PowerShell reverse shell from revshells.com and use it 
 </para>
 ```
 
-htb_solarlab_burp.png
+![htb_solarlab_burp.png](../assets/solarlab_assets/htb_solarlab_burp.png)
 
 Submitting this with a listener running we catch a shell as user blake:
 
@@ -320,7 +319,7 @@ solarlab
 
 And we can grab the first flag:
 
-htb_solarlab_user.png
+![htb_solarlab_user.png](../assets/solarlab_assets/htb_solarlab_user.png)
 
 ### Privilege Escalation
 
@@ -343,13 +342,13 @@ Locally there are only 3 users: administrator, blake and openfire.
 
 Let's use nxc to see if these password work for any of the box users:
 
-htb_solarlab_new_pass.png
+![htb_solarlab_new_pass.png](../assets/solarlab_assets/htb_solarlab_new_pass.png)
 
 Cool, looks like alexanderk is using the same password as openfire.
 
 Let's transfer over RunasCs.exe and use it to spawn a new shell as user openfire:
 
-htb_solarlab_new_shell.png
+![htb_solarlab_new_shell.png](../assets/solarlab_assets/htb_solarlab_new_shell.png)
 
 Looking around the box we find `openfire.script` in `C:\Program Files\Openfire\embedded-db`, and this file contains the admin password hash:
 
@@ -392,7 +391,7 @@ C:\Windows\system32> hostname
 solarlab
 ```
 
-htb_solarlab_root.png
+![htb_solarlab_root.png](../assets/solarlab_assets/htb_solarlab_root.png)
 
 Thanks for following along!
 
