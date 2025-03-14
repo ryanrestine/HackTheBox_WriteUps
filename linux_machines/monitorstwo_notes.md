@@ -1,12 +1,12 @@
 # HTB - MonitorsTwo
 
-##### Ip: 10.129.228.231
-##### Name: MonitorsTwo
-##### Rating: Easy
+### Ip: 10.129.228.231
+### Name: MonitorsTwo
+### Rating: Easy
 
 ------------------------------------------------
 
-MonitorsTwo.png
+![MonitorsTwo.png](../assets/monitorstwo_assets/MonitorsTwo.png)
 
 #### Enumeration
 
@@ -36,7 +36,7 @@ Nmap done: 1 IP address (1 host up) scanned in 17.81 seconds
 ```
 Looking at the site we find a Cacti login
 
-htb_monitors2_login.png
+![htb_monitors2_login.png](../assets/monitorstwo_assets/htb_monitors2_login.png)
 
 Looking for Cacti exploits against version 1.2.22 I find: https://github.com/FredBrave/CVE-2022-46169-CACTI-1.2.22/tree/main
 
@@ -70,11 +70,11 @@ hostname
 
 Running LinPEAS on the target we find `capsh` has the SUID bit set:
 
-htb_monitors2_lp1.png
+![htb_monitors2_lp1.png](../assets/monitorstwo_assets/htb_monitors2_lp1.png)
 
 We can head to: https://gtfobins.github.io/gtfobins/capsh/#suid for the command we'll need.
 
-htb_monitors2_gtfo.png
+![htb_monitors2_gtfo.png](../assets/monitorstwo_assets/htb_monitors2_gtfo.png)
 
 Lets give it a shot:
 
@@ -119,7 +119,7 @@ Lets login with: `mysql -h db -u root -proot cacti`
 
 Looking around we find a table called `user_auth` which contains a password hash for user marcus: `$2y$10$vcrYth5YcCLlZaPDj6PwqOYTw68W1.3WeKlBn70JonsdW/MhFYK4C`
 
-htb_monitors2_db.png
+![htb_monitors2_db.png](../assets/monitorstwo_assets/htb_monitors2_db.png)
 
 Now that we have this hash we can use hashcat to crack it:
 
@@ -150,8 +150,7 @@ Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-147-generic x86_64)
 
 We can now access the user.txt flag:
 
-
-htb_monitors2_user.png
+![htb_monitors2_user.png](../assets/monitorstwo_assets/htb_monitors2_user.png)
 
 ### Privilege Escalation
 
@@ -250,7 +249,7 @@ monitorstwo
 
 From here we can grab the final flag:
 
-htb_monitors2_root.png
+![htb_monitors2_root.png](../assets/monitorstwo_assets/htb_monitors2_root.png)
 
 Thanks for following along!
 
