@@ -32,6 +32,7 @@ A place to document various HTB CTF writeups
 - MetaTwo
 - Mirai
 - Monitored
+- MonitorsTwo
 - Nibbles
 - Nineveh
 - OpenAdmin
