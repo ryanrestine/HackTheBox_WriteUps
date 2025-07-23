@@ -40,15 +40,15 @@ Looking at port 80 we find a site about video games:
 
 After poking around the site and not finding much of interest, I began testing the `/login` page and discovered that the email field is vulnerable to SQL injection:
 
-htb_goodgames_test.png
+![htb_goodgames_test.png](../assets/goodgames_assets/htb_goodgames_test.png)
 
 Further testing reveals there are 4 columns:
 
-htb_goodgames_4.png
+![htb_goodgames_4.png](../assets/goodgames_assets/htb_goodgames_4.png)
 
 We can see the database is `main`:
 
-htb_goodgames_main.png
+![htb_goodgames_main.png](../assets/goodgames_assets/htb_goodgames_main.png)
 
 Let's look at the tables:
 
@@ -56,11 +56,11 @@ Let's look at the tables:
 '+UNION+SELECT+1,2,3,group_concat(table_schema,+'%3a'+,table_name)+FROM+information_schema.tables+WHERE+table_schema+!%3d+'mysql'+AND+table_schema+!%3d+'information_schema'--+-
 ```
 
-htb_goodgames_tables.png
+![htb_goodgames_tables.png](../assets/goodgames_assets/htb_goodgames_tables.png)
 
 We can now see the columns:
 
-htb_goodgames_columns.png
+![htb_goodgames_columns.png](../assets/goodgames_assets/htb_goodgames_columns.png)
 
 name and password seem interesting.
 
@@ -70,35 +70,35 @@ We can grab those with:
 '+UNION+SELECT+1,2,3,group_concat(name,+'%3a'+,password)+FROM+main.user+--+-
 ```
 
-htb_goodgames_hash.png
+![htb_goodgames_hash.png](../assets/goodgames_assets/htb_goodgames_hash.png)
 
 Here we find the admin hash, as well as all the test user accounts I created during my initial testing.
 
 We can crack the admin hash using crackstation:
 
-htb_goodgames_crack.png
+![htb_goodgames_crack.png](../assets/goodgames_assets/htb_goodgames_crack.png)
 
 `admin:superadministrator`
 
 Lets login using `admin@goodgames.htb`.
 
-htb_goodgames_in.png
+![htb_goodgames_in.png](../assets/goodgames_assets/htb_goodgames_in.png)
 
 Still not seeing much of interest now that we are logged in as admin, I checked the page source and found a new endpoint:
 
-htb_goodgames_internal.png
+![htb_goodgames_internal.png](../assets/goodgames_assets/htb_goodgames_internal.png)
 
 Let's add internal-administration.goodgames.htb to `/etc/hosts` as well.
 
-htb_goodgames_login2.png
+![htb_goodgames_login2.png](../assets/goodgames_assets/htb_goodgames_login2.png)
 
-Let's logging using the same credentials we discovered via SQLI:
+Let's login using the same credentials we discovered via SQLI:
 
-htb_goodgames_in2.png
+![htb_goodgames_in2.png](../assets/goodgames_assets/htb_goodgames_in2.png)
 
 Poking around, the internal site is largely static, but after a while I discovered an SSTI vulnerability in the admin profile page:
 
-htb_goodgames_ssti.png
+![htb_goodgames_ssti.png](../assets/goodgames_assets/htb_goodgames_ssti.png)
 
 Let's use this to run the `id` command:
 
@@ -106,7 +106,7 @@ Let's use this to run the `id` command:
 {{request.application.__globals__.__builtins__.__import__('os').popen('id').read()}}
 ```
 
-htb_goodgames_id.png
+![htb_goodgames_id.png](../assets/goodgames_assets/htb_goodgames_id.png)
 
 Let's exploit this for a reverse shell. For this step I found a helpful site at: https://exploit-notes.hdks.org/exploit/web/framework/python/flask-jinja2-pentesting/
 
@@ -142,7 +142,7 @@ hostname
 
 This seems to be a docker container, but let's go ahead and grab the user.txt flag:
 
-htb_goodgames_user.png
+![htb_goodgames_user.png](../assets/goodgames_assets/htb_goodgames_user.png)
 
 ### Privilege Escalation
 
@@ -282,7 +282,7 @@ GoodGames
 
 We can now grab the final flag:
 
-htb_goodgames_root.png
+![htb_goodgames_root.png](../assets/goodgames_assets/htb_goodgames_root.png)
 
 Thanks for following along!
 
