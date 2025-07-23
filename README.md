@@ -19,6 +19,7 @@ A place to document various HTB CTF writeups
 - DevOops
 - Devvortex
 - Editorial
+- GoodGames
 - Help
 - Horizontall
 - Irked
