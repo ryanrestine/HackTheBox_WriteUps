@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-GoodGames.png
+![GoodGames.png](../assets/goodgames_assets/GoodGames.png)
 
 ### Enumeration
 
@@ -34,7 +34,7 @@ Let's add goodgames.htb to `/etc/hosts`.
 
 Looking at port 80 we find a site about video games:
 
-htb_goodgames_site.png
+![htb_goodgames_site.png](../assets/goodgames_assets/htb_goodgames_site.png)
 
 ### Exploitation
 
