@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-htb_chaos_card.png
+![htb_chaos_card.png](../assets/chaos_assets/htb_chaos_card.png)
 
 ### Enumeration
 
