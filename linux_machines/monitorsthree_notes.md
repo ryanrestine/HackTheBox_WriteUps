@@ -96,7 +96,7 @@ Entering a single `'` character gets us an interesting error:
 
 Let's capture this in Burp and feed it into SQLMap to help enumerate this further:
 
-htb_monitors3_sqlmap1.png
+![htb_monitors3_sqlmap1.png](../assets/monitorsthree_assets/htb_monitors3_sqlmap1.png)
 
 ```
 POST parameter 'username' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
