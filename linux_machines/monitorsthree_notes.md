@@ -183,7 +183,7 @@ www-data@monitorsthree:/home$ cd marcus
 bash: cd: marcus: Permission denied
 ```
 
-Cheching out the cacti config file located at: `/var/www/html/cacti/include/config.php`  is a great place to start, and inside we find some mysql creds:
+Checking out the cacti config file located at: `/var/www/html/cacti/include/config.php`  is a great place to start, and inside we find some mysql creds:
 
 ```
 #$rdatabase_type     = 'mysql';
