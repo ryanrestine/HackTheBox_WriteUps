@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-htb_monitors3_card.png
+![htb_monitors3_card.png](../assets/monitorsthree_assets/htb_monitors3_card.png)
 
 ### Enumeration
 
