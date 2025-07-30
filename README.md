@@ -33,6 +33,7 @@ A place to document various HTB CTF writeups
 - MetaTwo
 - Mirai
 - Monitored
+- MonitorsThree
 - MonitorsTwo
 - Nibbles
 - Nineveh
