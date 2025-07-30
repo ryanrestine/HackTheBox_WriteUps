@@ -39,7 +39,7 @@ Let's add monitorsthree.htb to `/etc/hosts`.
 
 Looking at the page on port 80 we find a site offering networking solutions:
 
-htb_monitors3_site.png
+![htb_monitors3_site.png](../assets/monitorsthree_assets/htb_monitors3_site.png)
 
 Fuzzing directories we find http://monitorsthree.htb/admin/navbar.php, which interestingly we can access, but cannot click on to any of the links without first authenticating.
 
@@ -80,7 +80,7 @@ ________________________________________________
 
 Scanning this vhost with nikto, several files are found:
 
-htb_monitors3_nikto.png
+![htb_monitors3_nikto.png](../assets/monitorsthree_assets/htb_monitors3_nikto.png)
 
 But they all appear to be default files and not to contain anything of interest.
 
@@ -90,11 +90,11 @@ Going back to the drawing board and inspecting the "Forgot Password" feature on 
 
 Entering a single `'` character gets us an interesting error:
 
-htb_monitors3_syntax.png
+![htb_monitors3_syntax.png](../assets/monitorsthree_assets/htb_monitors3_syntax.png)
 
 ### Exploitation
 
-Lets capture this in Burp and feed it into SQLMap to help enumerate this further:
+Let's capture this in Burp and feed it into SQLMap to help enumerate this further:
 
 htb_monitors3_sqlmap1.png
 
@@ -154,11 +154,11 @@ Lets dump the users table:
 
 And after seemingly an eternity, we've got our hashes:
 
-htb_monitors3_hashes.png
+![htb_monitors3_hashes.png](../assets/monitorsthree_assets/htb_monitors3_hashes.png)
 
 Dropping these into crackstation, we find we can crack the admin hash: `greencacti2001`
 
-htb_monitors3_cracked.png
+![htb_monitors3_cracked.png](../assets/monitorsthree_assets/htb_monitors3_cracked.png)
 
 Now that we have this credential we can revisit some of the authenticated RCE exploits discovered earlier in enumeration.
 
@@ -171,7 +171,7 @@ Let's use: https://www.exploit-db.com/exploits/52225
 
 We can launch the exploit and catch as shell as www-data:
 
-htb_monitors3_shell.png
+![htb_monitors3_shell.png](../assets/monitorsthree_assets/htb_monitors3_shell.png)
 
 However it still looks like we'll need to escalate privileges or move laterally to access the user.txt flag:
 
@@ -199,9 +199,9 @@ Cheching out the cacti config file located at: `/var/www/html/cacti/include/conf
 #$rdatabase_ssl_ca   = '';
 ```
 
-We acn use these to login and further enumerate the cacti db. Inside we find a table called `user_auth` which contains some hashes:
+We can use these to login and further enumerate the cacti db. Inside we find a table called `user_auth` which contains some hashes:
 
-htb_monitors3_db.png
+![htb_monitors3_db.png](../assets/monitorsthree_assets/htb_monitors3_db.png)
 
 We can use john to crack one of these:
 
@@ -226,7 +226,7 @@ marcus
 
 From here we can grab the first flag:
 
-htb_monitors3_user.png
+![htb_monitors3_user.png](../assets/monitorsthree_assets/htb_monitors3_user.png)
 
 I'll also grab marcus' SSH key for persistence:
 
@@ -294,7 +294,7 @@ Serving HTTP on 0.0.0.0 port 8888 (http://0.0.0.0:8888/) ...
 
 Browsing this file I find two interesting hashes for duplicati in `options`:
 
-htb_monitors3_sql2.png
+![htb_monitors3_sql2.png](../assets/monitorsthree_assets/htb_monitors3_sql2.png)
 
 Not exactly sure what to do with these, I find a detailed writeup of utilizing these to bypass login for duplicati: https://read.martiandefense.llc/duplicati-bypassing-login-authentication-with-server-passphrase-024d6991e9ee
 
@@ -325,11 +325,11 @@ Let's set up the port forward:
 
 And we can see the duplicati login screen:
 
-htb_monitors3_duplicati.png
+![htb_monitors3_duplicati.png](../assets/monitorsthree_assets/htb_monitors3_duplicati.png)
 
 Let's now base64 decode and convert to hex the passphrase found in the sqlite file:
 
-htb_monitors3_chef.png
+![htb_monitors3_chef.png](../assets/monitorsthree_assets/htb_monitors3_chef.png)
 
 Let's now capture a login attempt after enabling "Do Intercept" the response and sending it to Repeater:
 
@@ -357,7 +357,7 @@ get-nonce=1
 
 The response:
 
-htb_monitors3_response.png
+![htb_monitors3_response.png](../assets/monitorsthree_assets/htb_monitors3_response.png)
 
 From here let's grab the hex encoded pw and the nonce from the burp response and create:
 
@@ -367,29 +367,29 @@ var noncedpwd = CryptoJS.SHA256(CryptoJS.enc.Hex.parse(CryptoJS.enc.Base64.parse
 
 We can then open the devtools and in the console type "allow pasting" and paste in the above:
 
-htb_monitors3_dev.png
+![htb_monitors3_dev.png](../assets/monitorsthree_assets/htb_monitors3_dev.png)
 
 After entering the noncedpwd var, we can then type `noncedpwd`, intercept the request, and update the password field with the string provided in devtools:
 
-htb_monitors3_forward.png
+![htb_monitors3_forward.png](../assets/monitorsthree_assets/htb_monitors3_forward.png)
 
 We can forward this request, disable burp, and are logged into duplicati:
 
-htb_monitors3_in.png
+![htb_monitors3_in.png](../assets/monitorsthree_assets/htb_monitors3_in.png)
 
 Nice. 
 
 So looks like there is a backup cronjob in place for cacti here.
 
-Let's try exploiting this  functionality by selecting "Add Backup" then "Configure a new backup". We'll name this one test and select "no encryption".
+Let's try exploiting this functionality by selecting "Add Backup" then "Configure a new backup". We'll name this one test and select "no encryption."
 
-htb_monitors3_backup1.png
+![htb_monitors3_backup1.png](../assets/monitorsthree_assets/htb_monitors3_backup1.png)
 
 We know that the host machine is `/source`, so lets set the backup destination as `/source/root/.ssh`
 
-htb_monitors3_destinaton.png
+![htb_monitors3_destinaton.png](../assets/monitorsthree_assets/htb_monitors3_destination.png)
 
-htb_monitors3_source.png 
+![htb_monitors3_source.png](../assets/monitorsthree_assets/htb_monitors3_source.png)
 
 and adding "Add Path"
 
@@ -397,7 +397,7 @@ Hitting "next" I will un-select "Automatically run backups"
 
 I can hit Save and then see my backup. I'll select "Run now"
 
-htb_monitors3_run.png
+![htb_monitors3_run.png](../assets/monitorsthree_assets/htb_monitors3_run.png)
 
 From here we can select more options using the down arrow, and click on "restore files"
 
@@ -405,7 +405,7 @@ Let's select `/source/home/marcus/authorized_keys` and restore them to `/source/
 
 Once this is done we can simply SSH in as user root using marcus' SSH key and grab the final flag.
 
-htb_monitors3_root.png
+![htb_monitors3_root.png](../assets/monitorsthree_assets/htb_monitors3_root.png)
 
 Thanks for following along!
 
