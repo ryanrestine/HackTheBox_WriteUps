@@ -64,7 +64,7 @@ Ok, looks like we've got 2 http ports open and then several mail ports.
 
 Looking at the page on port 80 we find:
 
-htb_chaos_site.png
+![htb_chaos_site.png](../assets/chaos_assets/htb_chaos_site.png)
 
 Scanning for directories on port 80 we discover a wordpress endpoint:
 
@@ -79,13 +79,13 @@ Scanning for directories on port 80 we discover a wordpress endpoint:
 
 Which tries to forward to http://wordpress.chaos.htb/ so let's add that to `/etc/hosts`:
 
-Once added we can access a new site at http://chaos.htb:
+Once added we can also access a new site at http://chaos.htb:
 
-htb_chaos_url.png
+![htb_chaos_url.png](../assets/chaos_assets/htb_chaos_url.png)
 
 And looking at the wordpress site we find it is protected:
 
-htb_chaos_protected.png
+![htb_chaos_protected.png](../assets/chaos_assets/htb_chaos_protected.png)
 
 Scanning for vhosts we find webmail.chaos.htb, so let's add that to `/etc/hosts` as well:
 
@@ -124,7 +124,7 @@ ________________________________________________
 
 This takes us to a roundcube login:
 
-htb_chaos_webmail.png
+![htb_chaos_webmail.png](../assets/chaos_assets/htb_chaos_webmail.png)
 
 Running wpscan against the wordpress instance we find one potential user:
 
@@ -144,13 +144,13 @@ Running wpscan against the wordpress instance we find one potential user:
 
 Trying the credentials `human:human` gets us access to the protected post:
 
-htb_chaos_creds.png
+![htb_chaos_creds.png](../assets/chaos_assets/htb_chaos_creds.png)
 
 So now we have some new creds: `ayush:jiujitsu`
 
 Logging into the roundcube instance at webmail.chaos.htb, there is nothing in ayush's inbox, but there is an interesting draft:
 
-htb_chaos_draft.png
+![htb_chaos_draft.png](../assets/chaos_assets/htb_chaos_draft.png)
 
 This gives us a new username (and potential password), as well as two files to download.
 
@@ -269,13 +269,13 @@ Thanks,
 Ayush
 ```
 
-Navigating tot his new URL we find a pdf creator:
+Navigating to this new URL we find a pdf creator:
 
-htb_chaos_test.png
+![htb_chaos_test.png](../assets/chaos_assets/htb_chaos_test.png)
 
 Capturing this in burp and trying some LaTex injections, we find there is blacklisting in place:
 
-htb_chaos_blacklisted.png
+![htb_chaos_blacklisted.png](../assets/chaos_assets/htb_chaos_blacklisted.png)
 
 We do find that template test3 will actually create a PDF:
 
@@ -296,7 +296,7 @@ But rather than storing the file at http://chaos.htb/pdf/random_file_name it is 
 
 Browsing the `/pdf` folder, we find several test PDFs made, and confirm that injection must be possible because we discover a base64 encoded `/etc/passwd`
 
-htb_chaos_b64.png
+![htb_chaos_b64.png](../assets/chaos_assets/htb_chaos_b64.png)
 
 This is interesting and at first I thought it must be the result of one of my injection attempts, but I see that the files were created in 2018 (the year the box was released) and after reverting the box the file remains. 
 
@@ -317,7 +317,7 @@ So this seems reassuring that some type of injection vulnerability exists.
 
 Going back to the drawing board and testing the different test templates, I find we have successful injection in template test1 using `\write18{id}`
 
-htb_chaos_id.png
+![htb_chaos_id.png](../assets/chaos_assets/htb_chaos_id.png)
 
 Cool, let's use this to issue a URL encoded reverse shell oneliner:
 
@@ -385,7 +385,7 @@ However so far I am unable to crack this or use it.
 
 Also in the db we find a few session hashes, but again, so far cannot crack them:
 
-htb_chaos_session_hashes.png
+![htb_chaos_session_hashes.png](../assets/chaos_assets/htb_chaos_session_hashes.png)
 
 Continuing to enumerate the db I re-discovered credentials I'd unfortunately forgotten about (doh!):
 
@@ -460,7 +460,7 @@ Which gives us a normal shell.
 
 From here we can (finally) grab the user.txt flag:
 
-htb_chaos_user.png
+![htb_chaos_user.png](../assets/chaos_assets/htb_chaos_user.png)
 
 ### Privilege Escalation
 
@@ -501,7 +501,7 @@ root@chaos:~#
 
 From here we can grab the final flag:
 
-htb_chaos_root.png
+![htb_chaos_root.png](../assets/chaos_assets/htb_chaos_root.png)
 
 Thanks for following along!
 
