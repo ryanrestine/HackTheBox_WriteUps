@@ -12,6 +12,7 @@ A place to document various HTB CTF writeups
 - Builder
 - Busqueda
 - Cap
+- Chaos
 - Codify
 - CozyHosting
 - Cronos
