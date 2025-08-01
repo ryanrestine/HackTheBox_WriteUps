@@ -11,6 +11,7 @@ A place to document various HTB CTF writeups
 - Broker
 - Builder
 - Busqueda
+- Cache
 - Cap
 - Chaos
 - Codify
